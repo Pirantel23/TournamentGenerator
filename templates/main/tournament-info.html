@@ -1,0 +1,31 @@
+<!-- tournament_frontend/templates/tournament_frontend/tournament_bracket.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ tournament.name }} Bracket</title>
+    <style>
+        /* Add your CSS styles for the bracket visualization here */
+    </style>
+</head>
+<body>
+    <h1>{{ tournament.name }} Bracket</h1>
+    <div class="bracket">
+        {% for round in tournament.rounds.all %}
+            <div class="round">
+                <h2>Round {{ round.round_number }}</h2>
+                <ul class="matches">
+                    {% for match in round.matches.all %}
+                        <li class="match">
+                            <span class="team">{{ match.team1.name }}</span>
+                            <span class="score">{{ match.team1_score }} - {{ match.team2_score }}</span>
+                            <span class="team">{{ match.team2.name }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
