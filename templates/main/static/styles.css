@@ -1,0 +1,34 @@
+.login-body {
+    background-image: url('background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+}
+
+.logo {
+    font-size: 128px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+
+.login-button {
+    padding: 5px 45px;
+    font-size: 42px;
+    background-color: #979797;
+    color: #ffffff;
+    border-radius: 5px;
+    text-decoration: none;
+    -webkit-text-stroke: 1px #000000; /* Толщина и цвет обводки */
+}
+
+.login-button:hover {
+    background-color: #bbbbbb;
+}
