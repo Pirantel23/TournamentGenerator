@@ -18,7 +18,6 @@
     margin-bottom: 20px;
 }
 
-
 .login-button {
     padding: 5px 45px;
     font-size: 42px;
@@ -26,9 +25,106 @@
     color: #ffffff;
     border-radius: 5px;
     text-decoration: none;
-    -webkit-text-stroke: 1px #000000; /* Толщина и цвет обводки */
+    -webkit-text-stroke: 1px #000000;
+    /* Толщина и цвет обводки */
 }
 
 .login-button:hover {
     background-color: #bbbbbb;
+}
+
+
+/* Вторая страница */
+
+.page-body {
+    background-image: url('background_page.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.page-logo {
+    font-size: 64px;
+    font-weight: bold;
+    color: #ffffff;
+    position: absolute;
+    padding: 30px;
+}
+
+.header {
+    height: 150px;
+    background-color: #42454E;
+    color: #fff;
+    margin: 0;
+}
+
+.sidebar {
+    position: relative;
+    /* Для позиционирования элементов внутри */
+    width: 75px;
+    height: calc(100vh - 150px);
+    background-color: #313542;
+    float: left;
+    transition: width 0.3s;
+    overflow: hidden;
+}
+
+.sidebar:hover {
+    width: 200px;
+}
+
+.sidebar-content {
+    width: 100%;
+    transition: width 0.3s;
+    white-space: nowrap;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.sidebar:hover .sidebar-content {
+    width: 200px;
+}
+
+.content {
+    margin-left: 200px;
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 200px;
+    top: 200px;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
