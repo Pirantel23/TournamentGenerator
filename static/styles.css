@@ -2,10 +2,20 @@
     background-image: url('background_page.png');
     background-size: cover;
     background-repeat: no-repeat;
-    flex-direction: column;
     font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
+}
+
+.main-page {
+    display: flex;
+    background: #555966;
+    border-radius: 15px;
+    align-items: center;
+    font-size: 64px;
+    padding: 15px;
+    margin: 45px 200px 0 0;
+    color: white;
 }
 
 .header{
@@ -121,9 +131,8 @@
 
 .sidebar {
     position: relative;
-    /* Для позиционирования элементов внутри */
     width: 75px;
-    height: calc(100vh - 120px); /* переделать */
+    height: calc(100vh - 120px);
     background-color: #313542;
     float: left;
     transition: width 0.3s;
