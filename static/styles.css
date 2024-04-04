@@ -1,27 +1,3 @@
-.login-body {
-    background-image: url('background.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Inter', sans-serif;
-    overflow: hidden;
-}
-
-.logo {
-    font-size: 128px;
-    font-weight: bold;
-    color: #ffffff;
-    margin-bottom: 20px;
-}
-
-
-
-
-/* Вторая страница */
 .page-body {
     background-image: url('background_page.png');
     background-size: cover;
@@ -36,25 +12,24 @@
     display: flex;
     align-items: center;
     height: 120px;
-    background-color: #42454E;
+    background: #42454E;
     color: #fff;
     margin: 0;
     flex-direction: row;
     justify-content: space-between;
 }
 
-
 .page-logo {
     font-size: 64px;
     font-weight: bold;
     color: #ffffff;
-    left: 30px;
-    padding: 0 10px;
+    padding: 0 10px 0 30px;
 }
 
 .page-logo:hover,
 .tournament-logo:hover,
-.chat-icon:hover {
+.chat-icon:hover,
+.create-button:hover {
     cursor: pointer;
 }
 
@@ -66,8 +41,6 @@
     color: #ffffff;
     border-radius: 5px;
     text-decoration: none;
-    -webkit-text-stroke: 1px #000000;
-    /* Толщина и цвет обводки */
 }
 
 .login-button:hover {
@@ -82,11 +55,12 @@
     width: 60vw;
     height: 90px;
     background: #555966;
-    border-radius: 50px 0;
+    border-radius: 50px 0 50px 15px;
     font-size: 42px;
     margin: 0 10px;
     overflow: hidden;
     white-space: nowrap;
+    align-self: flex-start;
 }
 
 .profile-header {
@@ -102,7 +76,6 @@
 
 .name {
     width: calc(100% - 120px);
-    height: 30px;
     margin: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -130,8 +103,6 @@
     border-top: 0;
     border-radius: 0 0 15px 15px;
     text-decoration: none;
-    -webkit-text-stroke: 1px #000000;
-    /* Толщина и цвет обводки */
 }
 
 .logout-button:hover {
@@ -146,7 +117,7 @@
     position: relative;
     /* Для позиционирования элементов внутри */
     width: 75px;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 120px); /* переделать */
     background-color: #313542;
     float: left;
     transition: width 0.3s;
@@ -179,10 +150,8 @@
 }
 
 .content {
-    margin-left: 200px;
-    padding: 20px;
-    flex-grow: 1;
     display: flex;
+    margin: 0 200px;
 }
 
 .modal {
@@ -216,13 +185,101 @@
     cursor: pointer;
 }
 
-#tournaments-list {
+ul {
+    list-style-type: none;
+}
+
+
+.tournaments-list { /* переделать, сейчас центрируется по центру. Мы хотели, чтобы слева, но так ломается кнопка удаления*/
     display: none;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.competitions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    height: 40px;
+    margin: 0 40px; /* если список соревнований слева, а не по центру */
+    text-align: center;
+    background: #42454E;
+    border-radius: 0 0 15px 15px;
+    max-width: 300%;
+    width: 30vw;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.tournament-container { /* беда с размерами, переделать бы*/
+    width: 30vw;
+    max-width: 100%;
+    height: 100px;
+    background: #555966;
+    border-radius: 50px 0;
+    overflow: hidden;
+}
+
+.tournament-container a, a:visited, a:active{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 24px;
+    color: white;
+    height: 100%;
+    padding: 0 10px;
+    border-radius: inherit;
+    transition: background-color 0.3s ease;
+}
+
+.tournament-container a:hover {
+    background: #b0b0b0;
+}
+
+.tournament-container div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.delete-button { /* переделать!!!*/
+    display: flex;
+    position: relative;
+    bottom: 100px;
+    left: 100%;
+    width: 100px;
+    height: 100px;
+    transition: filter 0.3s ease;
+    border: 1px solid red;
+}
+
+.delete-button:hover{
+    filter: brightness(150%);
+}
+
+.create-button{
+    padding: 15px 45px;
+    font-size: 42px;
+    background-color: #979797;
+    color: #ffffff;
+    border-radius: 15px;
+}
+
+.create-button:hover {
+    background: #bbbbbb;
 }
 
 
 @media screen and (max-width: 700px) {
     .info-label {
+        display: none;
+    }
+    .competitions{
         display: none;
     }
 }

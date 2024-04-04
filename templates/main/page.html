@@ -12,13 +12,14 @@
 <body class="page-body">
     <div class="header">
         <span class="page-logo">TGG</span>
-        <div class="info-label">{{ action }}</div>
+        <div class="info-label">sadfdsadsadsadsadasdasdasdasda</div>
         <div class="profile-header">
             <div class="name">{{ first_name }} {{ last_name }}</div>
             <img src="/static/user-avatar-square.png" alt="user avatar" id="user-avatar" class="user-avatar">
             <a href="/logout" class="logout-button" role="button">Выйти</a>
         </div>
 <!--        <a href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={{ client_id }}&scope=openid%20profile%20email&redirect_uri={{ redirect_uri }}&state=test123&nonce=123" class="login-button">Войти</a>-->
+        <!-- надо будет сделать проверку что вошел в аккаунт-->
     </div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-content">
@@ -38,13 +39,23 @@
             </div>
         </div>
         <!-- Ну здесь типа все остальное, турниры, сетки, все дела -->
-        <div id="tournaments-list" style="display: none;">
+        <div id="tournaments-list" class="tournaments-list">
+            <div class="competitions">Соревнования</div>
             {% for tournament in tournaments %}
-            <li><a href="{% url 'tournament_info' tournament.id %}">{{ tournament.name }}</a></li>
+            <ul>
+                <li><div class="tournament-container">
+                    <a href="{% url 'tournament_info' tournament.id %}">
+                        <div>{{ tournament.name }}</div>
+                    </a>
+                </div>
+                    <img src="/static/delete-button.png" alt="Delete Button" id="delete-button" class="delete-button">
+                    <!--надо будет сделать проверку на то, что если вошел - можешь создавать сетку-->
+                </li>
+            </ul>
             {% endfor %}
-            <button onclick="window.location.href = '/tournament/create/'">Create Tournament</button>
+            <button onclick="window.location.href = '/tournament/create/'" class="create-button">Create Tournament</button>
+            <!--надо будет сделать проверку на то, что если вошел - можешь создавать сетку-->
         </div>
-
         <div class="main-page">Main Content</div>
     </div>
     <script src="static/script.js"></script>

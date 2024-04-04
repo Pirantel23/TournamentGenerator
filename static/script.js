@@ -48,13 +48,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const pageLogo = document.querySelector(".page-logo");
 
     tournamentsIcon.addEventListener("click", function() {
-        tournamentsList.style.display = "block";
+        tournamentsList.style.display = "flex";
         mainContent.style.display = "none";
     });
 
     pageLogo.addEventListener("click", function() {
         tournamentsList.style.display = "none";
-        mainContent.style.display = "block";
+        mainContent.style.display = "flex";
     });
 });
 
