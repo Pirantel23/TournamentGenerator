@@ -12,13 +12,15 @@
 <body class="page-body">
     <div class="header">
         <span class="page-logo">TGG</span>
-        <div class="info-label">sadfdsadsadsadsadasdasdasdasda</div>
+        <div class="info-label"> {{ content }}</div>
+        <!--здесь должно писаться что находится на странице, например, открыты турниры:
+        Соревнования; поле создания турнира: Создание сетки; в самой сетке писать сверху название-->
         <div class="profile-header">
             <div class="name">{{ first_name }} {{ last_name }}</div>
             <img src="/static/user-avatar-square.png" alt="user avatar" id="user-avatar" class="user-avatar">
             <a href="/logout" class="logout-button" role="button">Выйти</a>
         </div>
-<!--        <a href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={{ client_id }}&scope=openid%20profile%20email&redirect_uri={{ redirect_uri }}&state=test123&nonce=123" class="login-button">Войти</a>-->
+        <!--<a href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={{ client_id }}&scope=openid%20profile%20email&redirect_uri={{ redirect_uri }}&state=test123&nonce=123" class="login-button">Войти</a>-->
         <!-- надо будет сделать проверку что вошел в аккаунт-->
     </div>
     <div class="sidebar" id="sidebar">
@@ -38,7 +40,6 @@
                 <p>НУ ЭТО ТИПО ЧАТ ДОЛЖЕН БЫТЬ =()</p>
             </div>
         </div>
-        <!-- Ну здесь типа все остальное, турниры, сетки, все дела -->
         <div id="tournaments-list" class="tournaments-list">
             <div class="competitions">Соревнования</div>
             {% for tournament in tournaments %}
@@ -49,12 +50,15 @@
                     </a>
                 </div>
                     <img src="/static/delete-button.png" alt="Delete Button" id="delete-button" class="delete-button">
-                    <!--надо будет сделать проверку на то, что если вошел - можешь создавать сетку-->
+                    <!--сделать действие - удаление сетки
+                    надо будет сделать проверку на то, что если вошел - можешь создавать сетку, а также удалять
+                     ТОЛЬКО свою сетку (или для админа удалять все)-->
                 </li>
             </ul>
             {% endfor %}
-            <button onclick="window.location.href = '/tournament/create/'" class="create-button">Create Tournament</button>
-            <!--надо будет сделать проверку на то, что если вошел - можешь создавать сетку-->
+            <img src="/static/create-button.png" alt="Create Button" id="create-button" class="create-button"
+                 onclick="window.location.href = '/tournament/create/'">
+            <!--надо будет сделать проверку на то, что если вошел - можешь создавать сетку ну и пользоваться чатом-->
         </div>
         <div class="main-page">Main Content</div>
     </div>
