@@ -3,4 +3,4 @@ from tournament.models import *
 
 
 def index(request):
-    return render(request, 'main/index.html', {'tournaments': Tournament.objects.all()})
+    return render(request, 'main/page.html', {'tournaments': Tournament.objects.all()})
