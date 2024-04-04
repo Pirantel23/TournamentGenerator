@@ -1,0 +1,17 @@
+<!-- create_tournament.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Tournament</title>
+</head>
+<body>
+    <h2>Create Tournament</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create Tournament</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tournament Matches</title>
+</head>
+<body>
+    <h1>Tournament Matches</h1>
+    <h2>{{ tournament.name }}</h2>
+
+    {% regroup tournament.matches.all by round_number as round_matches %}
+    {% for round_match in round_matches %}
+        <h3>Round {{ round_match.grouper }}</h3>
+        <ul>
+            {% for match in round_match.list %}
+                <li>
+                    {% if match.team1 %}
+                        {{ match.team1 }}
+                    {% else %}
+                        TBD
+                    {% endif %}
+                    vs
+                    {% if match.team2 %}
+                        {{ match.team2 }}
+                    {% else %}
+                        TBD
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% empty %}
+        <p>No matches available for this tournament.</p>
+    {% endfor %}
+</body>
+</html>
