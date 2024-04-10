@@ -73,19 +73,51 @@ function changeImage() {
     const tournamentType = document.querySelector('.tournament-type').value;
     const imageContainer = document.getElementById('image-container');
 
-    // Очищаем контейнер картинки перед добавлением новой
+    if (!tournamentType) {
+        return;
+    }
     imageContainer.innerHTML = '';
 
-    // Создаем новый элемент изображения и добавляем его в контейнер
     const image = document.createElement('img');
     if (tournamentType === 'single') {
-        image.src = '/static/single-elimination.svg'; // Путь к изображению для Single Elimination
+        image.src = '/static/single-elimination.svg';
     } else if (tournamentType === 'double') {
-        image.src = '/static/double-elimination.svg'; // Путь к изображению для Double Elimination
+        image.src = '/static/double-elimination.svg';
     }
     imageContainer.appendChild(image);
 }
+
 changeImage();
+
+function getMinDateTime() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes() + 1).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const minDateTime = getMinDateTime();
+    document.querySelector('.tournament_datetime').value = minDateTime;
+    document.querySelector('.tournament_datetime').min = minDateTime;
+});
+
+// Функция, которая будет вызываться при отправке формы
+function handleSubmit(event) {
+    const teamNames = document.getElementById('teamNames').value.trim();
+    const lines = teamNames.split('\n').filter(function(line) {
+        return line.trim() !== '';
+    });
+
+    if (lines.length < 2) {
+        alert('Введите минимум две строки для названий команд.');
+        event.preventDefault();
+    }
+}
+document.querySelector('form').addEventListener('submit', handleSubmit);
 
 
 // Говно код
