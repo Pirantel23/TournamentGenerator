@@ -15,14 +15,15 @@
         <div class="info-label"> {{ content }}</div>
         <!--здесь должно писаться что находится на странице, например, открыты турниры:
         Соревнования; поле создания турнира: Создание сетки; в самой сетке писать сверху название-->
+        {% if logged_in %}
         <div class="profile-header">
             <div class="name"> {{ username }}</div>
             <img src='{{ picture }}' alt="user avatar" id="user-avatar" class="user-avatar">
-            <a href="/logout" class="logout-button" role="button">Выйти</a>
+            <button onclick="window.location.href ='/logout'" class="logout-button" role="button">Выйти</button>
         </div>
-        <p>logged_in: {{ logged_in }}</p>
-        <p>is_admin: {{ is_admin }}</p>
-        <a href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={{ client_id }}&scope=openid%20profile%20email&redirect_uri={{ redirect_uri }}&state=test123&nonce=123" class="login-button">Войти</a>
+        {% else %}
+        <button onclick="window.location.href ='https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={{ client_id }}&scope=openid%20profile%20email&redirect_uri={{ redirect_uri }}&state=test123&nonce=123'" class="login-button">Войти</button>
+        {% endif %}
         <!-- надо будет сделать проверку что вошел в аккаунт-->
         <!-- поля юзера: is_admin; picture; username -->
     </div>
@@ -64,7 +65,11 @@
             <!--надо будет сделать проверку на то, что если вошел - можешь создавать сетку ну и пользоваться чатом-->
         </div>
         <div class="main-page">Не придумал, че здесь написать, но допустим здесь будет написано про то, зачем этот сайт
-        и как им пользоваться</div>
+        и как им пользоваться
+            <div>logged_in: {{ logged_in }}<br>is_admin: {{ is_admin }}
+            </div>
+        </div>
+
     </div>
     <script src="static/script.js"></script>
 
