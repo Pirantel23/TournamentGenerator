@@ -1,17 +1,49 @@
-<!-- create_tournament.html -->
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Create Tournament</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
-<body>
-    <h2>Create Tournament</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create Tournament</button>
-    </form>
+<body class="create-tournament-body">
+    <div class="create-tournament-container">
+        <h2>Создание турнирной сетки</h2>
+        <form action="/tournament/create/" method="post" onsubmit="collectTeams()">
+            {% csrf_token %}
+            <div id="image-container" class="image-container"></div>
+
+            <div class="create-tournament-field">
+                <label>Название турнира:</label>
+                <input placeholder="введите название турнира" name="tournament_name" class="tournament-name" autocomplete=off required>
+            </div>
+
+            <div class="create-tournament-field">
+                <label>Команды:</label>
+                <div class="tournament-teams-container" id="tournament-teams-container">
+                        <input placeholder="введите название команды" type="text" name="team" class="tournament-teams" autocomplete=off required>
+                        <input placeholder="введите название команды" type="text" name="team" class="tournament-teams" autocomplete=off required>
+                </div>
+                <button type="button" onclick="addTeam()" class="addTeam-button">Добавить команду</button>
+            </div>
+
+            <div class="create-tournament-field">
+                <label>Тип турнира:</label>
+                <select name="tournament_type" class="tournament-type" onchange="changeImage()">
+                    <option value="single">Single Elimination</option>
+                    <option value="double">Double Elimination</option>
+                </select>
+            </div>
+            <input type="hidden" name="teams" id="teams">
+
+            <button type="submit" class="create-tournament-button">Создать турнир</button>
+        </form>
+    </div>
+<!-- ПЕРЕДЕЛАТЬ ПУТЬ НА ОСНОВНУЮ СТРАНИЦУ-->
+    <img src="{% static 'return-button.svg' %}" alt="Main page" class="return-button"
+         onclick="window.location.href = '/'">
+    <script src="{% static 'script.js' %}"></script>
 </body>
+
 </html>

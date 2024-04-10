@@ -1,7 +1,8 @@
 .page-body {
-    background-image: url('background_page.png');
+    background-image: url('background.svg');
     background-size: cover;
     background-repeat: no-repeat;
+    background-attachment: fixed; /* Зафиксируем фон */
     font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
@@ -126,13 +127,13 @@
 }
 
 .hidden {
-    display: none; /* Скрываем элементы с классом hidden */
+    display: none;
 }
 
 .sidebar {
     position: relative;
     width: 75px;
-    height: calc(100vh - 120px);
+    height: 100vh;
     background-color: #313542;
     float: left;
     transition: width 0.3s;
@@ -141,13 +142,15 @@
 
 .chat-icon, .tournament-logo {
     transition: transform 0.3s;
-    transform: scale(25%);
+    transform: scale(50%);
     user-select: none;
+    margin: 20px; /* Добавляем отступ между элементами */
+
 }
 
 .sidebar:hover .chat-icon,
 .sidebar:hover .tournament-logo {
-    transform: scale(80%);
+    transform: scale(120%);
 }
 
 .sidebar-content {
@@ -265,7 +268,7 @@ ul {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction:row;
+    flex-direction: row;
 }
 
 .delete-button {
@@ -292,6 +295,146 @@ ul {
 
 .create-button:hover{
     background: #ffffff;
+}
+
+/* страница для создания таблиц */
+.create-tournament-body {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    background: #555966;
+    color: #cecece;
+}
+
+.create-tournament-container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    background: #42454E;
+    border-radius: 15px 15px 0 15px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.create-tournament-container h2{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.create-tournament-field{
+    display: flex;
+    margin: 30px;
+    align-items: center;
+}
+
+.create-tournament-field label{
+    background: #313542;
+    border-radius: 5px;
+    padding: 3px;
+    margin-right: 15px;
+    max-width: 30%;
+}
+
+.create-tournament-field .tournament-name {
+    width: calc(70% - 30px);
+    align-items: center;
+    font-size: 80%;
+    border: 5px solid transparent;
+    border-radius: 5px;
+    background: #cecece;
+}
+
+.tournament-teams-container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.create-tournament-field .tournament-teams {
+    width: 300px;
+    font-size: 80%;
+    border: 5px solid transparent;
+    border-radius: 5px;
+    margin: 5px;
+    background: #cecece;
+
+}
+
+.create-tournament-field select {
+    width: 350px;
+    align-items: center;
+    font-size: 80%;
+    border: 5px solid transparent;
+    border-radius: 5px;
+    background: #cecece;
+
+}
+
+.create-tournament-button {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    padding: 5px 10px;
+    background-color: #5A5C64;
+    color: #cecece;
+    border-radius: 0 0 15px 15px;
+    border: 5px solid #42454E;
+    border-top: 0;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.create-tournament-button:hover {
+    background-color: #FFFFFF;
+    color: black;
+}
+
+
+.addTeam-button{
+    padding: 5px 10px;
+    margin-left: 10px;
+    background-color: #5A5C64;
+    color: #cecece;
+    border-radius: 5px;
+    border: 1px solid black;
+    text-decoration: none;
+    font-size: 24px;
+
+}
+
+.addTeam-button:hover {
+    background-color: #FFFFFF;
+    color: black;
+}
+
+
+.image-container img {
+    margin-left: 15px;
+    width: 250px;
+    height: 250px;
+    float: right;
+    border-radius: 15px;
+}
+
+.return-button {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    transition: filter 0.3s ease;
+    border-radius: 50px;
+    border: 1px solid transparent;
+    background: #5d5e6b;
+}
+
+.return-button:hover{
+    background: #919191;
 }
 
 

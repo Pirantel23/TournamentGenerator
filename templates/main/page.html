@@ -17,7 +17,7 @@
         Соревнования; поле создания турнира: Создание сетки; в самой сетке писать сверху название-->
         <div class="profile-header">
             <div class="name"> {{ first_name }} {{ last_name }}</div>
-            <img src="/static/user-avatar-square.png" alt="user avatar" id="user-avatar" class="user-avatar">
+            <img src="/static/user-avatar.svg" alt="user avatar" id="user-avatar" class="user-avatar">
             <a href="/logout" class="logout-button" role="button">Выйти</a>
         </div>
         <!--<a href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={{ client_id }}&scope=openid%20profile%20email&redirect_uri={{ redirect_uri }}&state=test123&nonce=123" class="login-button">Войти</a>-->
@@ -26,10 +26,10 @@
     <div class="sidebar" id="sidebar">
         <div class="sidebar-content">
             <div class="chat-icon">
-                <img src="/static/chat.png" alt="Chat Icon" id="chat-logo">
+                <img src="/static/chat.svg" alt="Chat Icon" id="chat-logo">
             </div>
             <div class="tournament-logo">
-                <img src="/static/tournaments.png" alt="Tournaments Icon" id="tournaments-icon">
+                <img src="/static/tournaments.svg" alt="Tournaments Icon" id="tournaments-icon">
             </div>
         </div>
     </div>
@@ -49,14 +49,14 @@
                         <div>{{ tournament.name }}</div>
                     </a>
                 </div>
-                    <img src="/static/delete-button.png" alt="Delete Button" id="delete-button" class="delete-button">
+                    <img src="/static/delete-button.svg" alt="Delete Button" id="delete-button" class="delete-button">
                     <!--сделать действие - удаление сетки
                     надо будет сделать проверку на то, что если вошел - можешь создавать сетку, а также удалять
                      ТОЛЬКО свою сетку (или для админа удалять все)-->
                 </li>
             </ul>
             {% endfor %}
-            <img src="/static/create-button.png" alt="Create Button" id="create-button" class="create-button"
+            <img src="/static/create-button.svg" alt="Create Button" id="create-button" class="create-button"
                  onclick="window.location.href = '/tournament/create/'">
             <!--надо будет сделать проверку на то, что если вошел - можешь создавать сетку ну и пользоваться чатом-->
         </div>

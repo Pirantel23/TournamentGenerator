@@ -5,15 +5,16 @@ from .forms import TournamentForm
 from .models import Tournament, Match
 import math
 import random
+import json
 
 def create_tournament(request):
     if request.method == 'POST':
         form = TournamentForm(request.POST)
         if form.is_valid():
             tournament_name = form.cleaned_data['tournament_name']
-            teams_str = form.cleaned_data['teams']
+            teams_json = form.cleaned_data['teams']
             tournament_type = form.cleaned_data['tournament_type']
-            teams = [team.strip() for team in teams_str.split('\n') if team]
+            teams = json.loads(teams_json)
 
             # Create Tournament instance
             tournament = Tournament.objects.create(name=tournament_name, tournament_type=tournament_type)
