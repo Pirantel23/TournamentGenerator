@@ -37,10 +37,14 @@ def create_tournament(request):
             bracket = [[] for _ in range(rounds_amount)]
             for r in range(rounds_amount):
                 max_teams //= 2
-                for _ in range(max_teams):
-                    bracket[r].append(Match.objects.create(tournament=tournament, round_number=r+1))
+                for i in range(max_teams):
+                    bracket[r].append(Match.objects.create(tournament=tournament, round_number=r+1, round_index=i))
+            bracket[-1][0].is_final = True
             for i, team in enumerate(teams):
                 bracket[0][i//2].add_team(team)
+
+            # Advancing bye teams
+            
             
             print(bracket)
 
@@ -54,10 +58,20 @@ def tournament_info(request, tournament_id):
     tournament = get_object_or_404(Tournament, pk=tournament_id)
     return render(request, 'tournament/tournament_info.html', {'tournament': tournament})
 
+def edit_match(request, match_id, team_number): 
+    match = get_object_or_404(Match, pk=match_id)
+    if not request.session.get('is_admin') and request.user != match.tournament.author:
+        return JsonResponse({'success': False})
+    if match.advance_winner(team_number):
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
+
 
 def delete_tournament(request, tournament_id):
     try:
         tournament = Tournament.objects.get(pk=tournament_id)
+        if not request.session.get('is_admin') and request.user != tournament.author:
+            return JsonResponse({'success': False})
         tournament.delete()
         return JsonResponse({'success': True})
     except Tournament.DoesNotExist:

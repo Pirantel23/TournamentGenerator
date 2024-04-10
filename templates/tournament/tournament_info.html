@@ -1,10 +1,39 @@
 <!DOCTYPE html>
+{% csrf_token %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Tournament Matches</title>
 </head>
-<body>
+<script>
+    async function makeRequest(method, url, data) {
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify(data)
+        })
+        if (response.ok) {
+            return response
+        } else {
+            let error = new Error('Error occurred during the fetch request.');
+            console.error('ERROR: ', error);
+            throw error
+        }
+    }
+    async function advanceWinner(match_id, team_number) {
+        const response = await makeRequest('POST', `/tournament/edit/${match_id}/${team_number}/`, null)
+        const data = await response.json()
+        if (data.success) {
+            location.reload();
+        }
+        console.log(data)
+        return data;
+    }
+</script>
+<body style="background-color: #212121; color: #ECECEC;">
 
     <h1>Tournament Matches</h1>
     <h2>{{ tournament.name }}</h2>
@@ -15,17 +44,9 @@
         <ul>
             {% for match in round_match.list %}
                 <li>
-                    {% if match.team1 %}
-                        {{ match.team1 }}
-                    {% else %}
-                        TBD
-                    {% endif %}
-                    vs
-                    {% if match.team2 %}
-                        {{ match.team2 }}
-                    {% else %}
-                        TBD
-                    {% endif %}
+                    {{ match.team1}} vs {{ match.team2 }}; {{ match.score1 }} - {{ match.score2 }} ({{ match.round_index }})
+                    <button onclick="advanceWinner('{{ match.id }}', 1)">1</button>
+                    <button onclick="advanceWinner('{{ match.id }}', 2)">2</button>
                 </li>
             {% endfor %}
         </ul>
