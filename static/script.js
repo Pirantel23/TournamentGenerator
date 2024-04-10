@@ -37,18 +37,6 @@ if (closeBtn) {
 }
 
 
-// Предположим, что у вас есть переменная isAuthenticated, которая определяет, авторизован ли пользователь
-// let isAuthenticated = false;
-//
-// if (isAuthenticated) {
-//     document.querySelector('.login-button').classList.add('hidden');
-//     document.querySelector('.logout-button').classList.remove('hidden');
-// } else {
-//     document.querySelector('.login-button').classList.remove('hidden');
-//     document.querySelector('.logout-button').classList.add('hidden');
-// }
-
-
 document.addEventListener("DOMContentLoaded", function() {
     const tournamentsIcon = document.getElementById("tournaments-icon");
     const tournamentsList = document.getElementById("tournaments-list");
@@ -98,3 +86,37 @@ function changeImage() {
     imageContainer.appendChild(image);
 }
 changeImage();
+
+
+// Говно код
+
+
+async function makeRequest(method, url, data) {
+    const response = await fetch(url, {
+        method: method,
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify(data)
+    })
+    if (response.ok) {
+        return response
+    } else {
+        let error = new Error('Error occurred during the fetch request.');
+        console.error('ERROR: ', error);
+        throw error
+    }
+}
+
+
+async function deleteTournament(tournamentId) {
+    const response = await makeRequest('POST', `/tournament/delete/${tournamentId}/`);
+    const data = await response.json();
+    if (data.success){
+        const tournamentBlock = document.getElementById(tournamentId);
+        tournamentBlock.remove();
+    }
+    console.log(data);
+    return data;
+}

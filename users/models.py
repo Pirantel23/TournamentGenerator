@@ -10,5 +10,4 @@ class User(AbstractUser):
     is_admin = models.BooleanField(default=False)
 
     def __str__(self):
-        out = f'{self.username} - {self.email}'
-        return out
+        return self.username

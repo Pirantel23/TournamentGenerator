@@ -1,13 +1,17 @@
 # tournament/views.py
 
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import TournamentForm
 from .models import Tournament, Match
 import math
 import random
-import json
+
+
 
 def create_tournament(request):
+    if not request.session.get('logged_in'):
+        return redirect('/')
     if request.method == 'POST':
         form = TournamentForm(request.POST)
         if form.is_valid():
@@ -17,7 +21,10 @@ def create_tournament(request):
             teams = list({team.strip() for team in teams_str.split('\n') if team.strip()})
 
             # Create Tournament instance
-            tournament = Tournament.objects.create(name=tournament_name, tournament_type=tournament_type)
+            tournament = Tournament.objects.create(name=tournament_name,
+                                                   tournament_type=tournament_type,
+                                                   author=request.user,
+                                                   team_amount=len(teams))
 
             n = len(teams)
             rounds_amount = math.ceil(math.log2(n))
@@ -46,3 +53,12 @@ def create_tournament(request):
 def tournament_info(request, tournament_id):
     tournament = get_object_or_404(Tournament, pk=tournament_id)
     return render(request, 'tournament/tournament_info.html', {'tournament': tournament})
+
+
+def delete_tournament(request, tournament_id):
+    try:
+        tournament = Tournament.objects.get(pk=tournament_id)
+        tournament.delete()
+        return JsonResponse({'success': True})
+    except Tournament.DoesNotExist:
+        return JsonResponse({'success': False})

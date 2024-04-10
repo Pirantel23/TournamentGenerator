@@ -12,13 +12,14 @@ def index(request):
     username = request.session.get('username') or ''
     picture = request.session.get('picture') or '/static/user-avatar.svg'
     is_admin = request.session.get('is_admin') or False
+    logged_in = request.session.get('logged_in') or False
     return render(request, 'main/page.html', {'tournaments': Tournament.objects.all(), 
                                               'client_id': CLIENT_ID, 
                                               'redirect_uri': REDIRECT_URI,
                                               'username': username,
                                               'picture': picture,
                                               'is_admin': is_admin,
-                                              'logged_in': request.user.is_authenticated})
+                                              'logged_in': logged_in})
 
 
 def logout(request):
@@ -41,6 +42,7 @@ def handle_auth(request):
     request.session['username'] = user.username
     request.session['picture'] = user.picture_url
     request.session['is_admin'] = user.is_admin
+    request.session['logged_in'] = user.is_authenticated
 
     login(request, user, backend='django.contrib.auth.backends.ModelBackend')
     return redirect('/')

@@ -1,4 +1,5 @@
 {% load static %}
+{% csrf_token %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,18 +49,18 @@
             <div class="competitions">Соревнования</div>
             {% for tournament in tournaments %}
             <ul>
-                <li><div class="tournament-container">
-                    <a href="{% url 'tournament_info' tournament.id %}">
-                        <div>{{ tournament.name }}</div>
-                    </a>
-                </div>
-                    {% if logged_in %}
-                    <img src="/static/delete-button.svg" alt="Delete Button" id="delete-button" class="delete-button">
+                <li id="{{ tournament.id }}">
+                    <div class="tournament-container">
+                        <a href="{% url 'tournament_info' tournament.id %}">
+                            <div>{{ tournament.name }} - {{ tournament.author }} - {{ tournament.get_formatted_date }} - {{ tournament.team_amount }} Teams</div>
+                        </a>
+                    </div>
+                    {% if is_admin or request.user == tournament.author %}
+                    <img src="/static/delete-button.svg" alt="Delete Button" id="delete-button" class="delete-button" onclick="deleteTournament('{{ tournament.id }}')">
+                    {% else %}
+                    <img src="/static/delete-button.svg" alt="Delete Button" id="delete-button" class="delete-button" style="visibility:hidden">
                     {% endif %}
-                    <!--сделать действие - удаление сетки
-                    надо будет сделать проверку на то, что если вошел - можешь создавать сетку, а также удалять
-                     ТОЛЬКО свою сетку (или для админа удалять все)-->
-                </li>
+                </li> 
             </ul>
             {% endfor %}
             {% if logged_in %}
