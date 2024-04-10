@@ -100,8 +100,7 @@
     text-overflow: ellipsis;
     font-size: 36px;
     white-space: nowrap;
-    display: flex;
-    justify-content: center;
+    text-align: center
 }
 
 .user-avatar {
