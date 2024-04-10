@@ -34,10 +34,11 @@ def handle_auth(request):
     email = decoded['email']
     name = decoded['name']
     picture = decoded['picture']
-    user, _ = User.objects.get_or_create(name=name,
+    print(decoded)
+    user, _ = User.objects.get_or_create(username=name,
                                                   email=email,
                                                   picture_url=picture)
-    request.session['username'] = user.name
+    request.session['username'] = user.username
     request.session['picture'] = user.picture_url
     request.session['is_admin'] = user.is_admin
 
