@@ -16,12 +16,15 @@
         <!--здесь должно писаться что находится на странице, например, открыты турниры:
         Соревнования; поле создания турнира: Создание сетки; в самой сетке писать сверху название-->
         <div class="profile-header">
-            <div class="name"> {{ first_name }} {{ last_name }}</div>
-            <img src="/static/user-avatar.svg" alt="user avatar" id="user-avatar" class="user-avatar">
+            <div class="name"> {{ username }}</div>
+            <img src='{{ picture }}' alt="user avatar" id="user-avatar" class="user-avatar">
             <a href="/logout" class="logout-button" role="button">Выйти</a>
         </div>
-        <!--<a href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={{ client_id }}&scope=openid%20profile%20email&redirect_uri={{ redirect_uri }}&state=test123&nonce=123" class="login-button">Войти</a>-->
+        <p>logged_in: {{ logged_in }}</p>
+        <p>is_admin: {{ is_admin }}</p>
+        <a href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={{ client_id }}&scope=openid%20profile%20email&redirect_uri={{ redirect_uri }}&state=test123&nonce=123" class="login-button">Войти</a>
         <!-- надо будет сделать проверку что вошел в аккаунт-->
+        <!-- поля юзера: is_admin; picture; username -->
     </div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-content">

@@ -21,15 +21,17 @@ def create_tournament(request):
 
             n = len(teams)
             rounds_amount = math.ceil(math.log2(n))
-            if n % 2 == 1:
-                n+=1
-            bracket = [[] for _ in range(rounds_amount)]
-            for r in range(rounds_amount):
-                n //= 2
-                for _ in range(n):
-                    bracket[r].append(Match.objects.create(tournament=tournament, round_number=r+1))
+            max_teams = 2 ** rounds_amount
 
             random.shuffle(teams)
+            for i in range(max_teams - n):
+                teams.insert(2 * i + 1, 'BYE')
+            
+            bracket = [[] for _ in range(rounds_amount)]
+            for r in range(rounds_amount):
+                max_teams //= 2
+                for _ in range(max_teams):
+                    bracket[r].append(Match.objects.create(tournament=tournament, round_number=r+1))
             for i, team in enumerate(teams):
                 bracket[0][i//2].add_team(team)
             
