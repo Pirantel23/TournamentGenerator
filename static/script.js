@@ -68,20 +68,18 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-
-function addTeam() {
-    const tournamentField = document.getElementById('tournament-teams-container');
-    const newInput = document.createElement('input');
-    newInput.placeholder = "введите название команды";
-    newInput.type = 'text';
-    newInput.name = 'team';
-    newInput.classList.add('tournament-teams');
-    newInput.autocomplete = 'off';
-    newInput.required = true;
-
-    tournamentField.appendChild(newInput);
+function charCounter(){
+    document.getElementById('teamNames').addEventListener('input', function() {
+        const lines = this.value.split('\n');
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].length > 50) {
+                lines[i] = lines[i].substring(0, 50);
+            }
+        }
+        this.value = lines.join('\n');
+    });
 }
-
+charCounter();
 
 function changeImage() {
     const tournamentType = document.querySelector('.tournament-type').value;
@@ -100,17 +98,3 @@ function changeImage() {
     imageContainer.appendChild(image);
 }
 changeImage();
-
-
-function collectTeams() {
-    const teamInputs = document.querySelectorAll('.tournament-teams');
-    const teams = [];
-
-    teamInputs.forEach(input => {
-        if (input.value.trim() !== '') {
-            teams.push(input.value.trim());
-        }
-    });
-
-    document.getElementById('teams').value = JSON.stringify(teams);
-}

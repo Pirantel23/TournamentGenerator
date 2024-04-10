@@ -10,22 +10,18 @@
 <body class="create-tournament-body">
     <div class="create-tournament-container">
         <h2>Создание турнирной сетки</h2>
-        <form action="/tournament/create/" method="post" onsubmit="collectTeams()">
+        <form action="/tournament/create/" method="post">
             {% csrf_token %}
             <div id="image-container" class="image-container"></div>
 
             <div class="create-tournament-field">
                 <label>Название турнира:</label>
-                <input placeholder="введите название турнира" name="tournament_name" class="tournament-name" autocomplete=off required>
+                <input placeholder="введите название турнира" name="tournament_name" class="tournament-name" maxlength="50" autocomplete=off required>
             </div>
 
             <div class="create-tournament-field">
                 <label>Команды:</label>
-                <div class="tournament-teams-container" id="tournament-teams-container">
-                        <input placeholder="введите название команды" type="text" name="team" class="tournament-teams" autocomplete=off required>
-                        <input placeholder="введите название команды" type="text" name="team" class="tournament-teams" autocomplete=off required>
-                </div>
-                <button type="button" onclick="addTeam()" class="addTeam-button">Добавить команду</button>
+                <textarea id="teamNames" placeholder="введите название команд" name="teams" class="tournament-teams"  autocomplete=off required></textarea>
             </div>
 
             <div class="create-tournament-field">
@@ -35,7 +31,6 @@
                     <option value="double">Double Elimination</option>
                 </select>
             </div>
-            <input type="hidden" name="teams" id="teams">
 
             <button type="submit" class="create-tournament-button">Создать турнир</button>
         </form>

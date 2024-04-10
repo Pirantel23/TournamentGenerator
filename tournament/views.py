@@ -12,9 +12,9 @@ def create_tournament(request):
         form = TournamentForm(request.POST)
         if form.is_valid():
             tournament_name = form.cleaned_data['tournament_name']
-            teams_json = form.cleaned_data['teams']
+            teams_str = form.cleaned_data['teams']
             tournament_type = form.cleaned_data['tournament_type']
-            teams = json.loads(teams_json)
+            teams = list({team.strip() for team in teams_str.split('\n') if team.strip()})
 
             # Create Tournament instance
             tournament = Tournament.objects.create(name=tournament_name, tournament_type=tournament_type)

@@ -53,15 +53,19 @@
                         <div>{{ tournament.name }}</div>
                     </a>
                 </div>
+                    {% if logged_in %}
                     <img src="/static/delete-button.svg" alt="Delete Button" id="delete-button" class="delete-button">
+                    {% endif %}
                     <!--сделать действие - удаление сетки
                     надо будет сделать проверку на то, что если вошел - можешь создавать сетку, а также удалять
                      ТОЛЬКО свою сетку (или для админа удалять все)-->
                 </li>
             </ul>
             {% endfor %}
+            {% if logged_in %}
             <img src="/static/create-button.svg" alt="Create Button" id="create-button" class="create-button"
                  onclick="window.location.href = '/tournament/create/'">
+            {% endif %}
             <!--надо будет сделать проверку на то, что если вошел - можешь создавать сетку ну и пользоваться чатом-->
         </div>
         <div class="main-page">Не придумал, че здесь написать, но допустим здесь будет написано про то, зачем этот сайт
