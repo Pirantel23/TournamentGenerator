@@ -47,8 +47,8 @@
         </div>
         <div id="tournaments-list" class="tournaments-list">
             <div class="competitions">Соревнования</div>
-            {% for tournament in tournaments %}
             <ul>
+                {% for tournament in tournaments %}
                 <li id="{{ tournament.id }}">
                     <div class="tournament-container">
                         <a href="{% url 'tournament_info' tournament.id %}">
@@ -60,12 +60,14 @@
                     {% else %}
                     <img src="/static/delete-button.svg" alt="Delete Button" id="delete-button" class="delete-button" style="visibility:hidden">
                     {% endif %}
-                </li> 
+                </li>
+                {% endfor %}
             </ul>
-            {% endfor %}
             {% if logged_in %}
-            <img src="/static/create-button.svg" alt="Create Button" id="create-button" class="create-button"
-                 onclick="window.location.href = '/tournament/create/'">
+            <div class="create-button-container">
+                <img src="/static/create-button.svg" alt="Create Button" id="create-button" class="create-button"
+                     onclick="window.location.href = '/tournament/create/'">
+            </div>
             {% endif %}
             <!--надо будет сделать проверку на то, что если вошел - можешь создавать сетку ну и пользоваться чатом-->
         </div>
