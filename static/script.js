@@ -40,18 +40,37 @@ if (closeBtn) {
 document.addEventListener("DOMContentLoaded", function() {
     const tournamentsIcon = document.getElementById("tournaments-icon");
     const tournamentsList = document.getElementById("tournaments-list");
-    const mainContent = document.querySelector(".main-page");
+    const mainContent = document.querySelector(".main-content");
     const pageLogo = document.querySelector(".page-logo");
+    const form = document.getElementById("create-button");
+    const createTournamentContainer = document.querySelector(".create-tournament-container");
+    const createTournamentForm = document.getElementById("create-tournament-form");
 
     if (tournamentsIcon) {
         tournamentsIcon.addEventListener("click", function() {
             tournamentsList.style.display = "flex";
             mainContent.style.display = "none";
+            createTournamentContainer.style.display = "none";
+            tournamentsList.style.filter = null;
+            tournamentsList.style.pointerEvents = "auto";
         });
 
         pageLogo.addEventListener("click", function() {
             tournamentsList.style.display = "none";
             mainContent.style.display = "flex";
+            createTournamentContainer.style.display = "none";
+        });
+
+        form.addEventListener("click", function() {
+            mainContent.style.display = "none";
+            createTournamentContainer.style.display = "flex";
+            tournamentsList.style.filter = "blur(5px)";
+            tournamentsList.style.pointerEvents = "none";
+        });
+
+        createTournamentForm.addEventListener("submit", function() {
+            tournamentsList.style.filter = null;
+            tournamentsList.style.pointerEvents = "auto";
         });
     }
 });

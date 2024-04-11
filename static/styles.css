@@ -6,14 +6,14 @@
     font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
+    font-size: 32px;
 }
 
-.main-page {
+.main-content {
     display: flex;
     background: #555966;
     border-radius: 15px;
     align-items: center;
-    font-size: 64px;
     padding: 15px;
     margin: 45px 200px 0 0;
     color: white;
@@ -98,7 +98,6 @@
     margin: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 32px;
     white-space: nowrap;
     text-align: center
 }
@@ -147,9 +146,9 @@
     transition: transform 0.3s;
     transform: scale(50%);
     user-select: none;
-    margin: 200px;
-
+    margin: 50%;
 }
+
 
 .sidebar:hover .chat-icon,
 .sidebar:hover .tournament-logo {
@@ -169,6 +168,7 @@
 .sidebar:hover .sidebar-content {
     width: 200px;
 }
+
 
 .content {
     display: flex;
@@ -216,7 +216,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
     color: white;
     height: 40px;
     text-align: center;
@@ -313,15 +312,12 @@
 }
 
 /* страница для создания таблиц */
-.create-tournament-body {
-    font-family: 'Inter', sans-serif;
-    font-size: 20px;
-    background: #555966;
-    color: #cecece;
-}
-
 
 .create-tournament-container {
+    font-family: 'Inter', sans-serif;
+    display: none;
+    color: #cecece;
+    flex-direction: column;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -329,8 +325,6 @@
     background: #42454E;
     border-radius: 15px 15px 0 15px;
     padding: 15px;
-    display: flex;
-    flex-direction: column;
 }
 
 .create-tournament-container h2 {
@@ -346,10 +340,10 @@
     flex-wrap: wrap;
     flex-direction: column;
     align-content: space-between;
-    max-height: 1000px;
 }
 
 .create-tournament-field {
+    width: 100%;
     display: flex;
     margin-top: 15px;
     flex-direction: column;
@@ -366,7 +360,6 @@
 .create-tournament-field input,
 .create-tournament-field textarea,
 .create-tournament-field select {
-    width: 400px;
     font-size: 80%;
     border: 5px solid transparent;
     border-radius: 0 0 5px 5px;
@@ -375,9 +368,9 @@
 }
 
 .create-tournament-field textarea {
-    height: 200px; /* >_< */
     resize: none;
     white-space: nowrap;
+    height: 200px;
 }
 
 .create-tournament-button {
@@ -391,7 +384,7 @@
     border: 5px solid #42454E;
     border-top: 0;
     text-decoration: none;
-    font-size: 24px;
+    font-size: 32px;
 }
 
 .create-tournament-button:hover {
