@@ -4,7 +4,7 @@ const sidebar = document.getElementById('sidebar');
 // Если элемент существует, добавляем обработчики событий
 if (sidebar) {
     sidebar.addEventListener('mouseenter', function() {
-        this.style.width = '200px';
+        this.style.width = '150px';
     });
 
     sidebar.addEventListener('mouseleave', function() {

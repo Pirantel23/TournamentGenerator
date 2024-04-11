@@ -146,13 +146,13 @@
     transition: transform 0.3s;
     transform: scale(50%);
     user-select: none;
-    margin: 50%;
+    margin: 30%;
 }
 
 
 .sidebar:hover .chat-icon,
 .sidebar:hover .tournament-logo {
-    transform: scale(150%);
+    transform: scale(100%);
 }
 
 .sidebar-content {
@@ -166,7 +166,7 @@
 }
 
 .sidebar:hover .sidebar-content {
-    width: 200px;
+    width: 150px;
 }
 
 
