@@ -52,14 +52,14 @@
 </script>
 <body style="background-color: #212121; color: #ECECEC;">
     <h1>Tournament Matches</h1>
-    <h2>{{ tournament.name }}</h2>
+    <h2>{{ tournament.name }} -- Finished: {{ tournament.is_finished }}</h2>
     {% regroup tournament.matches.all by round_number as round_matches %}
     {% for round_match in round_matches %}
         <h3>Round {{ round_match.grouper }}</h3>
         <ul>
             {% for match in round_match.list %}
                 <li onclick="selectMatch('{{ match.id }}')">
-                    {{ match.team1}} vs {{ match.team2 }}; {{ match.score1 }} - {{ match.score2 }} ({{ match.round_index }})
+                    {{ match.team1}} vs {{ match.team2 }}; {{ match.score1 }} - {{ match.score2 }} ({{ match.round_index }}) -- Finished: {{ match.is_finished }}
                 </li>
             {% endfor %}
         </ul>
