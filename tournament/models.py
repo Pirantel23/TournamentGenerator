@@ -51,7 +51,7 @@ class Match(models.Model):
             raise Exception("Both teams are already assigned for this match")
 
     def finish(self, score1, score2):
-        if self.tournament.is_finished or self.is_finished:
+        if self.tournament.is_finished or self.is_finished or self.team1 is None or self.team2 is None:
             return False
         if score1 > score2:
             self.winner = self.team1
