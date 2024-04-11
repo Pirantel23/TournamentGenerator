@@ -23,8 +23,8 @@
             throw error
         }
     }
-    async function advanceWinner(match_id, team_number) {
-        const response = await makeRequest('POST', `/tournament/edit/${match_id}/${team_number}/`, null)
+    async function advanceWinner(match_id, score1, score2) {
+        const response = await makeRequest('POST', `/tournament/edit/${match_id}/`, {'score1': score1, 'score2': score2})
         const data = await response.json()
         if (data.success) {
             location.reload();
@@ -32,26 +32,55 @@
         console.log(data)
         return data;
     }
+    // Function to show the pop-up for a specific match
+    function selectMatch(matchId) {
+        const matchIdInput = document.getElementById('match-id');
+        matchIdInput.value = matchId;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('score-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const matchId = document.getElementById('match-id').value;
+            const team1Score = document.getElementById('team1-score').value;
+            const team2Score = document.getElementById('team2-score').value;
+            advanceWinner(matchId, team1Score, team2Score);
+            console.log(`Match ID: ${matchId}, Team 1 Score: ${team1Score}, Team 2 Score: ${team2Score}`);
+        });
+    });
 </script>
 <body style="background-color: #212121; color: #ECECEC;">
-
     <h1>Tournament Matches</h1>
     <h2>{{ tournament.name }}</h2>
-
     {% regroup tournament.matches.all by round_number as round_matches %}
     {% for round_match in round_matches %}
         <h3>Round {{ round_match.grouper }}</h3>
         <ul>
             {% for match in round_match.list %}
-                <li>
+                <li onclick="selectMatch('{{ match.id }}')">
                     {{ match.team1}} vs {{ match.team2 }}; {{ match.score1 }} - {{ match.score2 }} ({{ match.round_index }})
-                    <button onclick="advanceWinner('{{ match.id }}', 1)">1</button>
-                    <button onclick="advanceWinner('{{ match.id }}', 2)">2</button>
                 </li>
             {% endfor %}
         </ul>
     {% empty %}
         <p>No matches available for this tournament.</p>
     {% endfor %}
+    <div id="popup-container">
+        <div id="popup-content">
+          <h2>Set Team Scores</h2>
+          <form id="score-form">
+            <div style="display: flex; flex-direction: column; max-width: 20%;">
+                <label for="match-id">Match ID:</label>
+                <input type="number" id="match-id" name="match-id" placeholder="click on any match">
+                <label for="team1-score">Team 1 Score:</label>
+                <input type="number" id="team1-score" name="team1-score" required><br>
+                <label for="team2-score">Team 2 Score:</label>
+                <input type="number" id="team2-score" name="team2-score" required><br>
+                <button type="submit">Submit</button>
+            </div> 
+          </form>
+        </div>
+      </div>
 </body>
 </html>

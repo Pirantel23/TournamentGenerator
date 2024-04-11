@@ -1,5 +1,6 @@
 # tournament/views.py
 
+import json
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import TournamentForm
@@ -40,11 +41,14 @@ def create_tournament(request):
                 for i in range(max_teams):
                     bracket[r].append(Match.objects.create(tournament=tournament, round_number=r+1, round_index=i))
             bracket[-1][0].is_final = True
+            bracket[-1][0].save()
             for i, team in enumerate(teams):
                 bracket[0][i//2].add_team(team)
 
             # Advancing bye teams
-            
+            for match in bracket[0]:
+                if match.team2 == 'BYE':
+                    match.finish(1, 0)
             
             print(bracket)
 
@@ -58,11 +62,14 @@ def tournament_info(request, tournament_id):
     tournament = get_object_or_404(Tournament, pk=tournament_id)
     return render(request, 'tournament/tournament_info.html', {'tournament': tournament})
 
-def edit_match(request, match_id, team_number): 
+def edit_match(request, match_id):
+    data = json.loads(request.body)
+    score1 = data.get('score1')
+    score2 = data.get('score2')
     match = get_object_or_404(Match, pk=match_id)
     if not request.session.get('is_admin') and request.user != match.tournament.author:
         return JsonResponse({'success': False})
-    if match.advance_winner(team_number):
+    if match.finish(score1, score2):
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
 
