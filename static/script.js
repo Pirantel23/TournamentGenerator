@@ -191,3 +191,32 @@ async function deleteTournament(tournamentId) {
     console.log(data);
     return data;
 }
+
+async function advanceWinner(match_id, score1, score2) {
+    const response = await makeRequest('POST', `/tournament/edit/${match_id}/`, {'score1': score1, 'score2': score2})
+    const data = await response.json()
+    if (data.success) {
+        location.reload();
+    }
+    console.log(data)
+    return data;
+}
+// Function to show the pop-up for a specific match
+function selectMatch(matchId) {
+    const matchIdInput = document.getElementById('match-id');
+    matchIdInput.value = matchId;
+    const popupContainer = document.getElementById('popup-container');
+    popupContainer.style.display = 'flex';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('score-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const matchId = document.getElementById('match-id').value;
+        const team1Score = document.getElementById('team1-score').value;
+        const team2Score = document.getElementById('team2-score').value;
+        advanceWinner(matchId, team1Score, team2Score);
+        console.log(`Match ID: ${matchId}, Team 1 Score: ${team1Score}, Team 2 Score: ${team2Score}`);
+    });
+});

@@ -378,7 +378,7 @@
     height: 200px;
 }
 
-.create-tournament-button {
+.submit-button {
     position: absolute;
     right: 0;
     top: 100%;
@@ -392,7 +392,7 @@
     font-size: 32px;
 }
 
-.create-tournament-button:hover {
+.submit-button:hover {
     background-color: #FFFFFF;
     color: black;
 }
@@ -580,6 +580,73 @@
         left: -15px;
     }
 }
+
+
+#popup-container {
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    display: none;
+    color: #cecece;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #42454E;
+    border-radius: 15px 15px 0 15px;
+    padding: 15px;
+}
+
+#popup-container h2 {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+#popup-container form {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+#popup-container-field {
+    display: flex;
+    margin-top: 15px;
+    flex-direction: row;
+}
+
+#popup-container-field label {
+    background: #313542;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+#popup-container-field input{
+    font-size: 80%;
+    width: 50px;
+    border: 5px solid transparent;
+    border-radius: 5px;
+    background: #cecece;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    margin: 5px;
+}
+#popup-container-field input::-webkit-outer-spin-button,
+#popup-container-field input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 
 @media screen and (max-width: 700px) {
     .info-label {

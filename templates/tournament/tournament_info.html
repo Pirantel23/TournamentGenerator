@@ -9,49 +9,7 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <script>
-    async function makeRequest(method, url, data) {
-        const response = await fetch(url, {
-            method: method,
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-            },
-            body: JSON.stringify(data)
-        })
-        if (response.ok) {
-            return response
-        } else {
-            let error = new Error('Error occurred during the fetch request.');
-            console.error('ERROR: ', error);
-            throw error
-        }
-    }
-    async function advanceWinner(match_id, score1, score2) {
-        const response = await makeRequest('POST', `/tournament/edit/${match_id}/`, {'score1': score1, 'score2': score2})
-        const data = await response.json()
-        if (data.success) {
-            location.reload();
-        }
-        console.log(data)
-        return data;
-    }
-    // Function to show the pop-up for a specific match
-    function selectMatch(matchId) {
-        const matchIdInput = document.getElementById('match-id');
-        matchIdInput.value = matchId;
-    }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('score-form');
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const matchId = document.getElementById('match-id').value;
-            const team1Score = document.getElementById('team1-score').value;
-            const team2Score = document.getElementById('team2-score').value;
-            advanceWinner(matchId, team1Score, team2Score);
-            console.log(`Match ID: ${matchId}, Team 1 Score: ${team1Score}, Team 2 Score: ${team2Score}`);
-        });
-    });
 </script>
 <body style="background-color: #212121; color: #ECECEC;margin: 0;">
     <div class="tournament-status">
@@ -87,18 +45,22 @@
     </div>
     <br>
     <div id="popup-container">
+        <h2>Определить победителя матча</h2>
         <div id="popup-content">
-          <h2>Set Team Scores</h2>
           <form id="score-form">
-            <div style="display: flex; flex-direction: column; max-width: 20%;">
-                <label for="match-id">Match ID:</label>
-                <input type="number" id="match-id" name="match-id" placeholder="click on any match">
-                <label for="team1-score">Team 1 Score:</label>
+<!--                <label for="match-id">Match ID:</label>-->
+            <input type="hidden" id="match-id" name="match-id" placeholder="click on any match">
+
+            <div id="popup-container-field">
+                <label for="team1-score">комаднадоадопаодпдоавпдовапдо
+                </label>
                 <input type="number" id="team1-score" name="team1-score" required><br>
-                <label for="team2-score">Team 2 Score:</label>
+                <label>VS</label>
                 <input type="number" id="team2-score" name="team2-score" required><br>
-                <button type="submit">Submit</button>
+                <label for="team2-score">адпдпддп
+                </label>
             </div>
+            <button type="submit" class="submit-button">Сохранить</button>
           </form>
         </div>
       </div>
