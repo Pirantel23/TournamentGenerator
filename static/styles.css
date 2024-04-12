@@ -487,9 +487,10 @@ section h2{
 }
 
 .bracket .round-click{
-    border-radius: 5px;
+    border-radius: 15px;
     border: 2px solid black;
     transition: background-color 0.3s ease;
+    overflow: hidden;
 }
 
 .bracket .round-click:hover{
@@ -516,12 +517,10 @@ section h2{
 
 .bracket .team-1 {
     border-bottom: 1px solid black;
-    border-radius: 3px 0 0 0;
 }
 
 .bracket .team-2{
     border-top: 1px solid black;
-    border-radius: 0 0 0 3px;
 }
 
 .bracket .score-1,
@@ -538,12 +537,10 @@ section h2{
 
 .bracket .score-1 {
     border-bottom: 1px solid black;
-    border-radius: 0 3px 0 0;
 }
 
 .bracket .score-2 {
     border-top: 1px solid black;
-    border-radius: 0 0 3px 0;
 }
 
 .bracket section:not(:last-child) {
