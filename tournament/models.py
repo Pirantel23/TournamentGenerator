@@ -30,11 +30,11 @@ class Tournament(models.Model):
 
 class Match(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE, related_name='matches')
-    team1 = models.CharField(max_length=50, blank=True, null=True)
-    team2 = models.CharField(max_length=50, blank=True, null=True)
+    team1 = models.CharField(max_length=50, blank=True)
+    team2 = models.CharField(max_length=50, blank=True)
     score1 = models.PositiveIntegerField(default=0)
     score2 = models.PositiveIntegerField(default=0)
-    winner = models.CharField(max_length=50, blank=True, null=True)
+    winner = models.CharField(max_length=50, blank=True)
     round_number = models.PositiveIntegerField()
     round_index = models.PositiveIntegerField()
     is_finished = models.BooleanField(default=False)
@@ -51,6 +51,9 @@ class Match(models.Model):
             raise Exception("Both teams are already assigned for this match")
 
     def finish(self, score1, score2):
+        score1 = int(score1)
+        score2 = int(score2)
+
         if self.tournament.is_finished or self.is_finished or self.team1 is None or self.team2 is None:
             return False
         if score1 > score2:
@@ -68,7 +71,7 @@ class Match(models.Model):
             return True
         next_match = Match.objects.get(tournament=self.tournament, round_number=self.round_number+1, round_index=self.round_index//2)
         next_match.add_team(self.winner)
-        return True
+        return next_match
 
     def __str__(self):
         if self.winner:

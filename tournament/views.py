@@ -69,8 +69,14 @@ def edit_match(request, match_id):
     match = get_object_or_404(Match, pk=match_id)
     if not request.session.get('is_admin') and request.user != match.tournament.author:
         return JsonResponse({'success': False})
-    if match.finish(score1, score2):
-        return JsonResponse({'success': True})
+    next_match = match.finish(score1, score2)
+    if next_match:
+        return JsonResponse({'success': True,
+                             'next_match_id': next_match.id,
+                             'team1': next_match.team1,
+                             'team2': next_match.team2,
+                             'score1': score1,
+                             'score2': score2})
     return JsonResponse({'success': False})
 
 

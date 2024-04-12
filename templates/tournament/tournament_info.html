@@ -27,7 +27,7 @@
             <ul>
                 {% for match in round_match.list %}
                  <li>
-                     <div class="round-click" onclick="selectMatch('{{ match.id }}')">
+                     <div class="round-click" onclick="selectMatch('{{ match.id }}')" id="{{ match.id }}">
                          <div class="teams">
                              <div class="team-1">{{ match.team1 }}</div>
                              <div class="score-1">{{ match.score1 }}</div>
