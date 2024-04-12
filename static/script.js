@@ -36,6 +36,62 @@ if (closeBtn) {
     }
 }
 
+function charCounter(){
+    document.getElementById('teamNames').addEventListener('input', function() {
+        const lines = this.value.split('\n');
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].length > 50) {
+                lines[i] = lines[i].substring(0, 50);
+            }
+        }
+        this.value = lines.join('\n');
+    });
+}
+
+function changeImage() {
+    const tournamentType = document.querySelector('.tournament-type').value;
+    const imageContainer = document.getElementById('image-container');
+
+    if (!tournamentType) {
+        return;
+    }
+    imageContainer.innerHTML = '';
+
+    const image = document.createElement('img');
+    if (tournamentType === 'single') {
+        image.src = '/static/single-elimination.svg';
+    } else if (tournamentType === 'double') {
+        image.src = '/static/double-elimination.svg';
+    }
+    imageContainer.appendChild(image);
+}
+
+function getMinDateTime() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes() + 1).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
+function handleSubmit(event) {
+    const tournamentsList = document.getElementById("tournaments-list");
+    const teamNames = document.getElementById('teamNames').value.trim();
+    const lines = teamNames.split('\n').filter(function(line) {
+        return line.trim() !== '';
+    });
+
+    if (lines.length < 2) {
+        alert('Введите минимум две строки для названий команд.');
+        event.preventDefault();
+    } else {
+        tournamentsList.style.filter = null;
+        tournamentsList.style.pointerEvents = "auto";
+    }
+}
+
 
 document.addEventListener("DOMContentLoaded", function() {
     const tournamentsIcon = document.getElementById("tournaments-icon");
@@ -44,7 +100,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const pageLogo = document.querySelector(".page-logo");
     const form = document.getElementById("create-button");
     const createTournamentContainer = document.querySelector(".create-tournament-container");
-    const createTournamentForm = document.getElementById("create-tournament-form");
 
     if (tournamentsIcon) {
         tournamentsIcon.addEventListener("click", function() {
@@ -67,77 +122,42 @@ document.addEventListener("DOMContentLoaded", function() {
             tournamentsList.style.filter = "blur(5px)";
             tournamentsList.style.pointerEvents = "none";
         });
-
-        createTournamentForm.addEventListener("submit", function() {
-            tournamentsList.style.filter = null;
-            tournamentsList.style.pointerEvents = "auto";
-        });
-    }
-});
-
-function charCounter(){
-    document.getElementById('teamNames').addEventListener('input', function() {
-        const lines = this.value.split('\n');
-        for (let i = 0; i < lines.length; i++) {
-            if (lines[i].length > 50) {
-                lines[i] = lines[i].substring(0, 50);
-            }
+        if (createTournamentContainer) {
+            charCounter();
+            changeImage();
+            document.querySelector('form').addEventListener('submit', handleSubmit);
+            const minDateTime = getMinDateTime();
+            document.querySelector('.tournament_datetime').value = minDateTime;
+            document.querySelector('.tournament_datetime').min = minDateTime;
         }
-        this.value = lines.join('\n');
-    });
-}
-charCounter();
-
-function changeImage() {
-    const tournamentType = document.querySelector('.tournament-type').value;
-    const imageContainer = document.getElementById('image-container');
-
-    if (!tournamentType) {
-        return;
     }
-    imageContainer.innerHTML = '';
-
-    const image = document.createElement('img');
-    if (tournamentType === 'single') {
-        image.src = '/static/single-elimination.svg';
-    } else if (tournamentType === 'double') {
-        image.src = '/static/double-elimination.svg';
-    }
-    imageContainer.appendChild(image);
-}
-
-changeImage();
-
-function getMinDateTime() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes() + 1).padStart(2, '0');
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    const minDateTime = getMinDateTime();
-    document.querySelector('.tournament_datetime').value = minDateTime;
-    document.querySelector('.tournament_datetime').min = minDateTime;
 });
 
-// Функция, которая будет вызываться при отправке формы
-function handleSubmit(event) {
-    const teamNames = document.getElementById('teamNames').value.trim();
-    const lines = teamNames.split('\n').filter(function(line) {
-        return line.trim() !== '';
-    });
 
-    if (lines.length < 2) {
-        alert('Введите минимум две строки для названий команд.');
-        event.preventDefault();
+function updateScoreColor() {
+    let score1Elements = document.querySelectorAll('.score-1');
+    let score2Elements = document.querySelectorAll('.score-2');
+    let team1Elements = document.querySelectorAll('.team-1');
+    let team2Elements = document.querySelectorAll('.team-2');
+
+    for (let i = 0; i < score1Elements.length; i++) {
+        const score1 = parseInt(score1Elements[i].textContent);
+        const score2 = parseInt(score2Elements[i].textContent);
+
+        if (score1 > score2) {
+            score1Elements[i].style.background = '#35508a';
+            team1Elements[i].style.background = '#35508a';
+            score2Elements[i].style.background = '#555966';
+            team2Elements[i].style.background = '#555966';
+        } else if (score2 > score1) {
+            score1Elements[i].style.background = '#555966';
+            team1Elements[i].style.background = '#555966';
+            score2Elements[i].style.background = '#35508a'; //#3d8a35 - зелененький
+            team2Elements[i].style.background = '#35508a';
+        }
     }
 }
-document.querySelector('form').addEventListener('submit', handleSubmit);
-
+updateScoreColor();
 
 // Говно код
 

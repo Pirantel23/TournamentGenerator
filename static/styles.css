@@ -9,6 +9,7 @@
     font-size: 32px;
 }
 
+
 .main-content {
     display: flex;
     background: #555966;
@@ -99,7 +100,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    text-align: center
+    text-align: center;
 }
 
 .user-avatar {
@@ -217,14 +218,18 @@
     align-items: center;
     justify-content: center;
     color: white;
-    height: 40px;
     text-align: center;
     background: #42454E;
     border-radius: 0 0 15px 15px;
     max-width: 300%;
     width: 30vw;
+}
+
+.competitions > p{
     overflow: hidden;
     white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 5px;
 }
 
 .tournament-container { /* беда с размерами (при увеличении/уменьшении, переделать бы*/
@@ -411,9 +416,7 @@
 .return-button {
     width: 100px;
     height: 100px;
-    position: absolute;
-    bottom: 5%;
-    left: 5%;
+    margin: 15px;
     transition: filter 0.3s ease;
     border-radius: 50px;
     border: 1px solid transparent;
@@ -424,6 +427,169 @@
     background: #919191;
 }
 
+
+/*сетка*/
+
+.tournament-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #42454E;
+    color: white;
+    border-radius: 0 0 15px 15px;
+    padding: 5px;
+}
+
+.tournament-status > h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.bracket {
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    display: flex;
+    margin-bottom: 100px;
+    overflow: visible;
+    width: 100%;
+}
+
+.bracket section {
+    min-width: 300px;
+    padding: 0 20px 0 10px;
+    width: 20%;
+}
+
+.bracket ul {
+    display: flex;
+    flex-flow: row wrap;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+.bracket li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+    width: 100%;
+}
+
+.bracket .round-click{
+    border-radius: 5px;
+    border: 2px solid black;
+    transition: background-color 0.3s ease;
+}
+
+.bracket .round-click:hover{
+    background-color: #575757;
+}
+
+.bracket .teams {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.bracket .team-1,
+.bracket .team-2{
+    display: block;
+    padding: 5px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.bracket .team-1 {
+    border-bottom: 1px solid black;
+}
+
+.bracket .team-2{
+    border-top: 1px solid black;
+}
+
+.bracket .score-1 {
+    background: #646464;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    border-left: 2px solid black;
+    border-bottom: 1px solid black;
+    border-radius: 0 3px 0 0;
+}
+
+.bracket .score-2 {
+    background: #646464;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    border-left: 2px solid black;
+    border-top: 1px solid black;
+    border-radius: 0 0 3px 0;
+}
+
+.bracket section:not(:last-child) {
+    & li:after, li:before {
+        content: "";
+        display: block;
+        position: absolute;
+    }
+
+    & li:after {
+        right: -15px;
+        width: 15px;
+    }
+
+    & li:before {
+        border-top: 2px solid black;
+        position: absolute;
+        width: 15px;
+        left: -15px;
+        top: 50%;
+    }
+
+    & li:nth-child(even):after {
+        border-bottom:2px solid black;
+        border-bottom-right-radius: 10px;
+        border-right: 2px solid black;
+        bottom: 50%;
+        height: 100%;
+    }
+
+    & li:nth-child(odd):after {
+        border-right: 2px solid black;
+        border-top: 2px solid black;
+        border-top-right-radius: 10px;
+        top: 50%;
+        height: 100%;
+    }
+}
+
+.bracket li:before {
+    content: "";
+    border-top: 2px solid black;
+    position: absolute;
+    width: 15px;
+    left: -15px;
+    top: 50%;
+}
+
+.bracket:first-of-type {
+    .li:before {
+        background: red;
+    }
+}
 
 @media screen and (max-width: 700px) {
     .info-label {
