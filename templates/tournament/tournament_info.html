@@ -27,7 +27,11 @@
             <ul>
                 {% for match in round_match.list %}
                  <li>
+                     {% if not match.is_finished and match.team1 and match.team2 %}
                      <div class="round-click" onclick="selectMatch('{{ match.id }}')" id="{{ match.id }}">
+                     {% else %}
+                     <div class="round-click" id="{{ match.id }}">
+                     {% endif %}
                          <div class="teams">
                              <div class="team-1">{{ match.team1 }}</div>
                              <div class="score-1">{{ match.score1 }}</div>
@@ -52,11 +56,11 @@
             <input type="hidden" id="match-id" name="match-id" placeholder="click on any match">
 
             <div id="popup-container-field">
-                <label for="team1-score">Команда 1</label>
+                <label for="team1-score" id="team1-label">Команда 1</label>
                 <input type="number" id="team1-score" name="team1-score" required><br>
                 <label style="width: 50px">VS</label>
                 <input type="number" id="team2-score" name="team2-score" required><br>
-                <label for="team2-score">Команда 2</label>
+                <label for="team2-score" id="team2-label">Команда 2</label>
             </div>
             <button type="submit" class="submit-button">Сохранить</button>
           </form>
