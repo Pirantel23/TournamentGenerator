@@ -200,6 +200,7 @@ async function advanceWinner(match_id, score1, score2) {
     if (data.success) {
         currentMatch = document.getElementById(match_id);
         next_match_id = data.next_match_id;
+        currentMatch.onclick = null;
         if (next_match_id){
             nextMatch = document.getElementById(data.next_match_id);
             const team1Element = nextMatch.querySelector(".team-1");
@@ -222,6 +223,13 @@ function selectMatch(matchId) {
     matchIdInput.value = matchId;
     const popupContainer = document.getElementById('popup-container');
     popupContainer.style.display = 'flex';
+    match = document.getElementById(matchId);
+    team1Name = match.querySelector('.team-1').textContent;
+    team2Name = match.querySelector('.team-2').textContent;
+    const team1Label = document.getElementById('team1-label');
+    team1Label.textContent = team1Name;
+    const team2Label = document.getElementById('team2-label');
+    team2Label.textContent = team2Name;
     const team1Score = document.getElementById('team1-score');
     charCounter(team1Score, 4);
     const team2Score = document.getElementById('team2-score');
@@ -233,11 +241,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const popupContainer = document.getElementById('popup-container');
     scoreForm.addEventListener('submit', function(event) {
         event.preventDefault();
-        const matchId = document.getElementById('match-id').value;
-        const team1Score = document.getElementById('team1-score').value;
-        const team2Score = document.getElementById('team2-score').value;
-        advanceWinner(matchId, team1Score, team2Score);
+        const matchId = document.getElementById('match-id');
+        const team1Score = document.getElementById('team1-score');
+        const team2Score = document.getElementById('team2-score');
+        advanceWinner(matchId.value, team1Score.value, team2Score.value);
+        matchId.value = '';
+        team1Score.value = '';
+        team2Score.value = '';
         popupContainer.style.display = 'none';
-        console.log(`Match ID: ${matchId}, Team 1 Score: ${team1Score}, Team 2 Score: ${team2Score}`);
     });
 });
