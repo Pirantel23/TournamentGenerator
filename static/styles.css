@@ -463,6 +463,10 @@
     width: 20%;
 }
 
+section h2{
+    text-align: center;
+}
+
 .bracket ul {
     display: flex;
     flex-flow: row wrap;
@@ -621,12 +625,13 @@
 }
 
 #popup-container-field label {
+    display: flex;
+    justify-content: center;
     background: #313542;
     border-radius: 5px;
     padding: 5px;
     margin: 5px;
-    text-align: center;
-    width: 250px;
+        width: 250px;
     height: 40px;
     overflow: hidden;
     align-items: center;
