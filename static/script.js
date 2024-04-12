@@ -36,12 +36,13 @@ if (closeBtn) {
     }
 }
 
-function charCounter(){
-    document.getElementById('teamNames').addEventListener('input', function() {
+
+function charCounter(element, maxChars){
+    element.addEventListener('input', function() {
         const lines = this.value.split('\n');
         for (let i = 0; i < lines.length; i++) {
-            if (lines[i].length > 50) {
-                lines[i] = lines[i].substring(0, 50);
+            if (lines[i].length > maxChars) {
+                lines[i] = lines[i].substring(0, maxChars);
             }
         }
         this.value = lines.join('\n');
@@ -100,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const pageLogo = document.querySelector(".page-logo");
     const form = document.getElementById("create-button");
     const createTournamentContainer = document.querySelector(".create-tournament-container");
+    const teams = document.getElementById('teamNames')
 
     if (tournamentsIcon) {
         tournamentsIcon.addEventListener("click", function() {
@@ -123,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function() {
             tournamentsList.style.pointerEvents = "none";
         });
         if (createTournamentContainer) {
-            charCounter();
+            charCounter(teams, 50);
             changeImage();
             document.querySelector('form').addEventListener('submit', handleSubmit);
             const minDateTime = getMinDateTime();
@@ -217,6 +219,10 @@ function selectMatch(matchId) {
     matchIdInput.value = matchId;
     const popupContainer = document.getElementById('popup-container');
     popupContainer.style.display = 'flex';
+    const team1Score = document.getElementById('team1-score');
+    charCounter(team1Score, 4);
+    const team2Score = document.getElementById('team2-score');
+    charCounter(team2Score, 4);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
