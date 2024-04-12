@@ -54,7 +54,7 @@ class Match(models.Model):
         score1 = int(score1)
         score2 = int(score2)
 
-        if self.tournament.is_finished or self.is_finished or self.team1 is None or self.team2 is None:
+        if self.tournament.is_finished or self.is_finished or not self.team1 or not self.team2:
             return False
         if score1 > score2:
             self.winner = self.team1

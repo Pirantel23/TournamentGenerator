@@ -71,10 +71,18 @@ def edit_match(request, match_id):
         return JsonResponse({'success': False})
     next_match = match.finish(score1, score2)
     if next_match:
+        if match.is_final:
+            next_match_id = None
+            team1 = None
+            team2 = None
+        else:
+            next_match_id = next_match.id
+            team1 = next_match.team1
+            team2 = next_match.team2
         return JsonResponse({'success': True,
-                             'next_match_id': next_match.id,
-                             'team1': next_match.team1,
-                             'team2': next_match.team2,
+                             'next_match_id': next_match_id,
+                             'team1': team1,
+                             'team2': team2 ,
                              'score1': score1,
                              'score2': score2})
     return JsonResponse({'success': False})

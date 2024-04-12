@@ -199,14 +199,17 @@ async function advanceWinner(match_id, score1, score2) {
     const data = await response.json()
     if (data.success) {
         currentMatch = document.getElementById(match_id);
-        nextMatch = document.getElementById(data.next_match_id);
-        const team1Element = nextMatch.querySelector(".team-1");
+        next_match_id = data.next_match_id;
+        if (next_match_id){
+            nextMatch = document.getElementById(data.next_match_id);
+            const team1Element = nextMatch.querySelector(".team-1");
+            const team2Element = nextMatch.querySelector(".team-2");
+            team1Element.textContent = data.team1;
+            team2Element.textContent = data.team2;
+        }
         const score1Element = currentMatch.querySelector(".score-1");
-        const team2Element = nextMatch.querySelector(".team-2");
         const score2Element = currentMatch.querySelector(".score-2");
-        team1Element.textContent = data.team1;
         score1Element.textContent = data.score1;
-        team2Element.textContent = data.team2;
         score2Element.textContent = data.score2;
         updateScoreColor();
     }
