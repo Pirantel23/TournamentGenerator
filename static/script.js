@@ -205,6 +205,11 @@ async function advanceWinner(match_id, score1, score2) {
             nextMatch = document.getElementById(data.next_match_id);
             const team1Element = nextMatch.querySelector(".team-1");
             const team2Element = nextMatch.querySelector(".team-2");
+            if (data.team1 && data.team2){
+                nextMatch.onclick = function() {
+                    selectMatch(next_match_id);
+                }
+            }
             team1Element.textContent = data.team1;
             team2Element.textContent = data.team2;
         }
