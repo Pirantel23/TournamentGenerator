@@ -49,24 +49,6 @@ function charCounter(element, maxChars){
     });
 }
 
-function changeImage() {
-    const tournamentType = document.querySelector('.tournament-type').value;
-    const imageContainer = document.getElementById('image-container');
-
-    if (!tournamentType) {
-        return;
-    }
-    imageContainer.innerHTML = '';
-
-    const image = document.createElement('img');
-    if (tournamentType === 'single') {
-        image.src = '/static/single-elimination.svg';
-    } else if (tournamentType === 'double') {
-        image.src = '/static/double-elimination.svg';
-    }
-    imageContainer.appendChild(image);
-}
-
 function getMinDateTime() {
     const now = new Date();
     const year = now.getFullYear();
@@ -93,15 +75,50 @@ function handleSubmit(event) {
     }
 }
 
+function changeImage() {
+    const tournamentType = document.querySelector('.tournament-type').value;
+    const tournamentImg = document.getElementById("tournament-img");
+
+    if (!tournamentType) {
+        return;
+    }
+
+    if (tournamentType === 'single') {
+        tournamentImg.src = '/static/single-elimination.svg';
+    } else if (tournamentType === 'double') {
+        tournamentImg.src = '/static/double-elimination.svg';
+    }
+}
 
 document.addEventListener("DOMContentLoaded", function() {
+
+    function resetTournamentForm() {
+        createTournamentForm.reset();
+        charCounter(teams, 50);
+        changeImage();
+        document.querySelector('form').addEventListener('submit', handleSubmit);
+        const minDateTime = getMinDateTime();
+        document.querySelector('.tournament_datetime').value = minDateTime;
+        document.querySelector('.tournament_datetime').min = minDateTime;
+    }
+
     const tournamentsIcon = document.getElementById("tournaments-icon");
     const tournamentsList = document.getElementById("tournaments-list");
     const mainContent = document.querySelector(".main-content");
     const pageLogo = document.querySelector(".page-logo");
     const form = document.getElementById("create-button");
-    const createTournamentContainer = document.querySelector(".create-tournament-container");
-    const teams = document.getElementById('teamNames')
+    const createTournamentContainer = document.querySelector(".tournament-creator");
+    const teams = document.getElementById('teamNames');
+    const overlay = document.getElementById('overlay');
+    const createTournamentForm = document.getElementById('create-tournament-form');
+
+    overlay.addEventListener('click', function(event) {
+        if (event.target === overlay) {
+            createTournamentContainer.style.display = "none";
+            resetTournamentForm();
+            overlay.style.display = 'none';
+        }
+    });
 
     if (tournamentsIcon) {
         tournamentsIcon.addEventListener("click", function() {
@@ -121,16 +138,11 @@ document.addEventListener("DOMContentLoaded", function() {
         form.addEventListener("click", function() {
             mainContent.style.display = "none";
             createTournamentContainer.style.display = "flex";
-            tournamentsList.style.filter = "blur(5px)";
-            tournamentsList.style.pointerEvents = "none";
+            overlay.style.display = 'block';
         });
+
         if (createTournamentContainer) {
-            charCounter(teams, 50);
-            changeImage();
-            document.querySelector('form').addEventListener('submit', handleSubmit);
-            const minDateTime = getMinDateTime();
-            document.querySelector('.tournament_datetime').value = minDateTime;
-            document.querySelector('.tournament_datetime').min = minDateTime;
+            resetTournamentForm();
         }
     }
 });

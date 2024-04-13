@@ -1,3 +1,15 @@
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+
 .page-body {
     background-image: url('background.svg');
     background-size: cover;
@@ -283,6 +295,41 @@
     margin-top: 10px;
 }
 
+/* buttons */
+
+.submit-button {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    padding: 5px 10px;
+    background-color: #5A5C64;
+    color: #cecece;
+    border-radius: 0 0 15px 15px;
+    border: 5px solid #42454E;
+    border-top: 0;
+    text-decoration: none;
+    font-size: 32px;
+}
+
+.submit-button:hover {
+    background-color: #FFFFFF;
+    color: black;
+}
+
+.return-button {
+    width: 100px;
+    height: 100px;
+    margin: 15px;
+    transition: filter 0.3s ease;
+    border-radius: 50px;
+    border: 1px solid transparent;
+    background: #5d5e6b;
+}
+
+.return-button:hover{
+    background: #919191;
+}
+
 .delete-button {
     width: 50px;
     height: 50px;
@@ -316,17 +363,41 @@
     background: #ffffff;
 }
 
+.create-tournament-button {
+    position: static;
+    margin-right: 20px;
+    margin-left: auto;
+    padding: 5px 10px;
+    width: 60%;
+    background-color: #5A5C64;
+    color: #cecece;
+    border-radius: 0 0 15px 15px;
+    border: 5px solid #42454E;
+    border-top: 0;
+    text-decoration: none;
+    font-size: 32px;
+}
+
 /* страница для создания таблиц */
 
-.create-tournament-container {
-    font-family: 'Inter', sans-serif;
+.tournament-creator {
     display: none;
-    color: #cecece;
     flex-direction: column;
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 80vh;
+    height: 80vh;
     transform: translate(-50%, -50%);
+    z-index: 1010;
+}
+
+.create-tournament-container {
+    overflow-y: auto;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    color: #cecece;
+    flex-direction: column;
     background: #42454E;
     border-radius: 15px 15px 0 15px;
     padding: 15px;
@@ -378,25 +449,6 @@
     height: 200px;
 }
 
-.submit-button {
-    position: absolute;
-    right: 0;
-    top: 100%;
-    padding: 5px 10px;
-    background-color: #5A5C64;
-    color: #cecece;
-    border-radius: 0 0 15px 15px;
-    border: 5px solid #42454E;
-    border-top: 0;
-    text-decoration: none;
-    font-size: 32px;
-}
-
-.submit-button:hover {
-    background-color: #FFFFFF;
-    color: black;
-}
-
 .image-container {
     display: flex;
     text-align: center;
@@ -411,20 +463,6 @@
     text-align: center;
     justify-content: center;
     margin-top: 15px;
-}
-
-.return-button {
-    width: 100px;
-    height: 100px;
-    margin: 15px;
-    transition: filter 0.3s ease;
-    border-radius: 50px;
-    border: 1px solid transparent;
-    background: #5d5e6b;
-}
-
-.return-button:hover{
-    background: #919191;
 }
 
 
