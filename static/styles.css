@@ -698,18 +698,18 @@ section h2{
 }
 
 #popup-container-field label {
-    display: flex;
+    display: block;
     justify-content: center;
     background: #313542;
     border-radius: 5px;
     padding: 5px;
     margin: 5px;
-        width: 250px;
+    width: 250px;
     height: 40px;
     overflow: hidden;
-    align-items: center;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-align: center;
 }
 
 
