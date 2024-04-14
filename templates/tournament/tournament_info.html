@@ -29,7 +29,7 @@
             <ul>
                 {% for match in round_match.list %}
                  <li>
-                     {% if not match.is_finished and match.team1 and match.team2 %}
+                     {% if not match.is_finished and match.team1 and match.team2 and request.user == tournament.author %}
                      <div class="round-click" onclick="selectMatch('{{ match.id }}')" id="{{ match.id }}">
                      {% else %}
                      <div class="round-click" id="{{ match.id }}">
