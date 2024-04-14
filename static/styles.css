@@ -148,11 +148,11 @@
 .sidebar {
     position: relative;
     width: 75px;
-    height: calc(100vh - 120px);
-    background-color: #313542;
+    background: #42454E;
     float: left;
     transition: width 0.3s;
     overflow: hidden;
+    border-radius: 0 0 15px 15px;
 }
 
 .chat-icon, .tournament-logo {
@@ -178,14 +178,13 @@
     flex-direction: column;
 }
 
-.sidebar:hover .sidebar-content {
+.sidebar:hover {
     width: 150px;
 }
 
-
 .content {
     display: flex;
-    margin: 0 200px;
+    margin: 0 200px 10px 200px;
 }
 
 .modal {
@@ -251,6 +250,28 @@
     background: #555966;
     border-radius: 50px 0;
     overflow: hidden;
+    transition: height 0.3s;
+}
+
+.tournament-container:hover {
+    height: 250px;
+}
+
+.tournament-container div {
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.tournament-container .full-info {
+    display: none;
+    text-align: center;
+}
+
+.tournament-container:hover .full-info{
+    display: block;
 }
 
 .tournaments-list ul{
@@ -267,23 +288,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     text-decoration: none;
     font-size: 32px;
     color: white;
     height: 100%;
     padding: 0 10px;
     border-radius: inherit;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
 }
 
 .tournament-container a:hover {
-    background: #b0b0b0;
-}
-
-.tournament-container div {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    background: #42454E;
 }
 
 
@@ -311,7 +327,8 @@
     font-size: 32px;
 }
 
-.submit-button:hover {
+.submit-button:hover,
+.create-tournament-button:hover{
     background-color: #FFFFFF;
     color: black;
 }
@@ -363,18 +380,21 @@
     background: #ffffff;
 }
 
+.create-tournament-button-container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
 .create-tournament-button {
     position: static;
-    margin-right: 20px;
-    margin-left: auto;
-    padding: 5px 10px;
-    width: 60%;
+    width: 400px;
+    margin-top: 15px;
     background-color: #5A5C64;
     color: #cecece;
-    border-radius: 0 0 15px 15px;
-    border: 5px solid #42454E;
-    border-top: 0;
-    text-decoration: none;
+    border-radius: 15px;
+    padding: 5px 10px;
+    border: none;
     font-size: 32px;
 }
 
@@ -383,10 +403,9 @@
 .tournament-creator {
     display: none;
     flex-direction: column;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
-    width: 80vh;
     height: 80vh;
     transform: translate(-50%, -50%);
     z-index: 1010;
@@ -399,8 +418,9 @@
     color: #cecece;
     flex-direction: column;
     background: #42454E;
-    border-radius: 15px 15px 0 15px;
+    border-radius: 15px;
     padding: 15px;
+    width: 100%;
 }
 
 .create-tournament-container h2 {
@@ -408,6 +428,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     margin: 0;
 }
 
@@ -415,7 +436,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    align-content: space-between;
+    margin: 0;
 }
 
 .create-tournament-field {
@@ -423,14 +444,20 @@
     display: flex;
     margin-top: 15px;
     flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
 }
 
 .create-tournament-field label {
     background: #313542;
     border-radius: 5px 5px 0 0;
-    padding: 5px;
     text-align: center;
     white-space: nowrap;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .create-tournament-field input,
@@ -441,6 +468,7 @@
     border-radius: 0 0 5px 5px;
     background: #cecece;
     box-sizing: border-box;
+    width: 100%;
 }
 
 .create-tournament-field textarea {
@@ -621,20 +649,30 @@ section h2{
     }
 }
 
+.selection-container {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1010;
+}
 
 #popup-container {
     display: none;
     font-family: 'Inter', sans-serif;
     font-size: 32px;
     color: #cecece;
-    flex-direction: column;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background: #42454E;
     border-radius: 15px 15px 0 15px;
     padding: 15px;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1010;
 }
 
 #popup-container h2 {

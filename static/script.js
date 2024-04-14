@@ -1,37 +1,17 @@
-// Проверяем, существует ли элемент с id "sidebar"
-const sidebar = document.getElementById('sidebar');
-
-// Если элемент существует, добавляем обработчики событий
-if (sidebar) {
-    sidebar.addEventListener('mouseenter', function() {
-        this.style.width = '150px';
-    });
-
-    sidebar.addEventListener('mouseleave', function() {
-        this.style.width = '75px';
-    });
-}
-
-
 const logo = document.getElementById("chat-logo");
 const modal = document.getElementById("myModal");
 
 if (logo) {
-    // При нажатии на логотип
     logo.onclick = function() {
-        // Отобразить модальное окно
         modal.style.display = "block";
     }
 }
 
 
-// Найти элемент для закрытия модального окна
 const closeBtn = document.getElementsByClassName("close")[0];
 
 if (closeBtn) {
-    // При нажатии на кнопку закрытия
     closeBtn.onclick = function() {
-        // Скрыть модальное окно
         modal.style.display = "none";
     }
 }
@@ -68,6 +48,11 @@ function handleSubmit(event) {
 
     if (lines.length < 2) {
         alert('Введите минимум две строки для названий команд.');
+        event.preventDefault();
+    } else if (lines.every(function(line) {
+        return line === lines[0];
+    })) {
+        alert('Введите разные названия команд.');
         event.preventDefault();
     } else {
         tournamentsList.style.filter = null;
@@ -149,10 +134,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 function updateScoreColor() {
-    let score1Elements = document.querySelectorAll('.score-1');
-    let score2Elements = document.querySelectorAll('.score-2');
-    let team1Elements = document.querySelectorAll('.team-1');
-    let team2Elements = document.querySelectorAll('.team-2');
+    const score1Elements = document.querySelectorAll('.score-1');
+    const score2Elements = document.querySelectorAll('.score-2');
+    const team1Elements = document.querySelectorAll('.team-1');
+    const team2Elements = document.querySelectorAll('.team-2');
 
     for (let i = 0; i < score1Elements.length; i++) {
         const score1 = parseInt(score1Elements[i].textContent);
@@ -210,11 +195,11 @@ async function advanceWinner(match_id, score1, score2) {
     const response = await makeRequest('POST', `/tournament/edit/${match_id}/`, {'score1': score1, 'score2': score2})
     const data = await response.json()
     if (data.success) {
-        currentMatch = document.getElementById(match_id);
-        next_match_id = data.next_match_id;
+        const currentMatch = document.getElementById(match_id);
+        const next_match_id = data.next_match_id;
         currentMatch.onclick = null;
         if (next_match_id){
-            nextMatch = document.getElementById(data.next_match_id);
+            const nextMatch = document.getElementById(data.next_match_id);
             const team1Element = nextMatch.querySelector(".team-1");
             const team2Element = nextMatch.querySelector(".team-2");
             if (data.team1 && data.team2){
@@ -238,11 +223,15 @@ async function advanceWinner(match_id, score1, score2) {
 function selectMatch(matchId) {
     const matchIdInput = document.getElementById('match-id');
     matchIdInput.value = matchId;
+    const overlay = document.getElementById('overlay');
+    overlay.style.display = 'block';
     const popupContainer = document.getElementById('popup-container');
     popupContainer.style.display = 'flex';
-    match = document.getElementById(matchId);
-    team1Name = match.querySelector('.team-1').textContent;
-    team2Name = match.querySelector('.team-2').textContent;
+
+
+    const match = document.getElementById(matchId);
+    const team1Name = match.querySelector('.team-1').textContent;
+    const team2Name = match.querySelector('.team-2').textContent;
     const team1Label = document.getElementById('team1-label');
     team1Label.textContent = team1Name;
     const team2Label = document.getElementById('team2-label');
@@ -253,18 +242,34 @@ function selectMatch(matchId) {
     charCounter(team2Score, 4);
 }
 
+
+
 document.addEventListener('DOMContentLoaded', function() {
-    const scoreForm = document.getElementById('score-form');
-    const popupContainer = document.getElementById('popup-container');
-    scoreForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const matchId = document.getElementById('match-id');
-        const team1Score = document.getElementById('team1-score');
-        const team2Score = document.getElementById('team2-score');
-        advanceWinner(matchId.value, team1Score.value, team2Score.value);
+    function resetPopupContainer(){
+        overlay.style.display = 'none';
         matchId.value = '';
         team1Score.value = '';
         team2Score.value = '';
         popupContainer.style.display = 'none';
+    }
+
+    const scoreForm = document.getElementById('score-form');
+    const popupContainer = document.getElementById('popup-container');
+    const overlay = document.getElementById('overlay');
+
+    const matchId = document.getElementById('match-id');
+    const team1Score = document.getElementById('team1-score');
+    const team2Score = document.getElementById('team2-score');
+
+    overlay.addEventListener('click', function(event) {
+        if (event.target === overlay) {
+            resetPopupContainer();
+        }});
+
+    scoreForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        advanceWinner(matchId.value, team1Score.value, team2Score.value);
+        resetPopupContainer();
     });
 });

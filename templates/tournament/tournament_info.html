@@ -12,6 +12,8 @@
 
 </script>
 <body style="background-color: #212121; color: #ECECEC;margin: 0;">
+    <div id="overlay"></div>
+
     <div class="tournament-status">
         {% if tournament.is_finished %}
         <h2>Турнир «{{ tournament.name }}» завершен</h2>
@@ -51,21 +53,21 @@
     <div id="popup-container">
         <h2>Определить победителя матча</h2>
         <div id="popup-content">
-          <form id="score-form">
-<!--                <label for="match-id">Match ID:</label>-->
-            <input type="hidden" id="match-id" name="match-id" placeholder="click on any match">
+            <form id="score-form">
+                <!--                <label for="match-id">Match ID:</label>-->
+                <input type="hidden" id="match-id" name="match-id" placeholder="click on any match">
 
-            <div id="popup-container-field">
-                <label for="team1-score" id="team1-label">Команда 1</label>
-                <input type="number" id="team1-score" name="team1-score" required><br>
-                <label style="width: 50px">VS</label>
-                <input type="number" id="team2-score" name="team2-score" required><br>
-                <label for="team2-score" id="team2-label">Команда 2</label>
-            </div>
-            <button type="submit" class="submit-button">Сохранить</button>
-          </form>
+                <div id="popup-container-field">
+                    <label for="team1-score" id="team1-label">Команда 1</label>
+                    <input type="number" id="team1-score" name="team1-score" required><br>
+                    <label style="width: 50px">VS</label>
+                    <input type="number" id="team2-score" name="team2-score" required><br>
+                    <label for="team2-score" id="team2-label">Команда 2</label>
+                </div>
+                <button type="submit" class="submit-button">Сохранить</button>
+            </form>
         </div>
-      </div>
+    </div>
     <img src="{% static 'return-button.svg' %}" alt="Main page" class="return-button"
          onclick="window.location.href = '/'">
 

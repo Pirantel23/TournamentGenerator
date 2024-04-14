@@ -32,11 +32,11 @@
     </div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-content">
-            <div class="chat-icon">
-                <img src="/static/chat.svg" alt="Chat Icon" id="chat-logo">
-            </div>
             <div class="tournament-logo">
                 <img src="/static/tournaments.svg" alt="Tournaments Icon" id="tournaments-icon">
+            </div>
+            <div class="chat-icon">
+                <img src="/static/chat.svg" alt="Chat Icon" id="chat-logo">
             </div>
         </div>
     </div>
@@ -49,12 +49,29 @@
         </div>
         <div id="tournaments-list" class="tournaments-list">
             <div class="competitions"><p>Соревнования</p></div>
+            {% if logged_in %}
+            <div class="create-button-container">
+                <img src="/static/create-button.svg" alt="Create Button" id="create-button" class="create-button">
+            </div>
+            {% endif %}
             <ul>
-                {% for tournament in tournaments %}
+                {% for tournament in tournaments reversed %}
                 <li id="{{ tournament.id }}">
                     <div class="tournament-container">
                         <a href="{% url 'tournament_info' tournament.id %}">
-                            <div>{{ tournament.name }} - {{ tournament.author }} - {{ tournament.get_formatted_date }} - {{ tournament.team_amount }} Teams</div>
+                            <div class="short-info">{{ tournament.name }}</div>
+                            <div class="full-info">
+                                <br>
+                                {% if tournament.is_finished %}
+                                <strong>Статус:</strong> завершен
+                                {% else %}
+                                <strong>Статус:</strong> в процессе
+                                {% endif %}
+                                <br>
+                                <strong>Организатор:</strong> {{ tournament.author }}<br>
+                                <strong>Количество участников:</strong> {{ tournament.team_amount }}<br>
+                                <strong>Дата проведения:</strong> {{ tournament.get_formatted_date }}<br>
+                            </div>
                         </a>
                     </div>
                     {% if is_admin or request.user == tournament.author %}
@@ -65,11 +82,6 @@
                 </li>
                 {% endfor %}
             </ul>
-            {% if logged_in %}
-            <div class="create-button-container">
-                <img src="/static/create-button.svg" alt="Create Button" id="create-button" class="create-button">
-            </div>
-            {% endif %}
             <!--надо будет сделать проверку на то, что если вошел - можешь создавать сетку ну и пользоваться чатом-->
         </div>
 
@@ -86,7 +98,7 @@
 
                     <div class="create-tournament-field">
                         <label>Команды</label>
-                        <textarea id="teamNames" placeholder="введите названия команд" name="teams" class="tournament-teams"  autocomplete=off required></textarea>
+                        <textarea id="teamNames" placeholder="введите названия команд через Enter" name="teams" class="tournament-teams"  autocomplete=off required></textarea>
                     </div>
 
                     <div class="create-tournament-field">
@@ -105,7 +117,9 @@
                     <div id="image-container" class="image-container">
                         <img src="" id="tournament-img" alt="Изображение сетки">
                     </div>
-                    <button type="submit" class="submit-button create-tournament-button">Создать турнир</button>
+                    <div class="create-tournament-button-container">
+                        <button type="submit" class="create-tournament-button">Создать турнир</button>
+                    </div>
                 </form>
             </div>
         </div>
