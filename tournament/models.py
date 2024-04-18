@@ -12,7 +12,7 @@ class Tournament(models.Model):
     name = models.CharField(max_length=50)
     team_amount = models.PositiveIntegerField(default=0)
     author = models.ForeignKey(User, related_name='tournaments', on_delete=models.CASCADE)
-    creation_date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField()
     tournament_type = models.CharField(max_length=20, choices=TOURNAMENT_TYPES)
     is_finished = models.BooleanField(default=False)
 
@@ -21,7 +21,7 @@ class Tournament(models.Model):
         
     
     def get_formatted_date(self):
-        return self.creation_date.strftime("%d.%m.%Y %H:%M")\
+        return self.date.strftime("%d.%m.%Y %H:%M")
         
     def finish(self):
         self.is_finished = True
