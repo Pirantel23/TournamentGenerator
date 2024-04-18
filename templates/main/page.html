@@ -59,18 +59,35 @@
                 <li id="{{ tournament.id }}">
                     <div class="tournament-container">
                         <a href="{% url 'tournament_info' tournament.id %}">
-                            <div class="short-info">{{ tournament.name }}</div>
+                            <div class="short-info">{{ tournament.name }} </div>
                             <div class="full-info">
-                                <img src='{{ tournament.author.picture_url }}' class="author-picture">
-                                {% if tournament.is_finished %}
-                                <strong>Статус:</strong> завершен
-                                {% else %}
-                                <strong>Статус:</strong> в процессе
-                                {% endif %}
-                                <br>
-                                <strong>Организатор:</strong> {{ tournament.author }}<br>
-                                <strong>Количество участников:</strong> {{ tournament.team_amount }}<br>
-                                <strong>Дата проведения:</strong> {{ tournament.get_formatted_date }}<br>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <img src='{{ tournament.author.picture_url }}' class="author-picture">
+                                        </td>
+                                        <td>
+                                            <strong>Организатор: </strong> {{ tournament.author }}
+                                        </td>
+                                        <td>
+                                            <strong>Количество участников:</strong> {{ tournament.team_amount }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <br>
+                                        </td>
+                                        <td>{% if tournament.is_finished %}
+                                            <strong>Статус:</strong> завершен
+                                            {% else %}
+                                            <strong>Статус:</strong> в процессе
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <strong>Дата проведения:</strong> {{ tournament.get_formatted_date }}
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         </a>
                     </div>
@@ -124,7 +141,8 @@
             </div>
         </div>
 
-        <div class="main-content">Не придумал, че здесь написать, но допустим здесь будет написано про то, зачем этот сайт и как им пользоваться
+        <div class="main-content">Не придумал, че здесь написать, но допустим здесь будет написано про то, зачем этот сайт
+            и как им пользоваться
             <div>logged_in: {{ logged_in }}<br>is_admin: {{ is_admin }}
             </div>
         </div>

@@ -185,6 +185,7 @@
 .content {
     display: flex;
     margin: 0 200px 10px 200px;
+    justify-content: center;
 }
 
 .modal {
@@ -233,7 +234,7 @@
     background: #42454E;
     border-radius: 0 0 15px 15px;
     max-width: 300%;
-    width: 30vw;
+    width: 50vw;
 }
 
 .competitions > p{
@@ -243,8 +244,8 @@
     margin: 5px;
 }
 
-.tournament-container { /* беда с размерами (при увеличении/уменьшении, переделать бы*/
-    width: 30vw;
+.tournament-container {
+    width: 50vw;
     max-width: 100%;
     height: 100px;
     background: #555966;
@@ -265,17 +266,31 @@
     text-overflow: ellipsis;
 }
 
+.tournament-container table {
+    color: white;
+    border-collapse: separate;
+    border-spacing: 15px;
+    font-size: 32px;
+}
+
+.tournament-container td{
+    vertical-align: top;
+}
+
+
 .tournament-container .full-info {
     display: none;
     background: #555966;
     border-radius: 50px 0 50px 0;
     padding: 10px;
     width: calc(100% - 20px);
-    margin-top: 20px;
+    margin: 10px 0 10px 0;
 }
 
 .tournament-container:hover .full-info{
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .tournaments-list ul{
@@ -307,8 +322,8 @@
 }
 
 .author-picture{
-    width: 32px;
-    height: 32px;
+    width: 64px;
+    height: 64px;
     border-radius: 50px;
 }
 
@@ -373,7 +388,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30vw;
+    width: 50vw;
     margin-top: 10px;
 }
 
