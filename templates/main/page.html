@@ -61,7 +61,7 @@
                         <a href="{% url 'tournament_info' tournament.id %}">
                             <div class="short-info">{{ tournament.name }}</div>
                             <div class="full-info">
-                                <br>
+                                <img src='{{ tournament.author.picture_url }}' class="author-picture">
                                 {% if tournament.is_finished %}
                                 <strong>Статус:</strong> завершен
                                 {% else %}
@@ -124,8 +124,7 @@
             </div>
         </div>
 
-        <div class="main-content">Не придумал, че здесь написать, но допустим здесь будет написано про то, зачем этот сайт
-        и как им пользоваться
+        <div class="main-content">Не придумал, че здесь написать, но допустим здесь будет написано про то, зачем этот сайт и как им пользоваться
             <div>logged_in: {{ logged_in }}<br>is_admin: {{ is_admin }}
             </div>
         </div>

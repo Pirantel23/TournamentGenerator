@@ -267,7 +267,11 @@
 
 .tournament-container .full-info {
     display: none;
-    text-align: center;
+    background: #555966;
+    border-radius: 50px 0 50px 0;
+    padding: 10px;
+    width: calc(100% - 20px);
+    margin-top: 20px;
 }
 
 .tournament-container:hover .full-info{
@@ -302,6 +306,11 @@
     background: #42454E;
 }
 
+.author-picture{
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+}
 
 .tournaments-list li{
     display: flex;
