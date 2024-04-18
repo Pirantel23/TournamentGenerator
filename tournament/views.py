@@ -3,58 +3,52 @@
 import json
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import TournamentForm
 from .models import Tournament, Match
 import math
 import random
-
+from datetime import datetime
 
 
 def create_tournament(request):
     if not request.session.get('logged_in'):
         return redirect('/')
     if request.method == 'POST':
-        form = TournamentForm(request.POST)
-        if form.is_valid():
-            tournament_name = form.cleaned_data['tournament_name']
-            teams_str = form.cleaned_data['teams']
-            tournament_type = form.cleaned_data['tournament_type']
-            teams = list({team.strip() for team in teams_str.split('\n') if team.strip()})
-
-            # Create Tournament instance
-            tournament = Tournament.objects.create(name=tournament_name,
-                                                   tournament_type=tournament_type,
-                                                   author=request.user,
-                                                   team_amount=len(teams))
-
-            n = len(teams)
-            rounds_amount = math.ceil(math.log2(n))
-            max_teams = 2 ** rounds_amount
-
-            random.shuffle(teams)
-            for i in range(max_teams - n):
-                teams.insert(2 * i + 1, 'BYE')
-            
-            bracket = [[] for _ in range(rounds_amount)]
-            for r in range(rounds_amount):
-                max_teams //= 2
-                for i in range(max_teams):
-                    bracket[r].append(Match.objects.create(tournament=tournament, round_number=r+1, round_index=i))
-            bracket[-1][0].is_final = True
-            bracket[-1][0].save()
-            for i, team in enumerate(teams):
-                bracket[0][i//2].add_team(team)
-
-            # Advancing bye teams
-            for match in bracket[0]:
-                if match.team2 == 'BYE':
-                    match.finish(1, 0)
-            
-            print(bracket)
-
-            return redirect('/')
-    else:
-        form = TournamentForm()
+        data = request.POST
+        tournament_name = data['tournament_name']
+        teams_str = data['teams']
+        tournament_type = data['tournament_type']
+        date = datetime.strptime(data['tournament_datetime'], "%Y-%m-%dT%H:%M")
+        
+        teams = list({team.strip() for team in teams_str.split('\n') if team.strip()})
+        print(tournament_name, tournament_type, date, teams)
+        tournament = Tournament.objects.create(name=tournament_name,
+                                               tournament_type=tournament_type,
+                                               author=request.user,
+                                               team_amount=len(teams),
+                                               date=date)
+        n = len(teams)
+        rounds_amount = math.ceil(math.log2(n))
+        max_teams = 2 ** rounds_amount
+        random.shuffle(teams)
+        for i in range(max_teams - n):
+            teams.insert(2 * i + 1, 'BYE')
+        
+        bracket = [[] for _ in range(rounds_amount)]
+        for r in range(rounds_amount):
+            max_teams //= 2
+            for i in range(max_teams):
+                bracket[r].append(Match.objects.create(tournament=tournament, round_number=r+1, round_index=i))
+        bracket[-1][0].is_final = True
+        bracket[-1][0].save()
+        for i, team in enumerate(teams):
+            bracket[0][i//2].add_team(team)
+        # Advancing bye teams
+        for match in bracket[0]:
+            if match.team2 == 'BYE':
+                match.finish(1, 0)
+        
+        print(bracket)
+        return redirect('/')
 
     return render(request, 'tournament/create_tournament.html', {'form': form})
 
