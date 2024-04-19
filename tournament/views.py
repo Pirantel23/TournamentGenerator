@@ -31,7 +31,7 @@ def create_tournament(request):
         max_teams = 2 ** rounds_amount
         random.shuffle(teams)
         for i in range(max_teams - n):
-            teams.insert(2 * i + 1, 'BYE')
+            teams.insert(2 * i + 1, '-')
         
         bracket = [[] for _ in range(rounds_amount)]
         for r in range(rounds_amount):
@@ -44,7 +44,7 @@ def create_tournament(request):
             bracket[0][i//2].add_team(team)
         # Advancing bye teams
         for match in bracket[0]:
-            if match.team2 == 'BYE':
+            if match.team2 == '-':
                 match.finish(1, 0)
         
         print(bracket)
