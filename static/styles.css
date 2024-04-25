@@ -22,15 +22,19 @@
 }
 
 
-.main-content {
-    display: flex;
+.help-message {
+    display: none;
+    position: fixed;
+    top: 30%;
+    left: 50%;
     background: #555966;
     border-radius: 15px;
     align-items: center;
     padding: 15px;
-    margin: 45px 200px 0 0;
     color: white;
     flex-direction: column;
+    transform: translate(-50%, -50%);
+    z-index: 1010;
 }
 
 .header{
@@ -44,12 +48,26 @@
     justify-content: space-between;
 }
 
+.header-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+}
+
 .page-logo {
+    display: flex;
+    align-items: center;
     font-size: 64px;
     font-weight: bold;
     color: #ffffff;
-    padding: 0 10px 0 30px;
+    padding-left: 30px;
+    transition: all 0.3s;
 }
+
+/*.page-logo:hover {*/
+/*    transform: scale(120%);*/
+/*}*/
 
 .page-logo:hover,
 .delete-button:hover,
@@ -57,8 +75,8 @@
     cursor: pointer;
 }
 
-.tournament-logo:hover,
-.chat-icon:hover {
+.help-logo:hover,
+.chat-logo:hover {
     cursor: pointer;
     background: #727789;
     border-radius: 25px;
@@ -89,7 +107,7 @@
     background: #555966;
     border-radius: 50px 0 50px 15px;
     font-size: 42px;
-    margin: 0 10px;
+    margin: 0 15px;
     overflow: hidden;
     white-space: nowrap;
     align-self: flex-start;
@@ -145,42 +163,40 @@
     display: none;
 }
 
-.sidebar {
-    position: relative;
-    width: 75px;
-    background: #42454E;
-    float: left;
-    transition: width 0.3s;
-    overflow: hidden;
-    border-radius: 0 0 15px 15px;
-}
+/*.sidebar {*/
+/*    position: relative;*/
+/*    width: 75px;*/
+/*    background: #42454E;*/
+/*    float: left;*/
+/*    transition: width 0.3s;*/
+/*    overflow: hidden;*/
+/*    border-radius: 0 0 15px 15px;*/
+/*}*/
 
-.chat-icon, .tournament-logo {
+.chat-logo, .help-logo {
     transition: transform 0.3s;
-    transform: scale(50%);
+    transform: scale(70%);
     user-select: none;
-    margin: 30%;
 }
 
-
-.sidebar:hover .chat-icon,
-.sidebar:hover .tournament-logo {
-    transform: scale(100%);
+.chat-logo:hover,
+.help-logo:hover {
+    transform: scale(90%);
 }
 
-.sidebar-content {
-    width: 100%;
-    transition: width 0.3s;
-    white-space: nowrap;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
+/*.sidebar-content {*/
+/*    width: 100%;*/
+/*    transition: width 0.3s;*/
+/*    white-space: nowrap;*/
+/*    overflow: hidden;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    flex-direction: column;*/
+/*}*/
 
-.sidebar:hover {
-    width: 150px;
-}
+/*.sidebar:hover {*/
+/*    width: 150px;*/
+/*}*/
 
 .content {
     display: flex;
@@ -220,9 +236,10 @@
 }
 
 .tournaments-list {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: self-start;
+    pointer-events: auto;
 }
 
 .competitions {

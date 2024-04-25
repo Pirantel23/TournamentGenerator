@@ -1,4 +1,4 @@
-const logo = document.getElementById("chat-logo");
+const logo = document.querySelector(".chat-logo");
 const modal = document.getElementById("myModal");
 
 if (logo) {
@@ -87,9 +87,9 @@ document.addEventListener("DOMContentLoaded", function() {
         document.querySelector('.tournament_datetime').min = minDateTime;
     }
 
-    const tournamentsIcon = document.getElementById("tournaments-icon");
     const tournamentsList = document.getElementById("tournaments-list");
-    const mainContent = document.querySelector(".main-content");
+    const helpLogo =  document.querySelector(".help-logo");
+    const helpMessage = document.querySelector(".help-message");
     const pageLogo = document.querySelector(".page-logo");
     const form = document.getElementById("create-button");
     const createTournamentContainer = document.querySelector(".tournament-creator");
@@ -102,26 +102,22 @@ document.addEventListener("DOMContentLoaded", function() {
             createTournamentContainer.style.display = "none";
             resetTournamentForm();
             overlay.style.display = 'none';
+            helpMessage.style.display = "none";
         }
     });
 
-    if (tournamentsIcon) {
-        tournamentsIcon.addEventListener("click", function() {
-            tournamentsList.style.display = "flex";
-            mainContent.style.display = "none";
-            createTournamentContainer.style.display = "none";
-            tournamentsList.style.filter = null;
-            tournamentsList.style.pointerEvents = "auto";
+    if (tournamentsList) {
+        helpLogo.addEventListener("click", function() {
+            helpMessage.style.display = "flex";
+            overlay.style.display = 'block';
         });
 
         pageLogo.addEventListener("click", function() {
-            tournamentsList.style.display = "none";
-            mainContent.style.display = "flex";
+            helpMessage.style.display = "none";
             createTournamentContainer.style.display = "none";
         });
 
         form.addEventListener("click", function() {
-            mainContent.style.display = "none";
             createTournamentContainer.style.display = "flex";
             overlay.style.display = 'block';
         });
@@ -194,6 +190,10 @@ async function deleteTournament(tournamentId) {
 async function advanceWinner(match_id, score1, score2) {
     const response = await makeRequest('POST', `/tournament/edit/${match_id}/`, {'score1': score1, 'score2': score2})
     const data = await response.json()
+    if (score1 === score2) {
+        selectMatch(match_id);
+        alert('Невозможно определить победителя: счет равный.');
+    }
     if (data.success) {
         const currentMatch = document.getElementById(match_id);
         const next_match_id = data.next_match_id;

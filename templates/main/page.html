@@ -14,10 +14,20 @@
     <div id="overlay"></div>
 
     <div class="header">
-        <span class="page-logo">TGG</span>
+        <div class="header-buttons">
+            <div class="page-logo">TGG</div>
+            <div class="chat-logo">
+                <img src="/static/chat.svg" alt="Chat Icon">
+            </div>
+            <div class="help-logo">
+                <img src="/static/help-message-logo.svg" alt="Tournaments Icon">
+            </div>
+        </div>
         <div class="info-label"> {{ content }}</div>
+
         <!--здесь должно писаться что находится на странице, например, открыты турниры:
         Соревнования; поле создания турнира: Создание сетки; в самой сетке писать сверху название-->
+
         {% if logged_in %}
         <div class="profile-header">
             <div class="name"> {{ username }}</div>
@@ -30,16 +40,7 @@
         <!-- надо будет сделать проверку что вошел в аккаунт-->
         <!-- поля юзера: is_admin; picture; username -->
     </div>
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-content">
-            <div class="tournament-logo">
-                <img src="/static/tournaments.svg" alt="Tournaments Icon" id="tournaments-icon">
-            </div>
-            <div class="chat-icon">
-                <img src="/static/chat.svg" alt="Chat Icon" id="chat-logo">
-            </div>
-        </div>
-    </div>
+
     <div class="content">
         <div class="modal" id="myModal">
             <div class="modal-content">
@@ -141,7 +142,7 @@
             </div>
         </div>
 
-        <div class="main-content">Не придумал, че здесь написать, но допустим здесь будет написано про то, зачем этот сайт
+        <div class="help-message">Не придумал, че здесь написать, но допустим здесь будет написано про то, зачем этот сайт
             и как им пользоваться
             <div>logged_in: {{ logged_in }}<br>is_admin: {{ is_admin }}
             </div>
