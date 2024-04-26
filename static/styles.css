@@ -16,15 +16,17 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
     font-family: 'Inter', sans-serif;
+    font-size: 32px;
     margin: 0;
     padding: 0;
-    font-size: 32px;
 }
 
 
 .help-message {
     display: none;
     position: fixed;
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
     top: 30%;
     left: 50%;
     background: #555966;
@@ -37,12 +39,12 @@
     z-index: 1010;
 }
 
-.header{
+.header {
     display: flex;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* Делаем ширину заголовка равной ширине окна */
+    width: 100%;
     align-items: center;
     height: 120px;
     background: #42454E;
@@ -50,6 +52,7 @@
     margin: 0;
     flex-direction: row;
     justify-content: space-between;
+    z-index: 5;
 }
 
 .header-buttons {
@@ -57,6 +60,7 @@
     flex-direction: row;
     justify-content: center;
     position: relative;
+    height: 100px;
 }
 
 .page-logo {
@@ -110,7 +114,7 @@
     height: 90px;
     background: #555966;
     border-radius: 50px 0 50px 15px;
-    font-size: 42px;
+    font-size: 32px;
     margin: 0 15px;
     overflow: hidden;
     white-space: nowrap;
@@ -304,6 +308,9 @@
     vertical-align: top;
 }
 
+.tournament-container .short-info {
+    padding: 10px;
+}
 
 .tournament-container .full-info {
     display: none;
@@ -311,13 +318,13 @@
     border-radius: 50px 0 50px 0;
     padding: 10px;
     width: calc(100% - 20px);
-    margin: 10px 0 10px 0;
+    margin-bottom: 10px;
 }
 
 .tournament-container:hover .full-info{
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-self: flex-start;
 }
 
 .tournaments-list ul{
@@ -547,22 +554,13 @@
 
 /*сетка*/
 
-.tournament-status {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #42454E;
-    color: white;
-    border-radius: 0 0 15px 15px;
-    padding: 5px;
-}
-
-.tournament-status > h2 {
+.tournament-body {
+    background-color: #212121;
+    color: #ECECEC;
+    margin: 0;
+    padding: 120px;
     font-family: 'Inter', sans-serif;
     font-size: 32px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
 }
 
 .bracket {
@@ -572,6 +570,7 @@
     margin-bottom: 100px;
     overflow: visible;
     width: 100%;
+    padding-top: 120px;
 }
 
 .bracket section {
@@ -803,10 +802,12 @@ section h2{
     font-size: 60%;
     border-radius: 5px;
     background: #CECECE;
+    padding: 10px;
 }
 
 .chat-container input{
     font-size: 50%;
+    box-sizing: border-box;
 }
 
 .chat-message {
@@ -814,17 +815,19 @@ section h2{
 }
 
 #chat-message-input{
-    border-radius: 5px;
+    border-radius: 5px 0 0 5px;
+    border: transparent;
     height: 50px;
     width: 70%;
     position: relative;
+    padding: 10px;
 }
 
 #chat-message-submit{
     height: 50px;
     width: 30%;
     transition: filter 0.3s ease;
-    border-radius: 5px;
+    border-radius: 0 5px 5px 0;
     background: #5a5c64;
     border: transparent;
     color: white;
@@ -832,20 +835,27 @@ section h2{
 }
 
 #chat-message-submit:hover{
-    background: #ffffff;
+    background: #d5d5d5;
     color: black;
 }
 
 ::-webkit-scrollbar {
+    width: 0;
+}
+
+.content ::-webkit-scrollbar,
+.tournament-body ::-webkit-scrollbar{
     width: 10px;
 }
 
 ::-webkit-scrollbar-track {
     background: #797979;
+    border-radius: 0 3px 3px 0;
 }
 
 ::-webkit-scrollbar-thumb {
     background: #595c65;
+    border-radius: 0 3px 3px 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {

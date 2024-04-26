@@ -68,6 +68,14 @@ document.addEventListener("DOMContentLoaded", function() {
         document.querySelector('.tournament_datetime').min = minDateTime;
     }
 
+    function resetPopupContainer(){
+        overlay.style.display = 'none';
+        matchId.value = '';
+        team1Score.value = '';
+        team2Score.value = '';
+        popupContainer.style.display = 'none';
+    }
+
     const tournamentsList = document.querySelector("#tournaments-list");
     const helpLogo =  document.querySelector(".help-logo");
     const helpMessage = document.querySelector(".help-message");
@@ -80,16 +88,42 @@ document.addEventListener("DOMContentLoaded", function() {
     const chatLogo = document.querySelector('.chat-logo');
     const chatContainer = document.querySelector('.chat-container');
 
+
+    const scoreForm = document.getElementById('score-form');
+    const popupContainer = document.getElementById('popup-container');
+    const matchId = document.getElementById('match-id');
+    const team1Score = document.getElementById('team1-score');
+    const team2Score = document.getElementById('team2-score');
+
+    if (scoreForm) {
+        overlay.addEventListener('click', function(event) {
+            if (event.target === overlay) {
+                resetPopupContainer();
+            }});
+
+        scoreForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            advanceWinner(matchId.value, team1Score.value, team2Score.value);
+            resetPopupContainer();
+        });
+    }
+
     overlay.addEventListener('click', function(event) {
-        if (event.target === overlay) {
+        if (event.target === overlay && tournamentsList) {
             createTournamentContainer.style.display = "none";
             resetTournamentForm();
+            overlay.style.display = 'none';
+            helpMessage.style.display = "none";
+        } else if (event.target === overlay) {
             overlay.style.display = 'none';
             helpMessage.style.display = "none";
         }
     });
 
-    if (tournamentsList) {
+    if (overlay) {
+        initChat();
+
         helpLogo.addEventListener("click", function() {
             helpMessage.style.display = "flex";
             overlay.style.display = 'block';
@@ -100,21 +134,23 @@ document.addEventListener("DOMContentLoaded", function() {
             createTournamentContainer.style.display = "none";
         });
 
+        document.addEventListener('click', function(event) {
+            if (!chatContainer.contains(event.target) && event.target !== chatLogo) {
+                chatContainer.style.display = "none";
+            }
+        });
+        chatLogo.addEventListener("click", function (event) {
+            event.stopPropagation();
+            chatContainer.style.display = "flex";
+        });
+
         if (form){
             form.addEventListener("click", function() {
                 createTournamentContainer.style.display = "flex";
                 overlay.style.display = 'block';
             });
-            document.addEventListener('click', function(event) {
-                if (!chatContainer.contains(event.target) && event.target !== chatLogo) {
-                    chatContainer.style.display = "none";
-                }
-            });
-            chatLogo.addEventListener("click", function (event) {
-                event.stopPropagation();
-                chatContainer.style.display = "flex";
-            });
         }
+
         if (createTournamentContainer) {
             resetTournamentForm();
         }
@@ -236,38 +272,6 @@ function selectMatch(matchId) {
 }
 
 
-
-document.addEventListener('DOMContentLoaded', function() {
-    function resetPopupContainer(){
-        overlay.style.display = 'none';
-        matchId.value = '';
-        team1Score.value = '';
-        team2Score.value = '';
-        popupContainer.style.display = 'none';
-    }
-
-    const scoreForm = document.getElementById('score-form');
-    const popupContainer = document.getElementById('popup-container');
-    const overlay = document.getElementById('overlay');
-
-    const matchId = document.getElementById('match-id');
-    const team1Score = document.getElementById('team1-score');
-    const team2Score = document.getElementById('team2-score');
-    if (scoreForm) {
-        overlay.addEventListener('click', function(event) {
-            if (event.target === overlay) {
-                resetPopupContainer();
-            }});
-
-        scoreForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            advanceWinner(matchId.value, team1Score.value, team2Score.value);
-            resetPopupContainer();
-        });
-    }
-    initChat();
-});
 
 
 function initChat() {

@@ -5,21 +5,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tournament Matches</title>
+    <title>Турнир «{{ tournament.name }}»</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <script>
 
 </script>
-<body style="background-color: #212121; color: #ECECEC;margin: 0;">
+<body class="tournament-body">
     <div id="overlay"></div>
 
-    <div class="tournament-status">
-        {% if tournament.is_finished %}
-        <h2>Турнир «{{ tournament.name }}» завершен</h2>
+    <div class="header">
+        <div class="header-buttons">
+            <div class="page-logo" onclick="window.location.href ='/'">TGG</div>
+            <div class="chat-logo">
+                <img src="/static/chat.svg" alt="Chat Icon">
+            </div>
+            <div class="help-logo">
+                <img src="/static/help-message-logo.svg" alt="Tournaments Icon">
+            </div>
+        </div>
+        <div class="info-label">
+            {% if tournament.is_finished %}
+                <h2>Турнир «{{ tournament.name }}» завершен</h2>
+                {% else %}
+                <h2>Турнир «{{ tournament.name }}» в процессе</h2>
+            {% endif %}
+        </div>
+        {% if logged_in %}
+        <div class="profile-header">
+            <div class="name"> {{ username }}</div>
+            <img src='{{ picture }}' alt="user avatar" id="user-avatar" class="user-avatar">
+            <button onclick="window.location.href ='/logout'" class="logout-button" role="button">Выйти</button>
+        </div>
         {% else %}
-        <h2>Турнир «{{ tournament.name }}» в процессе</h2>
+        <button onclick="window.location.href ='https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={{ client_id }}&scope=openid%20profile%20email&redirect_uri={{ redirect_uri }}&state=test123&nonce=123'" class="login-button">Войти</button>
         {% endif %}
+    </div>
+
+    <div class="chat-container">
+        <textarea id="chat-log" readonly placeholder="Добро пожаловать, {{ request.user.username }}"></textarea>
+        <br>
+        <div class="chat-message">
+            <input id="chat-message-input" type="text" size="100" placeholder="Введите сообщение в чат">
+            <input id="chat-message-submit" type="button" value="Отправить">
+        </div>
+    </div>
     </div>
     {% regroup tournament.matches.all by round_number as round_matches %}
     <div class="bracket">
@@ -68,6 +98,12 @@
             </form>
         </div>
     </div>
+
+    <div class="help-message">А здесь будет написано про то как соукп=уап=аывшщпо
+        <div>logged_in: {{ logged_in }}<br>is_admin: {{ is_admin }}
+        </div>
+    </div>
+
     <img src="{% static 'return-button.svg' %}" alt="Main page" class="return-button"
          onclick="window.location.href = '/'">
 

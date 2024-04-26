@@ -7,6 +7,7 @@ from .models import Tournament, Match
 import math
 import random
 from datetime import datetime
+from config import CLIENT_ID, CLIENT_SECRET, SERVER_DOMAIN, REDIRECT_URI
 
 
 def create_tournament(request):
@@ -53,8 +54,19 @@ def create_tournament(request):
     return render(request, 'tournament/create_tournament.html', {'form': form})
 
 def tournament_info(request, tournament_id):
+    username = request.session.get('username') or ''
+    picture = request.session.get('picture') or '/static/user-avatar.svg'
+    is_admin = request.session.get('is_admin') or False
+    logged_in = request.session.get('logged_in') or False
     tournament = get_object_or_404(Tournament, pk=tournament_id)
-    return render(request, 'tournament/tournament_info.html', {'tournament': tournament})
+    return render(request, 'tournament/tournament_info.html', {'tournament': tournament,
+                                                               'client_id': CLIENT_ID,
+                                                               'redirect_uri': REDIRECT_URI,
+                                                               'username': username,
+                                                               'picture': picture,
+                                                               'is_admin': is_admin,
+                                                               'logged_in': logged_in})
+
 
 def edit_match(request, match_id):
     data = json.loads(request.body)
