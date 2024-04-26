@@ -19,15 +19,12 @@
         {{ room_name|json_script:"room-name" }}
     </div>
     <script>
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
         const username = "{{ request.user.username }}"; // Get current user's username
 
         const chatSocket = new WebSocket(
             'ws://'
             + window.location.host
             + '/ws/chat/'
-            + roomName
-            + '/'
         );
 
         chatSocket.onmessage = function(e) {
