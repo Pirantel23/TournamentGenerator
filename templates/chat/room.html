@@ -10,23 +10,18 @@
     <input id="chat-message-input" type="text" size="100"><br>
     <input id="chat-message-submit" type="button" value="Send">
     WELCOME dolbab: {{ request.user.username }}
-    {{ room_name|json_script:"room-name" }}
     <script>
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
         const username = "{{ request.user.username }}"; // Get current user's username
 
         const chatSocket = new WebSocket(
             'ws://'
             + window.location.host
             + '/ws/chat/'
-            + roomName
-            + '/'
         );
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            // Display message with sender's username
-            document.querySelector('#chat-log').value += (data.sender_username + ': ' + data.message + '\n');
+            document.querySelector('#chat-log').value += (data.sender + ': ' + data.message + '\n');
         };
 
         chatSocket.onclose = function(e) {
