@@ -39,6 +39,10 @@
 
 .header{
     display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; /* Делаем ширину заголовка равной ширине окна */
     align-items: center;
     height: 120px;
     background: #42454E;
@@ -260,6 +264,11 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     margin: 5px;
+}
+
+.genabukin{
+    height: 120px;
+    width: 100%;
 }
 
 .tournament-container {
@@ -773,42 +782,47 @@ section h2{
 }
 
 .chat-container{
-    display: flex;
+    display: none;
     background: #42454E;
+    position: fixed;
+    left: 0;
+    top: 120px;
     flex-direction: column;
-    border-radius: 5px;
-    width: 500px;
+    border-radius: 0 0 5px 5px;
+    width: 20%;
+    max-height: 50%;
     padding: 15px;
     font-size: 32px;
+    z-index: 1010;
+    box-sizing: border-box;
 }
 
 .chat-container textarea{
     resize: none;
-    height: 1000px;
-    font-size: 80%;
-    background: #b6b6b6;
-
+    height: 800px;
+    font-size: 60%;
+    border-radius: 5px;
+    background: #CECECE;
 }
 
 .chat-container input{
-    font-size: 80%;
+    font-size: 50%;
 }
 
 .chat-message {
     display: flex;
-
 }
 
 #chat-message-input{
     border-radius: 5px;
     height: 50px;
-    width: 350px;
+    width: 70%;
     position: relative;
 }
 
 #chat-message-submit{
     height: 50px;
-    width: 150px;
+    width: 30%;
     transition: filter 0.3s ease;
     border-radius: 5px;
     background: #5a5c64;
@@ -820,6 +834,22 @@ section h2{
 #chat-message-submit:hover{
     background: #ffffff;
     color: black;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #797979;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #595c65;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #b4b4b4;
 }
 
 @media screen and (max-width: 700px) {
