@@ -100,22 +100,21 @@ document.addEventListener("DOMContentLoaded", function() {
             createTournamentContainer.style.display = "none";
         });
 
-        form.addEventListener("click", function() {
-            createTournamentContainer.style.display = "flex";
-            overlay.style.display = 'block';
-        });
-
-        document.addEventListener('click', function(event) {
-            if (!chatContainer.contains(event.target) && event.target !== chatLogo) {
-                chatContainer.style.display = "none";
-            }
-        });
-
-        chatLogo.addEventListener("click", function (event) {
-            event.stopPropagation();
-            chatContainer.style.display = "flex";
-        });
-
+        if (form){
+            form.addEventListener("click", function() {
+                createTournamentContainer.style.display = "flex";
+                overlay.style.display = 'block';
+            });
+            document.addEventListener('click', function(event) {
+                if (!chatContainer.contains(event.target) && event.target !== chatLogo) {
+                    chatContainer.style.display = "none";
+                }
+            });
+            chatLogo.addEventListener("click", function (event) {
+                event.stopPropagation();
+                chatContainer.style.display = "flex";
+            });
+        }
         if (createTournamentContainer) {
             resetTournamentForm();
         }
@@ -278,11 +277,7 @@ function initChat() {
 
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
-        if (data.sender) {
-            document.querySelector('#chat-log').value += `${data.sender}: ${data.message}\n`;
-        } else if (data.count !== undefined) {
-            document.querySelector('#user-count').innerText = `Users connected: ${data.count}`;
-        }
+        document.querySelector('#chat-log').value += `${data.sender}: ${data.message}\n`;
     };
 
     chatSocket.onclose = function(e) {
@@ -307,10 +302,4 @@ function initChat() {
         }));
         messageInputDom.value = '';
     };
-
-    chatSocket.addEventListener('participant_count', function(event) {
-        const data = event.data;
-        document.querySelector('#user-count').innerText = `Users connected: ${data.count}`;
-    });
 }
-
