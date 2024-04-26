@@ -16,7 +16,7 @@
     <div class="header">
         <div class="header-buttons">
             <div class="page-logo">TGG</div>
-            <div class="chat-logo" onclick="window.location.href='/chat'">
+            <div class="chat-logo">
                 <img src="/static/chat.svg" alt="Chat Icon">
             </div>
             <div class="help-logo">
@@ -44,8 +44,14 @@
     <div class="content">
         <div class="modal" id="myModal">
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>НУ ЭТО ТИПО ЧАТ ДОЛЖЕН БЫТЬ =()</p>
+                <div class="chat-container">
+                    <textarea id="chat-log" readonly placeholder="Добро пожаловать, {{ request.user.username }}"></textarea>
+                    <br>
+                    <div class="chat-message">
+                        <input id="chat-message-input" type="text" size="100" placeholder="Введите сообщение в чат">
+                        <input id="chat-message-submit" type="button" value="Отправить">
+                    </div>
+                </div>
             </div>
         </div>
         <div id="tournaments-list" class="tournaments-list">
