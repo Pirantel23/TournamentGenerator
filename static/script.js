@@ -1,22 +1,3 @@
-const logo = document.querySelector(".chat-logo");
-const modal = document.getElementById("myModal");
-
-if (logo) {
-    logo.onclick = function() {
-        modal.style.display = "block";
-    }
-}
-
-
-const closeBtn = document.getElementsByClassName("close")[0];
-
-if (closeBtn) {
-    closeBtn.onclick = function() {
-        modal.style.display = "none";
-    }
-}
-
-
 function charCounter(element, maxChars){
     element.addEventListener('input', function() {
         const lines = this.value.split('\n');
@@ -85,6 +66,23 @@ document.addEventListener("DOMContentLoaded", function() {
         const minDateTime = getMinDateTime();
         document.querySelector('.tournament_datetime').value = minDateTime;
         document.querySelector('.tournament_datetime').min = minDateTime;
+    }
+
+    const logo = document.querySelector(".chat-logo");
+    const modal = document.getElementById("myModal");
+
+    if (logo) {
+        logo.addEventListener("click", function() {
+            modal.style.display = "block";
+        });
+    }
+
+    const closeBtn = document.getElementsByClassName("close")[0];
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", function() {
+            modal.style.display = "none";
+        });
     }
 
     const tournamentsList = document.getElementById("tournaments-list");
@@ -260,16 +258,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const matchId = document.getElementById('match-id');
     const team1Score = document.getElementById('team1-score');
     const team2Score = document.getElementById('team2-score');
+    if (scoreForm) {
+        overlay.addEventListener('click', function(event) {
+            if (event.target === overlay) {
+                resetPopupContainer();
+            }});
 
-    overlay.addEventListener('click', function(event) {
-        if (event.target === overlay) {
+        scoreForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            advanceWinner(matchId.value, team1Score.value, team2Score.value);
             resetPopupContainer();
-        }});
-
-    scoreForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        advanceWinner(matchId.value, team1Score.value, team2Score.value);
-        resetPopupContainer();
-    });
+        });
+    }
 });

@@ -177,6 +177,7 @@
     transition: transform 0.3s;
     transform: scale(70%);
     user-select: none;
+    margin-left: 15px;
 }
 
 .chat-logo:hover,
@@ -771,6 +772,55 @@ section h2{
     margin: 0;
 }
 
+.chat-container{
+    display: flex;
+    background: #42454E;
+    flex-direction: column;
+    border-radius: 5px;
+    width: 500px;
+    padding: 15px;
+    font-size: 32px;
+}
+
+.chat-container textarea{
+    resize: none;
+    height: 1000px;
+    font-size: 80%;
+    background: #b6b6b6;
+
+}
+
+.chat-container input{
+    font-size: 80%;
+}
+
+.chat-message {
+    display: flex;
+
+}
+
+#chat-message-input{
+    border-radius: 5px;
+    height: 50px;
+    width: 350px;
+    position: relative;
+}
+
+#chat-message-submit{
+    height: 50px;
+    width: 150px;
+    transition: filter 0.3s ease;
+    border-radius: 5px;
+    background: #5a5c64;
+    border: transparent;
+    color: white;
+    align-self: flex-end
+}
+
+#chat-message-submit:hover{
+    background: #ffffff;
+    color: black;
+}
 
 @media screen and (max-width: 700px) {
     .info-label {

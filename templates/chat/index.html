@@ -1,8 +1,11 @@
 <!-- chat/templates/chat/index.html -->
+{% load static %}
+{% csrf_token %}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
     <title>Chat Rooms</title>
 </head>
 <body>
