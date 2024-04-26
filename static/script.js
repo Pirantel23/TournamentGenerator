@@ -68,32 +68,17 @@ document.addEventListener("DOMContentLoaded", function() {
         document.querySelector('.tournament_datetime').min = minDateTime;
     }
 
-    const logo = document.querySelector(".chat-logo");
-    const modal = document.getElementById("myModal");
-
-    if (logo) {
-        logo.addEventListener("click", function() {
-            modal.style.display = "block";
-        });
-    }
-
-    const closeBtn = document.getElementsByClassName("close")[0];
-
-    if (closeBtn) {
-        closeBtn.addEventListener("click", function() {
-            modal.style.display = "none";
-        });
-    }
-
-    const tournamentsList = document.getElementById("tournaments-list");
+    const tournamentsList = document.querySelector("#tournaments-list");
     const helpLogo =  document.querySelector(".help-logo");
     const helpMessage = document.querySelector(".help-message");
     const pageLogo = document.querySelector(".page-logo");
-    const form = document.getElementById("create-button");
+    const form = document.querySelector("#create-button");
     const createTournamentContainer = document.querySelector(".tournament-creator");
-    const teams = document.getElementById('teamNames');
-    const overlay = document.getElementById('overlay');
-    const createTournamentForm = document.getElementById('create-tournament-form');
+    const teams = document.querySelector('#teamNames');
+    const overlay = document.querySelector('#overlay');
+    const createTournamentForm = document.querySelector('#create-tournament-form');
+    const chatLogo = document.querySelector('.chat-logo');
+    const chatContainer = document.querySelector('.chat-container');
 
     overlay.addEventListener('click', function(event) {
         if (event.target === overlay) {
@@ -118,6 +103,17 @@ document.addEventListener("DOMContentLoaded", function() {
         form.addEventListener("click", function() {
             createTournamentContainer.style.display = "flex";
             overlay.style.display = 'block';
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!chatContainer.contains(event.target) && event.target !== chatLogo) {
+                chatContainer.style.display = "none";
+            }
+        });
+
+        chatLogo.addEventListener("click", function (event) {
+            event.stopPropagation();
+            chatContainer.style.display = "flex";
         });
 
         if (createTournamentContainer) {
