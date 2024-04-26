@@ -275,31 +275,35 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-function initChat(){
-    // const username = "{{ request.user.username }}";
+function initChat() {
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/ws/chat/'
+    );
 
-    const chatSocket = new WebSocket( // НЕ ТРОГАТЬ СУКА
-        'ws://'
-        + window.location.host
-        + '/ws/chat/'
-    )
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
-        document.querySelector('#chat-log').value += `${data.sender}: ${data.message}\n`;
-    }
+        if (data.sender) {
+            document.querySelector('#chat-log').value += `${data.sender}: ${data.message}\n`;
+        } else if (data.count !== undefined) {
+            document.querySelector('#user-count').innerText = `Users connected: ${data.count}`;
+        }
+    };
+
     chatSocket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
-    }
+    };
+
     document.querySelector('#chat-message-input').focus();
     document.querySelector('#chat-message-input').onkeyup = function(e) {
         if (e.keyCode === 13) {  // enter, return
             document.querySelector('#chat-message-submit').click();
         }
-    }
+    };
+
     document.querySelector('#chat-message-submit').onclick = function(e) {
         const messageInputDom = document.querySelector('#chat-message-input');
         const message = messageInputDom.value;
-        if (!message){
+        if (!message) {
             return;
         }
         chatSocket.send(JSON.stringify({
@@ -307,4 +311,10 @@ function initChat(){
         }));
         messageInputDom.value = '';
     };
+
+    chatSocket.addEventListener('participant_count', function(event) {
+        const data = event.data;
+        document.querySelector('#user-count').innerText = `Users connected: ${data.count}`;
+    });
 }
+
