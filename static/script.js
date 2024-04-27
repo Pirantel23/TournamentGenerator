@@ -272,7 +272,7 @@ function selectMatch(matchId) {
 
 
 
-function initChat(roomName) {
+function initChat(roomName, admin="") {
     document.querySelector('.chat-logo').onclick = null;
     const chatSocket = new WebSocket(
         'ws://' + window.location.host + '/ws/chat/' + roomName
@@ -280,6 +280,9 @@ function initChat(roomName) {
 
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
+        if (admin && data.sender === admin){
+            document.querySelector('#chat-log').value += `[admin] ${data.sender}: ${data.message}\n`;
+        }
         document.querySelector('#chat-log').value += `${data.sender}: ${data.message}\n`;
     };
 
