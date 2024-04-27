@@ -122,8 +122,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     if (overlay) {
-        initChat();
-
         helpLogo.addEventListener("click", function() {
             helpMessage.style.display = "flex";
             overlay.style.display = 'block';
@@ -274,9 +272,9 @@ function selectMatch(matchId) {
 
 
 
-function initChat() {
+function initChat(roomName) {
     const chatSocket = new WebSocket(
-        'ws://' + window.location.host + '/ws/chat/'
+        'ws://' + window.location.host + '/ws/chat/' + roomName
     );
 
     chatSocket.onmessage = function(e) {
