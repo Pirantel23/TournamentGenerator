@@ -51,8 +51,6 @@ def create_tournament(request):
         print(bracket)
         return redirect('/')
 
-    return render(request, 'tournament/create_tournament.html', {'form': form})
-
 def tournament_info(request, tournament_id):
     username = request.session.get('username') or ''
     picture = request.session.get('picture') or '/static/user-avatar.svg'
