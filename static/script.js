@@ -280,10 +280,19 @@ function initChat(roomName, admin="") {
 
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
+        const message = data.message;
+        const chatLog = document.querySelector('#chat-log');
         if (admin && data.sender === admin){
-            document.querySelector('#chat-log').value += `[admin] ${data.sender}: ${data.message}\n`;
+            if (message.startsWith('!')){
+                alert(message.substring(1))
+                chatLog.value += `ОБЪЯВЛЕНИЕ: ${message.substring(1)}\n`;
+            } else {
+                chatLog.value += `[ADMIN] ${data.sender}: ${message}\n`;
+            }
+        } else {
+            chatLog.value += `${data.sender}: ${message}\n`;
         }
-        document.querySelector('#chat-log').value += `${data.sender}: ${data.message}\n`;
+        chatLog.scrollTop = chatLog.scrollHeight;
     };
 
     chatSocket.onclose = function(e) {
