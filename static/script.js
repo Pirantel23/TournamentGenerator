@@ -273,6 +273,7 @@ function selectMatch(matchId) {
 
 
 function initChat(roomName) {
+    document.querySelector('.chat-logo').onclick = null;
     const chatSocket = new WebSocket(
         'ws://' + window.location.host + '/ws/chat/' + roomName
     );
