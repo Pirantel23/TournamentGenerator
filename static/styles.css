@@ -37,6 +37,8 @@
     flex-direction: column;
     transform: translate(-50%, -50%);
     z-index: 1010;
+    animation: fadeIn 0.5s ease ;
+
 }
 
 .header {
@@ -479,6 +481,7 @@
     border-radius: 15px;
     padding: 15px;
     width: 100%;
+    animation: fadeIn 0.5s ease forwards;
 }
 
 .create-tournament-container h2 {
@@ -723,6 +726,7 @@ section h2{
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1010;
+    animation: fadeIn 0.5s ease forwards;
 }
 
 #popup-container h2 {
@@ -794,6 +798,16 @@ section h2{
     font-size: 32px;
     z-index: 1010;
     box-sizing: border-box;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .chat-container textarea{
