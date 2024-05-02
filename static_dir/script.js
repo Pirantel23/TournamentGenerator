@@ -50,9 +50,9 @@ function changeImage() {
     }
 
     if (tournamentType === 'single') {
-        tournamentImg.src = '/static/single-elimination.svg';
+        tournamentImg.src = '/static_dir/single-elimination.svg';
     } else if (tournamentType === 'double') {
-        tournamentImg.src = '/static/double-elimination.svg';
+        tournamentImg.src = '/static_dir/double-elimination.svg';
     }
 }
 
