@@ -13,7 +13,7 @@ def index(request):
     picture = request.session.get('picture') or '/static/user-avatar.svg'
     is_admin = request.session.get('is_admin') or False
     logged_in = request.session.get('logged_in') or False
-    return render(request, 'main/page.html', {'tournaments': Tournament.objects.all(), 
+    return render(request, 'main/index.html', {'tournaments': Tournament.objects.all(), 
                                               'client_id': CLIENT_ID, 
                                               'redirect_uri': REDIRECT_URI,
                                               'username': username,
