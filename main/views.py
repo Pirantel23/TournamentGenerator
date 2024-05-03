@@ -5,7 +5,7 @@ import jwt
 import requests
 from users.models import User
 from django.contrib.auth import login
-from config import CLIENT_ID, CLIENT_SECRET, SERVER_DOMAIN, REDIRECT_URI
+from config import CLIENT_ID, CLIENT_SECRET, REDIRECT_URI
 
 
 def index(request):

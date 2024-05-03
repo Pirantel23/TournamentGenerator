@@ -7,7 +7,7 @@ from .models import Tournament, Match
 import math
 import random
 from datetime import datetime
-from config import CLIENT_ID, CLIENT_SECRET, SERVER_DOMAIN, REDIRECT_URI
+from config import CLIENT_ID, CLIENT_SECRET, REDIRECT_URI
 
 
 def create_tournament(request):
