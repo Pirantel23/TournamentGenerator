@@ -41,27 +41,27 @@ function handleSubmit(event) {
     }
 }
 
-// function changeImage() {
-//     const tournamentType = document.querySelector('.tournament-type').value;
-//     const tournamentImg = document.getElementById("tournament-img");
+function changeImage() {
+    const tournamentType = document.querySelector('.tournament-type').value;
+    const tournamentImg = document.getElementById("tournament-img");
 
-//     if (!tournamentType) {
-//         return;
-//     }
+    if (!tournamentType) {
+        return;
+    }
 
-//     if (tournamentType === 'single') {
-//         tournamentImg.src = '/static/single-elimination.svg';
-//     } else if (tournamentType === 'double') {
-//         tournamentImg.src = '/static/double-elimination.svg';
-//     }
-// }
+    if (tournamentType === 'single') {
+        tournamentImg.src = '/static/single-elimination.svg';
+    } else if (tournamentType === 'double') {
+        tournamentImg.src = '/static/double-elimination.svg';
+    }
+}
 
 document.addEventListener("DOMContentLoaded", function() {
 
     function resetTournamentForm() {
         createTournamentForm.reset();
         charCounter(teams, 50);
-        // changeImage();
+        changeImage();
         document.querySelector('form').addEventListener('submit', handleSubmit);
         const minDateTime = getMinDateTime();
         document.querySelector('.tournament_datetime').value = minDateTime;
@@ -275,7 +275,7 @@ function selectMatch(matchId) {
 function initChat(roomName, admin="") {
     document.querySelector('.chat-logo').onclick = null;
     const chatSocket = new WebSocket(
-        'ws://' + window.location.host + '/ws/chat/' + roomName
+        'wss://' + window.location.host + '/wss/chat/' + roomName
     );
 
     chatSocket.onmessage = function(e) {
