@@ -1,8 +1,7 @@
+<!DOCTYPE html>
 {% load static %}
 {% csrf_token %}
-<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +22,7 @@
                 <img src="{% static 'svg/help-message-logo.svg' %}" alt="Tournaments Icon">
             </div>
         </div>
-        <div class="info-label"> {{ content }}</div>
+        <div class="info-label" id="useless"> {{ content }}</div>
         {% if logged_in %}
         <div class="profile-header">
             <div class="name"> {{ username }}</div>
@@ -106,23 +105,23 @@
                     {% csrf_token %}
 
                     <div class="create-tournament-field">
-                        <label>Название турнира</label>
-                        <input placeholder="введите название турнира" name="tournament_name" class="tournament-name" maxlength="50" autocomplete=off required>
+                        <label for="tournament_name">Название турнира</label>
+                        <input placeholder="введите название турнира" name="tournament_name" id="tournament_name" class="tournament-name" maxlength="50" autocomplete="off" required>
                     </div>
 
                     <div class="create-tournament-field">
-                        <label>Команды</label>
-                        <textarea id="teamNames" placeholder="введите названия команд через Enter" name="teams" class="tournament-teams" autocomplete=off required></textarea>
+                        <label for="teamNames">Команды</label>
+                        <textarea id="teamNames" placeholder="введите названия команд через Enter" name="teams" class="tournament-teams" autocomplete="off" required></textarea>
                     </div>
 
                     <div class="create-tournament-field">
-                        <label>Дата и время проведения</label>
-                        <input type="datetime-local" name="tournament_datetime" class="tournament_datetime" max="9999-12-31T23:59" required>
+                        <label for="tournament_datetime">Дата и время проведения</label>
+                        <input type="datetime-local" name="tournament_datetime" id="tournament_datetime" class="tournament_datetime" max="9999-12-31T23:59" required>
                     </div>
 
                     <div class="create-tournament-field">
-                        <label>Тип турнира</label>
-                        <select name="tournament_type" class="tournament-type" onchange="changeImage()" required>
+                        <label for="tournament_type">Тип турнира</label>
+                        <select name="tournament_type" id="tournament_type" class="tournament-type" onchange="changeImage()" required>
                             <option value="single">Single Elimination</option>
                             <option value="double">Double Elimination</option>
                         </select>

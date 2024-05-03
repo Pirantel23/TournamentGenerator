@@ -27,7 +27,6 @@
     position: fixed;
     font-family: 'Inter', sans-serif;
     font-size: 32px;
-    top: 30%;
     left: 50%;
     background: #555966;
     border-radius: 15px;
@@ -37,8 +36,16 @@
     flex-direction: column;
     transform: translate(-50%, -50%);
     z-index: 1010;
-    animation: fadeIn 0.5s ease ;
+    animation: fadeInOut_2 0.3s forwards;
+}
 
+@keyframes fadeInOut_2 {
+    from {
+        top: 0;
+    }
+    to {
+        top: 30%;
+    }
 }
 
 .header {
@@ -95,7 +102,7 @@
 
 .login-button {
     margin-right: 30px;
-    padding: 5px 45px;
+    padding: 5px 30px;
     font-size: 32px;
     background-color: #979797;
     color: #ffffff;
@@ -296,7 +303,6 @@
     width: 100%;
     text-align: center;
     overflow: hidden;
-    white-space: nowrap;
     text-overflow: ellipsis;
 }
 
@@ -313,6 +319,7 @@
 
 .tournament-container .short-info {
     padding: 10px;
+    white-space: nowrap;
 }
 
 .tournament-container .full-info {
@@ -322,6 +329,7 @@
     padding: 10px;
     width: calc(100% - 20px);
     margin-bottom: 10px;
+    align-items: center;
 }
 
 .tournament-container:hover .full-info{
@@ -482,7 +490,6 @@
     border-radius: 15px;
     padding: 15px;
     width: 100%;
-    animation: fadeIn 0.5s ease forwards;
 }
 
 .create-tournament-container h2 {
@@ -753,7 +760,7 @@ section h2{
 }
 
 #popup-container-field label {
-    display: block;
+    display: flex;
     justify-content: center;
     background: #313542;
     border-radius: 5px;
@@ -765,6 +772,7 @@ section h2{
     text-overflow: ellipsis;
     white-space: nowrap;
     text-align: center;
+    align-items: center;
 }
 
 
@@ -790,24 +798,24 @@ section h2{
     background: #42454E;
     position: fixed;
     left: 0;
-    top: 120px;
     flex-direction: column;
     border-radius: 0 0 5px 5px;
     width: 20%;
     max-height: 50%;
     padding: 15px;
     font-size: 32px;
-    z-index: 1010;
     box-sizing: border-box;
-    animation: fadeIn 0.5s ease forwards;
+    top: 0;
+    z-index: 1;
+    animation: fadeInOut 0.3s forwards;
 }
 
-@keyframes fadeIn {
+@keyframes fadeInOut {
     from {
-        opacity: 0;
+        top: -360px;
     }
     to {
-        opacity: 1;
+        top: 120px;
     }
 }
 
@@ -877,11 +885,61 @@ section h2{
     background: #b4b4b4;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 700px){
     .info-label {
+        font-size: 30%;
+    }
+    #useless{
         display: none;
     }
-    .competitions{
+    .page-body{
+        font-size: 24px;
+    }
+    .chat-container {
+        width: 100%;
+    }
+    .create-tournament-container{
+        width: 90%;
+    }
+    .page-logo{
         display: none;
+    }
+    .profile-header{
+        width: 30%;
+    }
+    .user-avatar {
+        transform: scale(70%);
+    }
+    .logout-button {
+        font-size: 24px;
+        display: flex;
+        justify-content: center;
+    }
+    .help-message{
+        margin-top: 120px;
+    }
+    .tournament-creator{
+        width: 90%;
+    }
+    .image-container img {
+        width: 100%;
+    }
+    .create-tournament-button{
+        width: 90%;
+    }
+    .tournament-container td {
+        font-size: 50%;
+    }
+
+    .tournament-container,
+    .competitions,
+    .create-button-container{
+        width: 70vw;
+    }
+    .author-picture{
+        display: none
+    }
+    .login-button{
+        padding: 5px 10px;
     }
 }
