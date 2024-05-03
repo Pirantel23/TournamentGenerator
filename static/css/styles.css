@@ -171,6 +171,8 @@
     border-top: 0;
     border-radius: 0 0 15px 15px;
     text-decoration: none;
+    height: 40px;
+    align-items: center;
 }
 
 .logout-button:hover {
@@ -271,6 +273,7 @@
     border-radius: 0 0 15px 15px;
     max-width: 300%;
     width: 50vw;
+    height: 40px;
 }
 
 .competitions > p{
@@ -914,6 +917,8 @@ section h2{
         font-size: 24px;
         display: flex;
         justify-content: center;
+        width: 100%;
+        right: 0;
     }
     .help-message{
         margin-top: 120px;
@@ -930,18 +935,13 @@ section h2{
     .tournament-container td {
         font-size: 50%;
     }
-
-    .logout-button{
-        width: 100%;
-        right: 0;
-    }
     .tournament-container,
     .competitions,
     .create-button-container{
         width: 70vw;
     }
     .author-picture{
-        display: none
+        display: none;
     }
     .login-button{
         padding: 5px 10px;
