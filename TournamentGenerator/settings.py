@@ -32,12 +32,13 @@ ALLOWED_HOSTS = ['*']
 # Channels
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "BACKEND": "channels.layers.DatabaseChannelLayer",
         "CONFIG": {
-            "hosts": [(SERVER_IP, 6379)],
+            "ROUTING": "chat.routing.websocket_urlpatterns",  # Adjust this to match your routing setup
         },
     },
 }
+
 
 
 
