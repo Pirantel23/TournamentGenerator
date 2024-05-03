@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from config import SERVER_IP
+from config import SERVER_DOMAIN
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,12 +32,13 @@ ALLOWED_HOSTS = ['*']
 # Channels
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels.layers.DatabaseChannelLayer",
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
         "CONFIG": {
-            "ROUTING": "chat.routing.websocket_urlpatterns",  # Adjust this to match your routing setup
+            "hosts": [(f"wss://{SERVER_DOMAIN}", 443)],
         },
     },
 }
+
 
 
 
