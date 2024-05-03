@@ -17,10 +17,10 @@
         <div class="header-buttons">
             <div class="page-logo">TGG</div>
             <div class="chat-logo" onclick="initChat('main')">
-                <img src="/static_dir/chat.svg" alt="Chat Icon">
+                <img src="static/chat.svg" alt="Chat Icon">
             </div>
             <div class="help-logo">
-                <img src="/static_dir/help-message-logo.svg" alt="Tournaments Icon">
+                <img src="static/help-message-logo.svg" alt="Tournaments Icon">
             </div>
         </div>
         <div class="info-label"> {{ content }}</div>
@@ -49,7 +49,7 @@
             <div class="competitions"><p>Соревнования</p></div>
             {% if logged_in %}
             <div class="create-button-container">
-                <img src="/static_dir/create-button.svg" alt="Create Button" id="create-button" class="create-button">
+                <img src="static/create-button.svg" alt="Create Button" id="create-button" class="create-button">
             </div>
             {% endif %}
             <ul>
@@ -90,9 +90,9 @@
                         </a>
                     </div>
                     {% if is_admin or request.user == tournament.author %}
-                    <img src="/static_dir/delete-button.svg" alt="Delete Button" id="delete-button" class="delete-button" onclick="deleteTournament('{{ tournament.id }}')">
+                    <img src="static/delete-button.svg" alt="Delete Button" id="delete-button" class="delete-button" onclick="deleteTournament('{{ tournament.id }}')">
                     {% else %}
-                    <img src="/static_dir/delete-button.svg" alt="Delete Button" id="delete-button" class="delete-button" style="visibility:hidden">
+                    <img src="static/delete-button.svg" alt="Delete Button" id="delete-button" class="delete-button" style="visibility:hidden">
                     {% endif %}
                 </li>
                 {% endfor %}
@@ -145,7 +145,7 @@
         </div>
 
     </div>
-    <script src="static_dir/script.js"></script>
+    <script src="static/script.js"></script>
 
 </body>
 
