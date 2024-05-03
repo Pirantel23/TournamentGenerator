@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TGG</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 
 <body class="page-body">
@@ -17,10 +17,10 @@
         <div class="header-buttons">
             <div class="page-logo">TGG</div>
             <div class="chat-logo" onclick="initChat('main')">
-                <img src="static/chat.svg" alt="Chat Icon">
+                <img src="{% static 'svg/chat.svg' %}" alt="Chat Icon">
             </div>
             <div class="help-logo">
-                <img src="static/help-message-logo.svg" alt="Tournaments Icon">
+                <img src="{% static 'svg/help-message-logo.svg' %}" alt="Tournaments Icon">
             </div>
         </div>
         <div class="info-label"> {{ content }}</div>
@@ -45,11 +45,11 @@
             </div>
         </div>
         <div id="tournaments-list" class="tournaments-list">
-            <div class="genabukin"></div>
+            <div class="pevelshemetov"></div>
             <div class="competitions"><p>Соревнования</p></div>
             {% if logged_in %}
             <div class="create-button-container">
-                <img src="static/create-button.svg" alt="Create Button" id="create-button" class="create-button">
+                <img src="{% static 'svg/create-button.svg' %}" alt="Create Button" id="create-button" class="create-button">
             </div>
             {% endif %}
             <ul>
@@ -90,9 +90,9 @@
                         </a>
                     </div>
                     {% if is_admin or request.user == tournament.author %}
-                    <img src="static/delete-button.svg" alt="Delete Button" id="delete-button" class="delete-button" onclick="deleteTournament('{{ tournament.id }}')">
+                    <img src="{% static 'svg/delete-button.svg' %}" alt="Delete Button" id="delete-button" class="delete-button" onclick="deleteTournament('{{ tournament.id }}')">
                     {% else %}
-                    <img src="static/delete-button.svg" alt="Delete Button" id="delete-button" class="delete-button" style="visibility:hidden">
+                    <img src="{% static 'svg/delete-button.svg' %}" alt="Delete Button" id="delete-button" class="delete-button" style="visibility:hidden">
                     {% endif %}
                 </li>
                 {% endfor %}
@@ -129,7 +129,7 @@
                     </div>
 
                     <div id="image-container" class="image-container">
-                        <img src="" id="tournament-img" alt="Изображение сетки">
+                        <img src="{% static 'svg/single-elimination.svg' %}" id="tournament-img" alt="Изображение сетки">
                     </div>
                     <div class="create-tournament-button-container">
                         <button type="submit" class="create-tournament-button">Создать турнир</button>
@@ -145,8 +145,6 @@
         </div>
 
     </div>
-    <script src="static/script.js"></script>
-
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
-
 </html>
