@@ -11,7 +11,7 @@
 
 
 .page-body {
-    background-image: url('background.svg');
+    background-image: url('../svg/background.svg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
