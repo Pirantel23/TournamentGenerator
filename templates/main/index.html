@@ -22,10 +22,10 @@
                 <img src="{% static 'svg/help-message-logo.svg' %}" alt="Tournaments Icon">
             </div>
         </div>
-        <div class="info-label" id="useless"> {{ content }}</div>
+        <div class="info-label useless"> {{ content }}</div>
         {% if logged_in %}
         <div class="profile-header">
-            <div class="name"> {{ username }}</div>
+            <div class="name useless"> {{ username }}</div>
             <img src='{{ picture }}' alt="user avatar" id="user-avatar" class="user-avatar">
             <button onclick="window.location.href ='/logout'" class="logout-button" role="button">Выйти</button>
         </div>

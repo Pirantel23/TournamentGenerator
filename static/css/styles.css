@@ -889,7 +889,7 @@ section h2{
     .info-label {
         font-size: 30%;
     }
-    #useless{
+    .useless{
         display: none;
     }
     .page-body{
@@ -931,6 +931,10 @@ section h2{
         font-size: 50%;
     }
 
+    .logout-button{
+        width: 100%;
+        right: 0;
+    }
     .tournament-container,
     .competitions,
     .create-button-container{
@@ -941,5 +945,8 @@ section h2{
     }
     .login-button{
         padding: 5px 10px;
+    }
+    #popup-container{
+        top: 25%;
     }
 }
