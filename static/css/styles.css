@@ -73,6 +73,7 @@
     color: #ffffff;
     padding-left: 30px;
     transition: all 0.3s;
+    flex-wrap: nowrap;
 }
 
 /*.page-logo:hover {*/

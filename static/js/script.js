@@ -27,6 +27,14 @@ function handleSubmit(event) {
         return line.trim() !== '';
     });
 
+    const tournamentType = document.querySelector('.tournament-type').value;
+
+    if (tournamentType === 'double') {
+        alert('Тип турнира «Double Elimination» находится в разработке.');
+        event.preventDefault();
+        return;
+    }
+
     if (lines.length < 2) {
         alert('Введите минимум две строки для названий команд.');
         event.preventDefault();
