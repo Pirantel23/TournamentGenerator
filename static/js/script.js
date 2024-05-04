@@ -192,7 +192,7 @@ updateScoreColor();
 // Говно код
 
 
-async function makeRequest(method, url, data) {
+async function makeRequest(method, url, data, throwError=true) {
     const response = await fetch(url, {
         method: method,
         headers: {
@@ -203,10 +203,12 @@ async function makeRequest(method, url, data) {
     })
     if (response.ok) {
         return response
-    } else {
+    } else if (throwError){
         let error = new Error('Error occurred during the fetch request.');
         console.error('ERROR: ', error);
         throw error
+    } else {
+        return response
     }
 }
 
@@ -343,9 +345,10 @@ function initChat(room, admin='') {
     async function longPollmessages(chatRoom, lastMessageId) {
         longPolling = true;
         console.log(`Starting long polling from message ${lastMessageId}`)
-        const response = await makeRequest('POST', '/chat/get/', {'room': chatRoom, 'last_message_id': lastMessageId})
+        const response = await makeRequest('POST', '/chat/get/', {'room': chatRoom, 'last_message_id': lastMessageId}, false)
         if (response.status !== 200) {
             console.error('Error occurred during long polling.');
+            console.log(response);
             longPolling = false;
         }
         const messages = await response.json();
