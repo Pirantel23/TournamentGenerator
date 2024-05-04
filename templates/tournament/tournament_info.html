@@ -45,7 +45,7 @@
             <input id="chat-message-input" type="text" placeholder="Введите сообщение в чат" autocomplete="off">
             <input id="chat-message-submit" type="button" value="Отправить">
         </div>
-    </div>
+        <div id="progress-bar"></div>
     </div>
     {% regroup tournament.matches.all by round_number as round_matches %}
     <div class="bracket">

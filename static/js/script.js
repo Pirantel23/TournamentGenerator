@@ -286,6 +286,9 @@ function initChat(room, admin='') {
 
     document.querySelector('#chat-message-submit').onclick = function() {
         const message = document.querySelector('#chat-message-input').value;
+        if (!message) {
+            return;
+        }
         sendMessage(room, message, "message");
         document.querySelector('#chat-message-input').value = '';
         disableSendMessageButton();
@@ -374,11 +377,26 @@ function initChat(room, admin='') {
     function disableSendMessageButton() {
         isSending = true;
         document.querySelector('#chat-message-submit').disabled = true;
-        setTimeout(enableSendMessageButton, 2000); // Enable button after 1 second
+        const progressBar = document.querySelector('#progress-bar');
+        progressBar.style.width = '0%';
+        let width = 0;
+        const duration = 2000;
+        const intervalTime = 100;
+
+        const interval = setInterval(function() {
+            if (width >= 100) {
+                clearInterval(interval);
+                enableSendMessageButton();
+            } else {
+                width += (intervalTime / duration) * 100;
+                progressBar.style.width = width + '%';
+            }
+        }, intervalTime);
     }
 
     function enableSendMessageButton() {
         isSending = false;
         document.querySelector('#chat-message-submit').disabled = false;
+        document.querySelector('#progress-bar').style.width = '0';
     }
 }

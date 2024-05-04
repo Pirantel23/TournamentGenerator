@@ -813,6 +813,18 @@ section h2{
     animation: fadeInOut 0.3s forwards;
 }
 
+.chat-container #progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 5px;
+    border-radius: 5px;
+    background-color: #a9a9a9;
+    transition: width 0.1s ease-in-out;
+}
+
+
 @keyframes fadeInOut {
     from {
         top: -360px;
