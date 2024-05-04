@@ -1,5 +1,5 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 {% csrf_token %}
 <html lang="en">
 <head>
@@ -8,12 +8,8 @@
     <title>Турнир «{{ tournament.name }}»</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<script>
-
-</script>
 <body class="tournament-body">
     <div id="overlay"></div>
-
     <div class="header">
         <div class="header-buttons">
             <div class="page-logo" onclick="window.location.href ='/'">TGG</div>
@@ -85,7 +81,6 @@
         <div id="popup-content">
             <form id="score-form">
                 <input type="hidden" id="match-id" name="match-id" placeholder="click on any match">
-
                 <div id="popup-container-field">
                     <label for="team1-score" id="team1-label">Команда 1</label>
                     <input type="number" id="team1-score" name="team1-score" required><br>
