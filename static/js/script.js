@@ -344,6 +344,10 @@ function initChat(room, admin='') {
         longPolling = true;
         console.log(`Starting long polling from message ${lastMessageId}`)
         const response = await makeRequest('POST', '/chat/get/', {'room': chatRoom, 'last_message_id': lastMessageId})
+        if (response.status !== 200) {
+            console.error('Error occurred during long polling.');
+            longPolling = false;
+        }
         const messages = await response.json();
         if (messages.length > 0) {
             console.log(`Received ${messages.length} messages.`);
