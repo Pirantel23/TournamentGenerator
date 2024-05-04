@@ -327,7 +327,7 @@ function updateChat(messages) {
     chatLog.scrollTop = chatLog.scrollHeight;
 }
 
-function initChat(room) {
+function initChat(room, admin='') {
     sendMessage(room, 'join', 'join');
     console.log('Initializing chat...');
     document.querySelector('.chat-logo').onclick = null;
