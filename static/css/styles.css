@@ -837,7 +837,7 @@ section h2{
 
 @keyframes moveDownChat {
     from {
-        top: -540px;
+        top: -40%;
     }
     to {
         top: 120px;
@@ -848,7 +848,7 @@ section h2{
         top: 120px;
     }
     to {
-        top: -540px;
+        top: -40%;
     }
 }
 
