@@ -16,7 +16,7 @@
         <div class="header-buttons">
             <div class="page-logo">TGG</div>
             <div class="chat-logo" onclick="initChat('main')">
-                <img src="{% static 'svg/chat.svg' %}" alt="Chat Icon">
+                <img src="{% static 'svg/chat-logo.svg' %}" alt="Chat Icon">
             </div>
             <div class="help-logo">
                 <img src="{% static 'svg/help-message-logo.svg' %}" alt="Tournaments Icon">
@@ -42,6 +42,7 @@
                 <input id="chat-message-input" type="text" size="10" placeholder="Введите сообщение в чат" autocomplete="off">
                 <input id="chat-message-submit" type="button" value="Отправить" onclick="sendMessage('main')">
             </div>
+            <div id="progress-bar"></div>
         </div>
         <div id="tournaments-list" class="tournaments-list">
             <div class="pevelshemetov"></div>
