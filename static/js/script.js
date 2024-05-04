@@ -277,70 +277,6 @@ function selectMatch(matchId) {
     charCounter(team2Score, 4);
 }
 
-let longPolling = false;
-
-async function sendMessage(chatRoom, message, type) {
-    const response = await makeRequest('POST', `/chat/send/`, {'content': message, 'room': chatRoom, 'type': type})
-    const data = await response.json();
-    console.log(data);
-    if (data.success) {
-        const chatLog = document.querySelector('#chat-log');
-        chatLog.value += formatMessage(data.sender, data.content, data.type, data.timestamp, chatRoom) + '\n';
-        chatLog.scrollTop = chatLog.scrollHeight;
-        if (!longPolling) {
-            longPolling = true;
-            longPollmessages(chatRoom, data.last_message_id);
-        }
-    console.log(data);
-    }
-}
-
-function formatMessage(sender, content, type, timestamp='', room='') {
-    switch (type) {
-        case 'join':
-            return `${sender} присоединился к чату.`;
-        case 'leave':
-            return `${sender} покинул чат.`;
-        case 'message':
-            return `${sender} (${room}): ${content}`;
-    }
-}
-
-async function longPollmessages(chatRoom, lastMessageId) {
-    longPolling = true;
-    console.log(`Starting long polling from message ${lastMessageId}`)
-    const response = await makeRequest('POST', '/chat/get/', {'room': chatRoom, 'last_message_id': lastMessageId})
-    const messages = await response.json();
-    if (messages.length > 0) {
-        console.log(`Received ${messages.length} messages.`);
-        updateChat(messages);
-        longPollmessages(chatRoom, messages[messages.length - 1].id);
-    } else {
-        console.log('No new messages, polling again...');
-        longPollmessages(chatRoom, lastMessageId);
-    }
-}
-
-function updateChat(messages) {
-    console.log(`Updating chat with ${messages.length} messages.`)
-    const chatLog = document.querySelector('#chat-log');
-    messages.forEach(function(message) {
-        chatLog.value += formatMessage(message.sender, message.content, message.type, message.timestamp, message.room) + '\n';
-    });
-    chatLog.scrollTop = chatLog.scrollHeight;
-}
-
-function disableSendMessageButton() {
-    isSending = true;
-    document.querySelector('#chat-message-submit').disabled = true;
-    setTimeout(enableSendMessageButton, 2000); // Enable button after 1 second
-}
-
-function enableSendMessageButton() {
-    isSending = false;
-    document.querySelector('#chat-message-submit').disabled = false;
-}
-
 function initChat(room, admin='') {
     sendMessage(room, 'join', 'join');
     console.log('Initializing chat...');
@@ -362,5 +298,79 @@ function initChat(room, admin='') {
 
     window.onbeforeunload = function() {
         sendMessage(room, 'leave', 'leave');
+    }
+
+
+    let longPolling = false;
+
+    async function sendMessage(chatRoom, message, type) {
+        const response = await makeRequest('POST', `/chat/send/`, {'content': message, 'room': chatRoom, 'type': type})
+        const data = await response.json();
+        console.log(data);
+        if (data.success) {
+            const chatLog = document.querySelector('#chat-log');
+            chatLog.value += formatMessage(data.sender, data.content, data.type, data.timestamp, chatRoom) + '\n';
+            chatLog.scrollTop = chatLog.scrollHeight;
+            if (!longPolling) {
+                longPolling = true;
+                longPollmessages(chatRoom, data.last_message_id);
+            }
+        console.log(data);
+        }
+    }
+
+    function formatMessage(sender, content, type, timestamp='', room='') {
+        let name = sender;
+        let message = content;
+        if (sender === admin) {
+            name = `[ADMIN] ${sender}`;
+        }
+        if (content.startsWith('!')) {
+            message = content.substring(1);
+            alert(message)
+        }
+        switch (type) {
+            case 'join':
+                return `${name} присоединился к чату.`;
+            case 'leave':
+                return `${name} покинул чат.`;
+            case 'message':
+                return `${name} (${room}): ${message}`;
+        }
+    }
+
+    async function longPollmessages(chatRoom, lastMessageId) {
+        longPolling = true;
+        console.log(`Starting long polling from message ${lastMessageId}`)
+        const response = await makeRequest('POST', '/chat/get/', {'room': chatRoom, 'last_message_id': lastMessageId})
+        const messages = await response.json();
+        if (messages.length > 0) {
+            console.log(`Received ${messages.length} messages.`);
+            updateChat(messages);
+            longPollmessages(chatRoom, messages[messages.length - 1].id);
+        } else {
+            console.log('No new messages, polling again...');
+            longPollmessages(chatRoom, lastMessageId);
+        }
+    }
+
+    function updateChat(messages) {
+        console.log(`Updating chat with ${messages.length} messages.`)
+        const chatLog = document.querySelector('#chat-log');
+        messages.forEach(function(message) {
+            chatLog.value += formatMessage(message.sender, message.content, message.type, message.timestamp, message.room) + '\n';
+        });
+        chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    function disableSendMessageButton() {
+        isSending = true;
+        document.querySelector('#chat-message-submit').disabled = true;
+        setTimeout(enableSendMessageButton, 2000); // Enable button after 1 second
+    }
+
+    function enableSendMessageButton() {
+        isSending = false;
+        document.querySelector('#chat-message-submit').disabled = false;
     }
 }
