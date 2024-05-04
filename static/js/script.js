@@ -327,15 +327,16 @@ function initChat(room, admin='') {
         }
         if (content.startsWith('!') && sender === admin) {
             message = content.substring(1);
+            name = 'ОБЪЯВЛЕНИЕ'
             alert(message)
         }
         switch (type) {
             case 'join':
-                return `${name} присоединился к чату.`;
+                return `${name} присоединился к чату ${room}.`;
             case 'leave':
                 return `${name} покинул чат.`;
             case 'message':
-                return `${name} (${room}): ${message}`;
+                return `${name}: ${message}`;
         }
     }
 
