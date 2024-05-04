@@ -36,6 +36,9 @@ def long_poll_messages(request):
         last_message_id = Message.objects.last().id
 
     while True:
+        current = time.time()
+        if current - request_time > 30:
+            return JsonResponse({'error': 'Timeout'})
         new_messages = Message.objects.filter(id__gt=last_message_id, room=room).exclude(sender=sender)
         if new_messages:
             messages_data = [{'id': msg.id, 'sender': msg.sender.username, 'content': msg.content, 'room': msg.room, 'timestamp': msg.timestamp, 'type': msg.type} for msg in new_messages]
