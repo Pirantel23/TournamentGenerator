@@ -277,35 +277,66 @@ function selectMatch(matchId) {
     charCounter(team2Score, 4);
 }
 
+let longPolling = false;
 
-
-
-function initChat(roomName, admin="") {
-    document.querySelector('.chat-logo').onclick = null;
-    const chatSocket = new WebSocket(
-        'wss://' + window.location.host + '/wss/chat/' + roomName
-    );
-
-    chatSocket.onmessage = function(e) {
-        const data = JSON.parse(e.data);
-        const message = data.message;
+async function sendMessage(chatRoom, message, type) {
+    const response = await makeRequest('POST', `/chat/send/`, {'content': message, 'room': chatRoom, 'type': type})
+    const data = await response.json();
+    console.log(data);
+    if (data.success) {
         const chatLog = document.querySelector('#chat-log');
-        if (admin && data.sender === admin){
-            if (message.startsWith('!')){
-                alert(message.substring(1))
-                chatLog.value += `ОБЪЯВЛЕНИЕ: ${message.substring(1)}\n`;
-            } else {
-                chatLog.value += `[ADMIN] ${data.sender}: ${message}\n`;
-            }
-        } else {
-            chatLog.value += `${data.sender}: ${message}\n`;
-        }
+        chatLog.value += formatMessage(data.sender, data.content, data.type, data.timestamp, chatRoom) + '\n';
         chatLog.scrollTop = chatLog.scrollHeight;
-    };
+        if (!longPolling) {
+            longPolling = true;
+            longPollmessages(chatRoom, data.last_message_id);
+        }
+    console.log(data);
+    }
+}
 
-    chatSocket.onclose = function(e) {
-        console.error('Chat socket closed unexpectedly');
-    };
+function formatMessage(sender, content, type, timestamp='', room='') {
+    switch (type) {
+        case 'join':
+            return `${sender} присоединился к чату.`;
+        case 'leave':
+            return `${sender} покинул чат.`;
+        case 'message':
+            return `${sender} (${room}): ${content}`;
+    }
+}
+
+async function longPollmessages(chatRoom, lastMessageId) {
+    longPolling = true;
+    console.log(`Starting long polling from message ${lastMessageId}`)
+    const response = await makeRequest('POST', '/chat/get/', {'room': chatRoom, 'last_message_id': lastMessageId})
+    const messages = await response.json();
+    if (messages.length > 0) {
+        console.log(`Received ${messages.length} messages.`);
+        updateChat(messages);
+    }
+    longPollmessages(chatRoom, messages[messages.length - 1].id);
+}
+
+function updateChat(messages) {
+    console.log(`Updating chat with ${messages.length} messages.`)
+    const chatLog = document.querySelector('#chat-log');
+    messages.forEach(function(message) {
+        chatLog.value += formatMessage(message.sender, message.content, message.type, message.timestamp, message.room) + '\n';
+    });
+    chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+function initChat(room) {
+    sendMessage(room, 'join', 'join');
+    console.log('Initializing chat...');
+    document.querySelector('.chat-logo').onclick = null;
+
+    document.querySelector('#chat-message-submit').onclick = function() {
+        const message = document.querySelector('#chat-message-input').value;
+        sendMessage(room, message, "message");
+        document.querySelector('#chat-message-input').value = '';
+    }
 
     document.querySelector('#chat-message-input').focus();
     document.querySelector('#chat-message-input').onkeyup = function(e) {
@@ -314,15 +345,7 @@ function initChat(roomName, admin="") {
         }
     };
 
-    document.querySelector('#chat-message-submit').onclick = function(e) {
-        const messageInputDom = document.querySelector('#chat-message-input');
-        const message = messageInputDom.value;
-        if (!message) {
-            return;
-        }
-        chatSocket.send(JSON.stringify({
-            'message': message
-        }));
-        messageInputDom.value = '';
-    };
+    window.onbeforeunload = function() {
+        sendMessage(room, 'leave', 'leave');
+    }
 }

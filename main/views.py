@@ -35,7 +35,6 @@ def handle_auth(request):
     email = decoded['email']
     name = decoded['name']
     picture = decoded['picture']
-    print(decoded)
     user, _ = User.objects.get_or_create(username=name,
                                                   email=email,
                                                   picture_url=picture)
