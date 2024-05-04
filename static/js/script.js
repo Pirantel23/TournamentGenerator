@@ -314,8 +314,11 @@ async function longPollmessages(chatRoom, lastMessageId) {
     if (messages.length > 0) {
         console.log(`Received ${messages.length} messages.`);
         updateChat(messages);
+        longPollmessages(chatRoom, messages[messages.length - 1].id);
+    } else {
+        console.log('No new messages, polling again...');
+        longPollmessages(chatRoom, lastMessageId);
     }
-    longPollmessages(chatRoom, messages[messages.length - 1].id);
 }
 
 function updateChat(messages) {
