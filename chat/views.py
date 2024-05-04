@@ -20,7 +20,6 @@ def send_message(request):
     type = data.get('type')
 
     last_message = Message.objects.filter(sender=sender).last()
-    print(last_message.timestamp)
     # set time zone 0 in datetime object
     if last_message and last_message.timestamp > datetime.datetime.now(tz=datetime.timezone.utc) - datetime.timedelta(seconds=RATE_LIMIT):
         return JsonResponse({'success': False, 'error': 'Rate limit exceeded.'})
