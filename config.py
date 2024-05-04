@@ -1,13 +1,5 @@
-from dotenv import load_dotenv
-import os
-
-if not load_dotenv():
-    raise Exception('No .env file found')
-
-
-CLIENT_ID = os.getenv('CLIENT_ID')
-CLIENT_SECRET = os.getenv('CLIENT_SECRET')
-SERVER_IP = os.getenv('SERVER_IP')
-SERVER_DOMAIN = os.getenv('SERVER_DOMAIN')
-DJANGO_SECRET = os.getenv('DJANGO_SECRET')
+CLIENT_ID = '453737687894-c3hei64hc4tsimbqfs6v4iehtagt955d.apps.googleusercontent.com'
+CLIENT_SECRET = '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'
+SERVER_IP = '31.31.198.57'
+SERVER_DOMAIN = 't-gg.ru'
 REDIRECT_URI = f'https://{SERVER_DOMAIN}/auth'
