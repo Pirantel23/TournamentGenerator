@@ -330,6 +330,17 @@ function updateChat(messages) {
     chatLog.scrollTop = chatLog.scrollHeight;
 }
 
+function disableSendMessageButton() {
+    isSending = true;
+    document.querySelector('#chat-message-submit').disabled = true;
+    setTimeout(enableSendMessageButton, 2000); // Enable button after 1 second
+}
+
+function enableSendMessageButton() {
+    isSending = false;
+    document.querySelector('#chat-message-submit').disabled = false;
+}
+
 function initChat(room, admin='') {
     sendMessage(room, 'join', 'join');
     console.log('Initializing chat...');
@@ -339,6 +350,7 @@ function initChat(room, admin='') {
         const message = document.querySelector('#chat-message-input').value;
         sendMessage(room, message, "message");
         document.querySelector('#chat-message-input').value = '';
+        disableSendMessageButton();
     }
 
     document.querySelector('#chat-message-input').focus();
