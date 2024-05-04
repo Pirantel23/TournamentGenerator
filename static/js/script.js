@@ -147,7 +147,15 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         chatLogo.addEventListener("click", function (event) {
             event.stopPropagation();
-            chatContainer.style.display = "flex";
+            if (chatContainer.style.display === "flex") {
+                chatContainer.style.animation = "moveUpChat 0.3s forwards";
+                setTimeout(() => {
+                    chatContainer.style.display = "none";
+                }, 300);
+            } else {
+                chatContainer.style.display = "flex";
+                chatContainer.style.animation = "moveDownChat 0.3s forwards";
+            }
         });
 
         if (form){

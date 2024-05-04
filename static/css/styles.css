@@ -36,10 +36,10 @@
     flex-direction: column;
     transform: translate(-50%, -50%);
     z-index: 1010;
-    animation: fadeInOut_2 0.3s forwards;
+    animation: moveDown 0.3s forwards;
 }
 
-@keyframes fadeInOut_2 {
+@keyframes moveDown {
     from {
         top: 0;
     }
@@ -740,6 +740,16 @@ section h2{
     animation: fadeIn 0.5s ease forwards;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
 #popup-container h2 {
     position: relative;
     display: flex;
@@ -810,7 +820,7 @@ section h2{
     box-sizing: border-box;
     top: 0;
     z-index: 1;
-    animation: fadeInOut 0.3s forwards;
+    animation: moveDownChat 0.3s forwards;
 }
 
 .chat-container #progress-bar {
@@ -825,12 +835,20 @@ section h2{
 }
 
 
-@keyframes fadeInOut {
+@keyframes moveDownChat {
     from {
-        top: -360px;
+        top: -540px;
     }
     to {
         top: 120px;
+    }
+}
+@keyframes moveUpChat {
+    from {
+        top: 120px;
+    }
+    to {
+        top: -540px;
     }
 }
 
