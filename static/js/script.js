@@ -323,9 +323,9 @@ function initChat(room, admin='') {
         let name = sender;
         let message = content;
         if (sender === admin) {
-            name = `[ADMIN] ${sender}`;
+            name = `[Организатор] ${sender}`;
         }
-        if (content.startsWith('!')) {
+        if (content.startsWith('!') && sender === admin) {
             message = content.substring(1);
             alert(message)
         }
