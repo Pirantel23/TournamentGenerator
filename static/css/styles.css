@@ -925,6 +925,7 @@ section h2{
     .useless{
         display: none;
     }
+    .tournament-container a, a:visited, a:active,
     .page-body{
         font-size: 24px;
     }
@@ -952,6 +953,7 @@ section h2{
     }
     .help-message{
         margin-top: 120px;
+        width: 80%;
     }
     .tournament-creator{
         width: 90%;
