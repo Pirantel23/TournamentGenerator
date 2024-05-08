@@ -7,6 +7,8 @@ import json
 import datetime
 
 RATE_LIMIT = 2
+UPDATE_RATE = 5
+TIMEOUT = 30
 
 def send_message(request):
     if request.method != 'POST':
@@ -32,8 +34,6 @@ def send_message(request):
 
 
 def long_poll_messages(request):
-    time.sleep(30)
-    return JsonResponse({'error': 'disabled'})
     now = datetime.datetime.now()
     if request.method != 'POST':
         return JsonResponse({'error': 'POST request required.'}, status=400)
@@ -48,13 +48,13 @@ def long_poll_messages(request):
 
     while True:
         current = time.time()
-        if current - request_time > 30:
+        if current - request_time > TIMEOUT:
             open('log.txt', 'a').write(f'[{now}] Long poll request rejected from {request.user}.')
             return JsonResponse({'error': 'Timeout'})
         new_messages = Message.objects.filter(id__gt=last_message_id, room=room).exclude(sender=sender)
         if new_messages:
             messages_data = [{'id': msg.id, 'sender': msg.sender.username, 'content': msg.content, 'room': msg.room, 'timestamp': msg.timestamp, 'type': msg.type} for msg in new_messages]
             open('log.txt', 'a').write(f'[{now}] Long poll response sent to {request.user} in {current - request_time:.2f}s')
-            return JsonResponse(messages_data, safe=False)
+            return JsonResponse(messages_data)
         else:
-            time.sleep(1)
+            time.sleep(UPDATE_RATE)
