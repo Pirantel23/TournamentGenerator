@@ -55,6 +55,6 @@ def long_poll_messages(request):
         if new_messages:
             messages_data = [{'id': msg.id, 'sender': msg.sender.username, 'content': msg.content, 'room': msg.room, 'timestamp': msg.timestamp, 'type': msg.type} for msg in new_messages]
             open('log.txt', 'a').write(f'[{now}] Long poll response sent to {request.user} in {current - request_time:.2f}s')
-            return JsonResponse(messages_data)
+            return JsonResponse(messages_data, safe=False)
         else:
             time.sleep(UPDATE_RATE)
