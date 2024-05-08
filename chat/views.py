@@ -14,16 +14,11 @@ def send_message(request):
     if request.method != 'POST':
         return JsonResponse({'success': False})
     
-
     sender = request.user
     data = json.loads(request.body)
     room = data.get('room')
     content = data.get('content')
     type = data.get('type')
-
-    last_message = Message.objects.filter(sender=sender).last()
-    if last_message and last_message.timestamp > datetime.datetime.now(tz=datetime.timezone.utc) - datetime.timedelta(seconds=RATE_LIMIT):
-        return JsonResponse({'success': False, 'error': 'Rate limit exceeded.'})
 
     if not room or not content:
         return JsonResponse({'success': False})
