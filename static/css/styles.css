@@ -1031,6 +1031,12 @@ section h2 {
         font-size: 20px;
     }
 
+    .help-message a,
+    .help-message a:visited,
+    .help-message a:active {
+        font-size: 20px;
+    }
+
     #symbol-create {
         width: 20px;
         height: 20px;
