@@ -71,6 +71,7 @@ def send_message(request):
 
 def long_poll_messages(request):
     now = datetime.datetime.now()
+    open('log.txt', 'a').write(f'[{now}] ACTIVE:{active_long_poll_requests}.\n')
     if request.method != 'POST':
         return JsonResponse({'error': 'POST request required.'}, status=400)
     sender = request.user
@@ -83,6 +84,7 @@ def long_poll_messages(request):
         last_message_id = Message.objects.last().id
 
     existing_thread = active_long_poll_requests.get(client_id)
+    open('log.txt', 'a').write(f'[{now}] EXISTING {client_id}:{active_long_poll_requests}.\n')
     if existing_thread:
         open('log.txt', 'a').write(f'[{now}] Deleting thread from {sender}.\n')
         existing_thread.stop()
