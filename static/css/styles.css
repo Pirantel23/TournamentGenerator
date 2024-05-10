@@ -26,6 +26,7 @@
     font-family: 'Inter', sans-serif;
     font-size: 32px;
     left: 50%;
+    margin-top: 120px;
     background: #555966;
     border-radius: 15px;
     align-items: center;
@@ -1024,10 +1025,17 @@ section h2 {
         width: 100%;
         right: 0;
     }
+
     .help-message {
-        margin-top: 120px;
         width: 80%;
+        font-size: 20px;
     }
+
+    #symbol-create {
+        width: 20px;
+        height: 20px;
+    }
+
     .tournament-creator {
         width: 90%;
     }
