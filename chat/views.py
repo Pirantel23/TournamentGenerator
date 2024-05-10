@@ -84,6 +84,7 @@ def long_poll_messages(request):
 
     existing_thread = active_long_poll_requests.get(client_id)
     if existing_thread:
+        open('log.txt', 'a').write(f'[{now}] Deleting thread from {sender}.\n')
         existing_thread.stop()
         del active_long_poll_requests[client_id]
 
