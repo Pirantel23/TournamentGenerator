@@ -22,7 +22,10 @@ class LongPollThread():
 
     def run(self) -> JsonResponse:
         request_time = time.time()
-        while not self.stop_event:
+        while 1:
+            if self.stop_event:
+                self.log(f"Long poll request from {self.client_id} stopped.")
+                return JsonResponse({'error': 'Request stopped.'}, status=400)
             self.log(f'{self.sender} is checking db')
             current = time.time()
             if current - request_time > TIMEOUT:
@@ -37,9 +40,6 @@ class LongPollThread():
                 return JsonResponse(messages_data, safe=False)
             else:
                 time.sleep(UPDATE_RATE)
-        
-        self.log(f"Long poll request from {self.client_id} stopped.")
-        return JsonResponse({'error': 'Request stopped.'}, status=400)
 
     def stop(self):
         self.stop_event = True

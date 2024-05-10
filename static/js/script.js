@@ -368,8 +368,9 @@ function initChat(room, admin='') {
                 console.log('No new messages, polling again...');
                 longPollmessages(chatRoom, lastMessageId);
             }
+        } else {
+            console.log(`Long polling ended ${response.status} ${response.textContent}`);
         }
-        console.log('Long polling ended.', response);
     }
 
     function updateChat(messages) {
