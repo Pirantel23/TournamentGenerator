@@ -32,7 +32,7 @@ def long_poll_messages(request):
     now = datetime.datetime.now()
     if request.method != 'POST':
         return JsonResponse({'error': 'POST request required.'}, status=400)
-    open('log.txt', 'a').write(f'[{now}] Long poll request received from {request.user}.')
+    open('log.txt', 'a').write(f'[{now}] Long poll request received from {request.user}.\n')
     request_time = time.time()
     sender = request.user
     data = json.loads(request.body)
@@ -44,12 +44,12 @@ def long_poll_messages(request):
     while True:
         current = time.time()
         if current - request_time > TIMEOUT:
-            open('log.txt', 'a').write(f'[{now}] Long poll request rejected from {request.user}.')
+            open('log.txt', 'a').write(f'[{now}] Long poll request rejected from {request.user}.\n')
             return JsonResponse({'error': 'Timeout'})
         new_messages = Message.objects.filter(id__gt=last_message_id, room=room).exclude(sender=sender)
         if new_messages:
             messages_data = [{'id': msg.id, 'sender': msg.sender.username, 'content': msg.content, 'room': msg.room, 'timestamp': msg.timestamp, 'type': msg.type} for msg in new_messages]
-            open('log.txt', 'a').write(f'[{now}] Long poll response sent to {request.user} in {current - request_time:.2f}s')
+            open('log.txt', 'a').write(f'[{now}] Long poll response sent to {request.user} in {current - request_time:.2f}s\n')
             return JsonResponse(messages_data, safe=False)
         else:
             time.sleep(UPDATE_RATE)
