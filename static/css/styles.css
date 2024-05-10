@@ -9,7 +9,6 @@
     z-index: 1000;
 }
 
-
 .page-body {
     background-image: url('../svg/background.svg');
     background-size: cover;
@@ -20,7 +19,6 @@
     margin: 0;
     padding: 0;
 }
-
 
 .help-message {
     display: none;
@@ -46,6 +44,28 @@
     to {
         top: 30%;
     }
+}
+
+.help-message p {
+    margin: 5px;
+}
+
+.help-message a,
+.help-message a:visited,
+.help-message a:active {
+    color: rgb(167, 180, 255);
+    text-decoration: none;
+    height: 100%;
+    display: inline-block;
+}
+
+.help-message a:hover {
+    color: white;
+}
+
+.span-auth-users {
+    color: #929292;
+    font-weight: bold;
 }
 
 .header {
@@ -83,13 +103,18 @@
     flex-wrap: nowrap;
 }
 
+
 /*.page-logo:hover {*/
+
+
 /*    transform: scale(120%);*/
+
+
 /*}*/
 
 .page-logo:hover,
 .delete-button:hover,
-.create-button:hover{
+.create-button:hover {
     cursor: pointer;
 }
 
@@ -115,7 +140,7 @@
     background-color: #bbbbbb;
 }
 
-.info-label{
+.info-label {
     display: flex;
     position: relative;
     align-items: center;
@@ -152,7 +177,8 @@
 }
 
 .user-avatar {
-    position: absolute; /*  */
+    position: absolute;
+    /*  */
     margin: 10px;
     right: 0;
     border-radius: 50px;
@@ -183,17 +209,35 @@
     display: none;
 }
 
+
 /*.sidebar {*/
+
+
 /*    position: relative;*/
+
+
 /*    width: 75px;*/
+
+
 /*    background: #42454E;*/
+
+
 /*    float: left;*/
+
+
 /*    transition: width 0.3s;*/
+
+
 /*    overflow: hidden;*/
+
+
 /*    border-radius: 0 0 15px 15px;*/
+
+
 /*}*/
 
-.chat-logo, .help-logo {
+.chat-logo,
+.help-logo {
     transition: transform 0.3s;
     transform: scale(70%);
     user-select: none;
@@ -205,18 +249,40 @@
     transform: scale(90%);
 }
 
+
 /*.sidebar-content {*/
+
+
 /*    width: 100%;*/
+
+
 /*    transition: width 0.3s;*/
+
+
 /*    white-space: nowrap;*/
+
+
 /*    overflow: hidden;*/
+
+
 /*    display: flex;*/
+
+
 /*    align-items: center;*/
+
+
 /*    flex-direction: column;*/
+
+
 /*}*/
 
+
 /*.sidebar:hover {*/
+
+
 /*    width: 150px;*/
+
+
 /*}*/
 
 .content {
@@ -276,14 +342,14 @@
     height: 40px;
 }
 
-.competitions > p{
+.competitions>p {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     margin: 5px;
 }
 
-.pevelshemetov{
+.pevelshemetov {
     height: 120px;
     width: 100%;
 }
@@ -316,7 +382,7 @@
     font-size: 32px;
 }
 
-.tournament-container td{
+.tournament-container td {
     vertical-align: top;
 }
 
@@ -335,13 +401,13 @@
     align-items: center;
 }
 
-.tournament-container:hover .full-info{
+.tournament-container:hover .full-info {
     display: flex;
     justify-content: center;
     align-self: flex-start;
 }
 
-.tournaments-list ul{
+.tournaments-list ul {
     list-style-type: none;
     padding: 0;
     display: flex;
@@ -351,7 +417,9 @@
     align-items: center;
 }
 
-.tournament-container a, a:visited, a:active{
+.tournament-container a,
+.tournament-container a:visited,
+.tournament-container a:active {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -369,19 +437,20 @@
     background: #42454E;
 }
 
-.author-picture{
+.author-picture {
     width: 64px;
     height: 64px;
     border-radius: 50px;
 }
 
-.tournaments-list li{
+.tournaments-list li {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: row;
     margin-top: 10px;
 }
+
 
 /* buttons */
 
@@ -400,7 +469,7 @@
 }
 
 .submit-button:hover,
-.create-tournament-button:hover{
+.create-tournament-button:hover {
     background-color: #FFFFFF;
     color: black;
 }
@@ -415,7 +484,7 @@
     background: #5d5e6b;
 }
 
-.return-button:hover{
+.return-button:hover {
     background: #919191;
 }
 
@@ -428,7 +497,7 @@
     margin-left: 10px;
 }
 
-.delete-button:hover{
+.delete-button:hover {
     background: #cb1c1c;
 }
 
@@ -448,7 +517,7 @@
     background: #5a5c64;
 }
 
-.create-button:hover{
+.create-button:hover {
     background: #ffffff;
 }
 
@@ -469,6 +538,7 @@
     border: none;
     font-size: 32px;
 }
+
 
 /* страница для создания таблиц */
 
@@ -593,7 +663,7 @@
     width: 20%;
 }
 
-section h2{
+section h2 {
     text-align: center;
 }
 
@@ -616,14 +686,14 @@ section h2{
     width: 100%;
 }
 
-.bracket .round-click{
+.bracket .round-click {
     border-radius: 15px;
     border: 2px solid black;
     transition: background-color 0.3s ease;
     overflow: hidden;
 }
 
-.bracket .round-click:hover{
+.bracket .round-click:hover {
     background-color: #575757;
     cursor: pointer;
 }
@@ -635,7 +705,7 @@ section h2{
 }
 
 .bracket .team-1,
-.bracket .team-2{
+.bracket .team-2 {
     display: block;
     padding: 10px;
     text-align: center;
@@ -649,7 +719,7 @@ section h2{
     border-bottom: 1px solid black;
 }
 
-.bracket .team-2{
+.bracket .team-2 {
     border-top: 1px solid black;
 }
 
@@ -679,12 +749,10 @@ section h2{
         display: block;
         position: absolute;
     }
-
     li:after {
         right: -15px;
         width: 15px;
     }
-
     li:nth-child(even):after {
         border-bottom: 1px solid black;
         border-bottom-right-radius: 10px;
@@ -692,7 +760,6 @@ section h2{
         bottom: 50%;
         height: 100%;
     }
-
     li:nth-child(odd):after {
         border-right: 1px solid black;
         border-top: 1px solid black;
@@ -749,7 +816,6 @@ section h2{
     }
 }
 
-
 #popup-container h2 {
     position: relative;
     display: flex;
@@ -788,8 +854,7 @@ section h2{
     align-items: center;
 }
 
-
-#popup-container-field input{
+#popup-container-field input {
     font-size: 100%;
     width: 100px;
     border: 5px solid transparent;
@@ -800,13 +865,19 @@ section h2{
     margin: 5px;
     text-align: center;
 }
+
 #popup-container-field input::-webkit-outer-spin-button,
 #popup-container-field input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-.chat-container{
+#symbol-create{
+    width: 32px;
+    height: 32px;
+}
+
+.chat-container {
     display: none;
     background: #42454E;
     position: fixed;
@@ -834,7 +905,6 @@ section h2{
     transition: width 0.1s ease-in-out;
 }
 
-
 @keyframes moveDownChat {
     from {
         top: -40%;
@@ -843,6 +913,7 @@ section h2{
         top: 120px;
     }
 }
+
 @keyframes moveUpChat {
     from {
         top: 120px;
@@ -852,7 +923,7 @@ section h2{
     }
 }
 
-.chat-container textarea{
+.chat-container textarea {
     resize: none;
     height: 800px;
     font-size: 60%;
@@ -861,7 +932,7 @@ section h2{
     padding: 10px;
 }
 
-.chat-container input{
+.chat-container input {
     font-size: 50%;
     box-sizing: border-box;
 }
@@ -870,7 +941,7 @@ section h2{
     display: flex;
 }
 
-#chat-message-input{
+#chat-message-input {
     border-radius: 5px 0 0 5px;
     border: transparent;
     height: 50px;
@@ -879,7 +950,7 @@ section h2{
     padding: 10px;
 }
 
-#chat-message-submit{
+#chat-message-submit {
     height: 50px;
     width: 30%;
     transition: filter 0.3s ease;
@@ -887,10 +958,10 @@ section h2{
     background: #5a5c64;
     border: transparent;
     color: white;
-    align-self: flex-end
+    align-self: flex-end;
 }
 
-#chat-message-submit:hover{
+#chat-message-submit:hover {
     background: #d5d5d5;
     color: black;
 }
@@ -900,7 +971,7 @@ section h2{
 }
 
 .content ::-webkit-scrollbar,
-.tournament-body ::-webkit-scrollbar{
+.tournament-body ::-webkit-scrollbar {
     width: 10px;
 }
 
@@ -918,27 +989,29 @@ section h2{
     background: #b4b4b4;
 }
 
-@media screen and (max-width: 700px){
+@media screen and (max-width: 700px) {
     .info-label {
         font-size: 30%;
     }
-    .useless{
+    .useless {
         display: none;
     }
-    .tournament-container a, a:visited, a:active,
-    .page-body{
+    .tournament-container a,
+    a:visited,
+    a:active,
+    .page-body {
         font-size: 24px;
     }
     .chat-container {
         width: 100%;
     }
-    .create-tournament-container{
+    .create-tournament-container {
         width: 90%;
     }
-    .page-logo{
+    .page-logo {
         display: none;
     }
-    .profile-header{
+    .profile-header {
         width: 30%;
     }
     .user-avatar {
@@ -951,17 +1024,17 @@ section h2{
         width: 100%;
         right: 0;
     }
-    .help-message{
+    .help-message {
         margin-top: 120px;
         width: 80%;
     }
-    .tournament-creator{
+    .tournament-creator {
         width: 90%;
     }
     .image-container img {
         width: 100%;
     }
-    .create-tournament-button{
+    .create-tournament-button {
         width: 90%;
     }
     .tournament-container td {
@@ -969,16 +1042,16 @@ section h2{
     }
     .tournament-container,
     .competitions,
-    .create-button-container{
+    .create-button-container {
         width: 70vw;
     }
-    .author-picture{
+    .author-picture {
         display: none;
     }
-    .login-button{
+    .login-button {
         padding: 5px 10px;
     }
-    #popup-container{
+    #popup-container {
         top: 25%;
     }
 }

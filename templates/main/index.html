@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-{% load static %}
-{% csrf_token %}
+<!DOCTYPE html> {% load static %} {% csrf_token %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,9 +14,15 @@
     <div class="header">
         <div class="header-buttons">
             <div class="page-logo">TGG</div>
+            {% if logged_in %}
             <div class="chat-logo" onclick="initChat('main')">
                 <img src="{% static 'svg/chat-logo.svg' %}" alt="Chat Icon">
             </div>
+            {% else %}
+            <div class="chat-logo">
+                <img src="{% static 'svg/chat-logo.svg' %}" alt="Chat Icon">
+            </div>
+            {% endif %}
             <div class="help-logo">
                 <img src="{% static 'svg/help-message-logo.svg' %}" alt="Tournaments Icon">
             </div>
@@ -30,8 +35,7 @@
             <button onclick="window.location.href ='/logout'" class="logout-button" role="button">Выйти</button>
         </div>
         {% else %}
-        <button onclick="window.location.href ='https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={{ client_id }}&scope=openid%20profile%20email&redirect_uri={{ redirect_uri }}&state=test123&nonce=123'" class="login-button">Войти</button>
-        {% endif %}
+        <button onclick="window.location.href ='https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={{ client_id }}&scope=openid%20profile%20email&redirect_uri={{ redirect_uri }}&state=test123&nonce=123'" class="login-button">Войти</button>        {% endif %}
     </div>
 
     <div class="content">
@@ -48,7 +52,9 @@
         {% endif %}
         <div id="tournaments-list" class="tournaments-list">
             <div class="pevelshemetov"></div>
-            <div class="competitions"><p>Соревнования</p></div>
+            <div class="competitions">
+                <p>Соревнования</p>
+            </div>
             {% if logged_in %}
             <div class="create-button-container">
                 <img src="{% static 'svg/create-button.svg' %}" alt="Create Button" id="create-button" class="create-button">
@@ -78,10 +84,8 @@
                                             <br>
                                         </td>
                                         <td>{% if tournament.is_finished %}
-                                            <strong>Статус:</strong> завершен
-                                            {% else %}
-                                            <strong>Статус:</strong> в процессе
-                                            {% endif %}
+                                            <strong>Статус:</strong> завершен {% else %}
+                                            <strong>Статус:</strong> в процессе {% endif %}
                                         </td>
                                         <td>
                                             <strong>Дата проведения:</strong> {{ tournament.get_formatted_date }}
@@ -92,10 +96,8 @@
                         </a>
                     </div>
                     {% if is_admin or request.user == tournament.author %}
-                    <img src="{% static 'svg/delete-button.svg' %}" alt="Delete Button" id="delete-button" class="delete-button" onclick="deleteTournament('{{ tournament.id }}')">
-                    {% else %}
-                    <img src="{% static 'svg/delete-button.svg' %}" alt="Delete Button" id="delete-button" class="delete-button" style="visibility:hidden">
-                    {% endif %}
+                    <img src="{% static 'svg/delete-button.svg' %}" alt="Delete Button" id="delete-button" class="delete-button" onclick="deleteTournament('{{ tournament.id }}')"> {% else %}
+                    <img src="{% static 'svg/delete-button.svg' %}" alt="Delete Button" id="delete-button" class="delete-button" style="visibility:hidden"> {% endif %}
                 </li>
                 {% endfor %}
             </ul>
@@ -140,13 +142,17 @@
             </div>
         </div>
 
-        <div class="help-message">Не придумал, че здесь написать, но допустим здесь будет написано про то, зачем этот сайт
-            и как им пользоваться
-            <div>logged_in: {{ logged_in }}<br>is_admin: {{ is_admin }}
-            </div>
+        <div class="help-message">
+            <p>Данный сайт был создан для проведения различных турниров
+                <br><br> Также был создан чат для общения между пользователями сайта <span class="span-auth-users">(только для авторизированных пользователей)</span>
+                <br><br> Для авторизации требуется войти через <span style="color:#0086F9;">G</span><span style="color:#FF4131;">o</span><span style="color:#FEBD00;">o</span><span style="color:#0086F9;">g</span><span style="color:#00AA4A;">l</span><span style="color:#FF4131;">e</span> аккаунт
+                <br><br> Чтобы создать турнир, нужно нажать на <img src="{% static 'svg/create-button.svg' %}" id="symbol-create">, написать название турнира, название команд (через Enter), время проведения (минимальная дата проведения - текущее) и тип турнира
+                <br><br> По всем техническим вопросам писать в <a href="https://t.me/p1rantel">поддержку</a>
+            </p>
         </div>
 
     </div>
     <script src="{% static 'js/script.js' %}"></script>
 </body>
+
 </html>

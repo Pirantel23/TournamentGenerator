@@ -1,4 +1,4 @@
-function charCounter(element, maxChars){
+function charCounter(element, maxChars) {
     element.addEventListener('input', function() {
         const lines = this.value.split('\n');
         for (let i = 0; i < lines.length; i++) {
@@ -39,8 +39,8 @@ function handleSubmit(event) {
         alert('Введите минимум две строки для названий команд.');
         event.preventDefault();
     } else if (lines.every(function(line) {
-        return line === lines[0];
-    })) {
+            return line === lines[0];
+        })) {
         alert('Введите разные названия команд.');
         event.preventDefault();
     } else {
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.querySelector('.tournament_datetime').min = minDateTime;
     }
 
-    function resetPopupContainer(){
+    function resetPopupContainer() {
         overlay.style.display = 'none';
         matchId.value = '';
         team1Score.value = '';
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     const tournamentsList = document.querySelector("#tournaments-list");
-    const helpLogo =  document.querySelector(".help-logo");
+    const helpLogo = document.querySelector(".help-logo");
     const helpMessage = document.querySelector(".help-message");
     const pageLogo = document.querySelector(".page-logo");
     const form = document.querySelector("#create-button");
@@ -107,7 +107,8 @@ document.addEventListener("DOMContentLoaded", function() {
         overlay.addEventListener('click', function(event) {
             if (event.target === overlay) {
                 resetPopupContainer();
-            }});
+            }
+        });
 
         scoreForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -140,25 +141,28 @@ document.addEventListener("DOMContentLoaded", function() {
             createTournamentContainer.style.display = "none";
         });
 
-        document.addEventListener('click', function(event) {
-            if (!chatContainer.contains(event.target) && event.target !== chatLogo) {
-                chatContainer.style.display = "none";
-            }
-        });
-        chatLogo.addEventListener("click", function (event) {
-            event.stopPropagation();
-            if (chatContainer.style.display === "flex") {
-                chatContainer.style.animation = "moveUpChat 0.3s forwards";
-                setTimeout(() => {
+        if (chatContainer) {
+            document.addEventListener('click', function(event) {
+                if (!chatContainer.contains(event.target) && event.target !== chatLogo) {
                     chatContainer.style.display = "none";
-                }, 300);
-            } else {
-                chatContainer.style.display = "flex";
-                chatContainer.style.animation = "moveDownChat 0.3s forwards";
-            }
-        });
+                }
+            });
 
-        if (form){
+            chatLogo.addEventListener("click", function(event) {
+                event.stopPropagation();
+                if (chatContainer.style.display === "flex") {
+                    chatContainer.style.animation = "moveUpChat 0.3s forwards";
+                    setTimeout(() => {
+                        chatContainer.style.display = "none";
+                    }, 300);
+                } else {
+                    chatContainer.style.display = "flex";
+                    chatContainer.style.animation = "moveDownChat 0.3s forwards";
+                }
+            });
+        }
+
+        if (form) {
             form.addEventListener("click", function() {
                 createTournamentContainer.style.display = "flex";
                 overlay.style.display = 'block';
@@ -200,7 +204,7 @@ updateScoreColor();
 // Говно код
 
 
-async function makeRequest(method, url, data, throwError=true) {
+async function makeRequest(method, url, data, throwError = true) {
     const response = await fetch(url, {
         method: method,
         headers: {
@@ -211,7 +215,7 @@ async function makeRequest(method, url, data, throwError=true) {
     })
     if (response.ok) {
         return response
-    } else if (throwError){
+    } else if (throwError) {
         let error = new Error('Error occurred during the fetch request.');
         console.error('ERROR: ', error);
         throw error
@@ -224,7 +228,7 @@ async function makeRequest(method, url, data, throwError=true) {
 async function deleteTournament(tournamentId) {
     const response = await makeRequest('POST', `/tournament/delete/${tournamentId}/`);
     const data = await response.json();
-    if (data.success){
+    if (data.success) {
         const tournamentBlock = document.getElementById(tournamentId);
         tournamentBlock.remove();
     }
@@ -233,7 +237,7 @@ async function deleteTournament(tournamentId) {
 }
 
 async function advanceWinner(match_id, score1, score2) {
-    const response = await makeRequest('POST', `/tournament/edit/${match_id}/`, {'score1': score1, 'score2': score2})
+    const response = await makeRequest('POST', `/tournament/edit/${match_id}/`, { 'score1': score1, 'score2': score2 })
     const data = await response.json()
     if (score1 === score2) {
         selectMatch(match_id);
@@ -243,11 +247,11 @@ async function advanceWinner(match_id, score1, score2) {
         const currentMatch = document.getElementById(match_id);
         const next_match_id = data.next_match_id;
         currentMatch.onclick = null;
-        if (next_match_id){
+        if (next_match_id) {
             const nextMatch = document.getElementById(data.next_match_id);
             const team1Element = nextMatch.querySelector(".team-1");
             const team2Element = nextMatch.querySelector(".team-2");
-            if (data.team1 && data.team2){
+            if (data.team1 && data.team2) {
                 nextMatch.onclick = function() {
                     selectMatch(next_match_id);
                 }
@@ -287,27 +291,34 @@ function selectMatch(matchId) {
     charCounter(team2Score, 4);
 }
 
-function initChat(room, admin='') {
+function initChat(room, admin = '') {
     sendMessage(room, 'join', 'join');
     console.log('Initializing chat...');
     document.querySelector('.chat-logo').onclick = null;
+    const chatMessageSubmit = document.querySelector('#chat-message-submit');
 
-    document.querySelector('#chat-message-submit').onclick = function() {
-        const message = document.querySelector('#chat-message-input').value;
-        if (!message) {
-            return;
+    if (chatMessageSubmit) {
+        chatMessageSubmit.onclick = function() {
+            const message = document.querySelector('#chat-message-input').value;
+            if (!message) {
+                return;
+            }
+            sendMessage(room, message, "message");
+            document.querySelector('#chat-message-input').value = '';
+            disableSendMessageButton();
         }
-        sendMessage(room, message, "message");
-        document.querySelector('#chat-message-input').value = '';
-        disableSendMessageButton();
     }
 
-    document.querySelector('#chat-message-input').focus();
-    document.querySelector('#chat-message-input').onkeyup = function(e) {
-        if (e.keyCode === 13) {  // enter, return
-            document.querySelector('#chat-message-submit').click();
-        }
-    };
+    const chatMessageInput = document.querySelector('#chat-message-input');
+
+    if (chatMessageInput) {
+        chatMessageInput.focus();
+        chatMessageInput.onkeyup = function(e) {
+            if (e.keyCode === 13) { // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
+    }
 
     window.onbeforeunload = function() {
         sendMessage(room, 'leave', 'leave');
@@ -317,7 +328,7 @@ function initChat(room, admin='') {
     let longPolling = false;
 
     async function sendMessage(chatRoom, message, type) {
-        const response = await makeRequest('POST', `/chat/send/`, {'content': message, 'room': chatRoom, 'type': type})
+        const response = await makeRequest('POST', `/chat/send/`, { 'content': message, 'room': chatRoom, 'type': type })
         const data = await response.json();
         console.log(data);
         if (data.success) {
@@ -328,11 +339,11 @@ function initChat(room, admin='') {
                 longPolling = true;
                 longPollmessages(chatRoom, data.last_message_id);
             }
-        console.log(data);
+            console.log(data);
         }
     }
 
-    function formatMessage(sender, content, type, timestamp='', room='') {
+    function formatMessage(sender, content, type, timestamp = '', room = '') {
         let name = sender;
         let message = content;
         if (sender === admin) {
@@ -356,8 +367,8 @@ function initChat(room, admin='') {
     async function longPollmessages(chatRoom, lastMessageId) {
         longPolling = true;
         console.log(`Starting long polling from message ${lastMessageId}`)
-        const response = await makeRequest('POST', '/chat/get/', {'room': chatRoom, 'last_message_id': lastMessageId}, false)
-        if (response.ok){
+        const response = await makeRequest('POST', '/chat/get/', { 'room': chatRoom, 'last_message_id': lastMessageId }, false)
+        if (response.ok) {
             console.log('Long polling started...');
             const messages = await response.json();
             if (messages.length > 0) {
