@@ -314,11 +314,7 @@ function initChat(room, admin='') {
     }
 
 
-    let longPolling = sessionStorage.getItem('longPolling') === 'true' || false;
-
-    function setLongPollingState(state) {
-        sessionStorage.setItem('longPolling', state);
-    }
+    let longPolling = false;
 
     async function sendMessage(chatRoom, message, type) {
         const response = await makeRequest('POST', `/chat/send/`, {'content': message, 'room': chatRoom, 'type': type})
@@ -330,7 +326,6 @@ function initChat(room, admin='') {
             chatLog.scrollTop = chatLog.scrollHeight;
             if (!longPolling) {
                 longPolling = true;
-                setLongPollingState(longPolling)
                 longPollmessages(chatRoom, data.last_message_id);
             }
         console.log(data);
@@ -360,14 +355,12 @@ function initChat(room, admin='') {
 
     async function longPollmessages(chatRoom, lastMessageId) {
         longPolling = true;
-        setLongPollingState(longPolling)
         console.log(`Starting long polling from message ${lastMessageId}`)
         const response = await makeRequest('POST', '/chat/get/', {'room': chatRoom, 'last_message_id': lastMessageId}, false)
         if (response.status !== 200) {
             console.error('Error occurred during long polling.');
             console.log(response);
             longPolling = false;
-            setLongPollingState(longPolling)
         }
         const messages = await response.json();
         if (messages.length > 0) {
