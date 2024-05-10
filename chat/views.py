@@ -22,16 +22,20 @@ class LongPollThread():
 
     def run(self) -> JsonResponse:
         request_time = time.time()
+        flag = True
         while 1:
-            if self.stop_event:
-                self.log(f"Long poll request from {self.client_id} stopped.")
-                return JsonResponse({'error': 'Request stopped.'}, status=400)
-            self.log(f'{self.sender} is checking db')
+            if flag:
+                time.sleep(RATE_LIMIT)
+                flag = False
             current = time.time()
             if current - request_time > TIMEOUT:
                 self.log(f"Long poll request from {self.client_id} timed out.")
                 return JsonResponse({'error': 'Request timed out.'})
 
+            if self.stop_event:
+                self.log(f"Long poll request from {self.client_id} stopped.")
+                return JsonResponse({'error': 'Request stopped.'}, status=400)
+            self.log(f'{self.sender} is checking db')
             new_messages = Message.objects.filter(id__gt=self.last_message_id, room=self.room).exclude(sender=self.sender)
             if new_messages:
                 messages_data = [{'id': msg.id, 'sender': msg.sender.username, 'content': msg.content, 'room': msg.room, 'timestamp': msg.timestamp, 'type': msg.type} for msg in new_messages]
