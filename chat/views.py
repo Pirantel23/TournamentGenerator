@@ -27,6 +27,7 @@ class LongPollThread():
             if flag:
                 time.sleep(RATE_LIMIT)
                 flag = False
+                continue
             current = time.time()
             if current - request_time > TIMEOUT:
                 self.log(f"Long poll request from {self.client_id} timed out.")
@@ -80,8 +81,7 @@ def long_poll_messages(request):
     data = json.loads(request.body)
     last_message_id = data.get('last_message_id')
     room = data.get('room')
-    if not last_message_id:
-        last_message_id = Message.objects.last().id
+    
 
     existing_thread = active_long_poll_requests.get(client_id)
     open('log.txt', 'a').write(f'[{now}] EXISTING {client_id}:{active_long_poll_requests}.\n')
@@ -89,6 +89,9 @@ def long_poll_messages(request):
         open('log.txt', 'a').write(f'[{now}] Deleting thread from {sender}.\n')
         existing_thread.stop()
         del active_long_poll_requests[client_id]
+
+    if not last_message_id:
+        last_message_id = Message.objects.last().id
 
     thread = LongPollThread(client_id, sender, last_message_id, room)
     active_long_poll_requests[client_id] = thread
