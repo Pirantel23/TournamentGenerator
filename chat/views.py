@@ -5,7 +5,6 @@ from django.http import JsonResponse
 import time
 import json
 import datetime
-import threading
 
 RATE_LIMIT = 2
 UPDATE_RATE = 5
@@ -24,6 +23,7 @@ class LongPollThread():
     def run(self) -> JsonResponse:
         request_time = time.time()
         while not self.stop_event:
+            self.log(f'{self.sender} is checking db')
             current = time.time()
             if current - request_time > TIMEOUT:
                 self.log(f"Long poll request from {self.client_id} timed out.")
