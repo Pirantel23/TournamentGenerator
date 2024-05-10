@@ -357,20 +357,19 @@ function initChat(room, admin='') {
         longPolling = true;
         console.log(`Starting long polling from message ${lastMessageId}`)
         const response = await makeRequest('POST', '/chat/get/', {'room': chatRoom, 'last_message_id': lastMessageId}, false)
-        if (response.status !== 200) {
-            console.error('Error occurred during long polling.');
-            console.log(response);
-            longPolling = false;
+        if (response.ok){
+            console.log('Long polling started...');
+            const messages = await response.json();
+            if (messages.length > 0) {
+                console.log(`Received ${messages.length} messages.`);
+                updateChat(messages);
+                longPollmessages(chatRoom, messages[messages.length - 1].id);
+            } else {
+                console.log('No new messages, polling again...');
+                longPollmessages(chatRoom, lastMessageId);
+            }
         }
-        const messages = await response.json();
-        if (messages.length > 0) {
-            console.log(`Received ${messages.length} messages.`);
-            updateChat(messages);
-            longPollmessages(chatRoom, messages[messages.length - 1].id);
-        } else {
-            console.log('No new messages, polling again...');
-            longPollmessages(chatRoom, lastMessageId);
-        }
+        console.log('Long polling ended.', response);
     }
 
     function updateChat(messages) {
