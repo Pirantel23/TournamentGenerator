@@ -232,7 +232,6 @@ async function deleteTournament(tournamentId) {
         const tournamentBlock = document.getElementById(tournamentId);
         tournamentBlock.remove();
     }
-    console.log(data);
     return data;
 }
 
@@ -265,7 +264,6 @@ async function advanceWinner(match_id, score1, score2) {
         score2Element.textContent = data.score2;
         updateScoreColor();
     }
-    console.log(data)
     return data;
 }
 
@@ -293,7 +291,6 @@ function selectMatch(matchId) {
 
 function initChat(room, admin = '') {
     sendMessage(room, 'join', 'join');
-    console.log('Initializing chat...');
     document.querySelector('.chat-logo').onclick = null;
     const chatMessageSubmit = document.querySelector('#chat-message-submit');
 
@@ -330,7 +327,6 @@ function initChat(room, admin = '') {
     async function sendMessage(chatRoom, message, type) {
         const response = await makeRequest('POST', `/chat/send/`, { 'content': message, 'room': chatRoom, 'type': type })
         const data = await response.json();
-        console.log(data);
         if (data.success) {
             const chatLog = document.querySelector('#chat-log');
             chatLog.value += formatMessage(data.sender, data.content, data.type, data.timestamp, chatRoom) + '\n';
@@ -339,7 +335,6 @@ function initChat(room, admin = '') {
                 longPolling = true;
                 longPollmessages(chatRoom, data.last_message_id);
             }
-            console.log(data);
         }
     }
 
@@ -366,26 +361,19 @@ function initChat(room, admin = '') {
 
     async function longPollmessages(chatRoom, lastMessageId) {
         longPolling = true;
-        console.log(`Starting long polling from message ${lastMessageId}`)
         const response = await makeRequest('POST', '/chat/get/', { 'room': chatRoom, 'last_message_id': lastMessageId }, false)
         if (response.ok) {
-            console.log('Long polling started...');
             const messages = await response.json();
             if (messages.length > 0) {
-                console.log(`Received ${messages.length} messages.`);
                 updateChat(messages);
                 longPollmessages(chatRoom, messages[messages.length - 1].id);
             } else {
-                console.log('No new messages, polling again...');
                 longPollmessages(chatRoom, lastMessageId);
             }
-        } else {
-            console.log(`Long polling ended ${response.status} ${response.textContent}`);
         }
     }
 
     function updateChat(messages) {
-        console.log(`Updating chat with ${messages.length} messages.`)
         const chatLog = document.querySelector('#chat-log');
         messages.forEach(function(message) {
             chatLog.value += formatMessage(message.sender, message.content, message.type, message.timestamp, message.room) + '\n';
