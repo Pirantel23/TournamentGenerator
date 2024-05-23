@@ -875,7 +875,11 @@ section h2 {
     margin: 0;
 }
 
-#symbol-create{
+label#vs {
+    width: 50px;
+}
+
+#symbol-create {
     width: 32px;
     height: 32px;
 }
@@ -1027,23 +1031,19 @@ section h2 {
         width: 100%;
         right: 0;
     }
-
     .help-message {
         width: 80%;
         font-size: 20px;
     }
-
     .help-message a,
     .help-message a:visited,
     .help-message a:active {
         font-size: 20px;
     }
-
     #symbol-create {
         width: 20px;
         height: 20px;
     }
-
     .tournament-creator {
         width: 90%;
     }
@@ -1071,7 +1071,7 @@ section h2 {
         top: 30%;
         padding: 5px;
     }
-    #popup-container-field{
+    #popup-container-field {
         flex-direction: column;
         align-items: center;
     }
