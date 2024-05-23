@@ -801,6 +801,8 @@ section h2 {
     padding: 15px;
     flex-direction: column;
     position: fixed;
+    align-items: center;
+    text-align: center;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -992,7 +994,7 @@ section h2 {
 
 @media screen and (max-width: 700px) {
     .info-label {
-        font-size: 30%;
+        display: none;
     }
     .useless {
         display: none;
@@ -1066,6 +1068,17 @@ section h2 {
         padding: 5px 10px;
     }
     #popup-container {
-        top: 25%;
+        top: 30%;
+        padding: 5px;
+    }
+    #popup-container-field{
+        flex-direction: column;
+        align-items: center;
+    }
+    #popup-container h2 {
+        width: 300px;
+    }
+    label#vs {
+        width: 90px;
     }
 }

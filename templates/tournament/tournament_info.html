@@ -55,7 +55,8 @@
         </div>
         <div id="progress-bar"></div>
     </div>
-    {% endif %} {% regroup tournament.matches.all by round_number as round_matches %}
+    {% endif %}
+    {% regroup tournament.matches.all by round_number as round_matches %}
     <div class="bracket">
         {% for round_match in round_matches %}
         <section>
@@ -91,9 +92,9 @@
                     <input type="hidden" id="match-id" name="match-id" placeholder="click on any match">
                     <div id="popup-container-field">
                         <label for="team1-score" id="team1-label">Команда 1</label>
-                        <input type="number" id="team1-score" name="team1-score" required><br>
-                        <label style="width: 50px">VS</label>
-                        <input type="number" id="team2-score" name="team2-score" required><br>
+                        <input type="number" id="team1-score" name="team1-score" required>
+                        <label id="vs" >VS</label>
+                        <input type="number" id="team2-score" name="team2-score" required>
                         <label for="team2-score" id="team2-label">Команда 2</label>
                     </div>
                     <button type="submit" class="submit-button">Сохранить</button>
