@@ -1,5 +1,5 @@
 function charCounter(element, maxChars) {
-    element.addEventListener('input', function() {
+    element.addEventListener('input', function () {
         const lines = this.value.split('\n');
         for (let i = 0; i < lines.length; i++) {
             if (lines[i].length > maxChars) {
@@ -23,7 +23,7 @@ function getMinDateTime() {
 function handleSubmit(event) {
     const tournamentsList = document.getElementById("tournaments-list");
     const teamNames = document.getElementById('teamNames').value.trim();
-    const lines = teamNames.split('\n').filter(function(line) {
+    const lines = teamNames.split('\n').filter(function (line) {
         return line.trim() !== '';
     });
 
@@ -38,9 +38,9 @@ function handleSubmit(event) {
     if (lines.length < 2) {
         alert('Введите минимум две строки для названий команд.');
         event.preventDefault();
-    } else if (lines.every(function(line) {
-            return line === lines[0];
-        })) {
+    } else if (lines.every(function (line) {
+        return line === lines[0];
+    })) {
         alert('Введите разные названия команд.');
         event.preventDefault();
     } else {
@@ -64,7 +64,7 @@ function changeImage() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 
     function resetTournamentForm() {
         createTournamentForm.reset();
@@ -104,13 +104,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const team2Score = document.getElementById('team2-score');
 
     if (scoreForm) {
-        overlay.addEventListener('click', function(event) {
+        overlay.addEventListener('click', function (event) {
             if (event.target === overlay) {
                 resetPopupContainer();
             }
         });
 
-        scoreForm.addEventListener('submit', function(event) {
+        scoreForm.addEventListener('submit', function (event) {
             event.preventDefault();
 
             advanceWinner(matchId.value, team1Score.value, team2Score.value);
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    overlay.addEventListener('click', function(event) {
+    overlay.addEventListener('click', function (event) {
         if (event.target === overlay && tournamentsList) {
             createTournamentContainer.style.display = "none";
             resetTournamentForm();
@@ -131,18 +131,18 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     if (overlay) {
-        helpLogo.addEventListener("click", function() {
+        helpLogo.addEventListener("click", function () {
             helpMessage.style.display = "flex";
             overlay.style.display = 'block';
         });
 
-        pageLogo.addEventListener("click", function() {
+        pageLogo.addEventListener("click", function () {
             helpMessage.style.display = "none";
             createTournamentContainer.style.display = "none";
         });
 
         if (chatContainer) {
-            document.addEventListener('click', function(event) {
+            document.addEventListener('click', function (event) {
                 if (!chatContainer.contains(event.target) && event.target !== chatLogo) {
                     chatContainer.style.display = "none";
                     if (window.innerWidth <= 700) {
@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             });
 
-            chatLogo.addEventListener("click", function(event) {
+            chatLogo.addEventListener("click", function (event) {
                 event.stopPropagation();
                 if (chatContainer.style.display === "flex") {
                     chatContainer.style.animation = "moveUpChat 0.3s forwards";
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         if (form) {
-            form.addEventListener("click", function() {
+            form.addEventListener("click", function () {
                 createTournamentContainer.style.display = "flex";
                 overlay.style.display = 'block';
             });
@@ -209,6 +209,7 @@ function updateScoreColor() {
         }
     }
 }
+
 updateScoreColor();
 
 // Говно код
@@ -246,7 +247,7 @@ async function deleteTournament(tournamentId) {
 }
 
 async function advanceWinner(match_id, score1, score2) {
-    const response = await makeRequest('POST', `/tournament/edit/${match_id}/`, { 'score1': score1, 'score2': score2 })
+    const response = await makeRequest('POST', `/tournament/edit/${match_id}/`, {'score1': score1, 'score2': score2})
     const data = await response.json()
     if (score1 === score2) {
         selectMatch(match_id);
@@ -261,7 +262,7 @@ async function advanceWinner(match_id, score1, score2) {
             const team1Element = nextMatch.querySelector(".team-1");
             const team2Element = nextMatch.querySelector(".team-2");
             if (data.team1 && data.team2) {
-                nextMatch.onclick = function() {
+                nextMatch.onclick = function () {
                     selectMatch(next_match_id);
                 }
             }
@@ -305,7 +306,7 @@ function initChat(room, admin = '') {
     const chatMessageSubmit = document.querySelector('#chat-message-submit');
 
     if (chatMessageSubmit) {
-        chatMessageSubmit.onclick = function() {
+        chatMessageSubmit.onclick = function () {
             const message = document.querySelector('#chat-message-input').value;
             if (!message) {
                 return;
@@ -320,14 +321,14 @@ function initChat(room, admin = '') {
 
     if (chatMessageInput) {
         chatMessageInput.focus();
-        chatMessageInput.onkeyup = function(e) {
+        chatMessageInput.onkeyup = function (e) {
             if (e.keyCode === 13) { // enter, return
                 document.querySelector('#chat-message-submit').click();
             }
         };
     }
 
-    window.onbeforeunload = function() {
+    window.onbeforeunload = function () {
         sendMessage(room, 'leave', 'leave');
     }
 
@@ -335,7 +336,7 @@ function initChat(room, admin = '') {
     let longPolling = false;
 
     async function sendMessage(chatRoom, message, type) {
-        const response = await makeRequest('POST', `/chat/send/`, { 'content': message, 'room': chatRoom, 'type': type })
+        const response = await makeRequest('POST', `/chat/send/`, {'content': message, 'room': chatRoom, 'type': type})
         const data = await response.json();
         if (data.success) {
             const chatLog = document.querySelector('#chat-log');
@@ -375,7 +376,10 @@ function initChat(room, admin = '') {
 
     async function longPollmessages(chatRoom, lastMessageId) {
         longPolling = true;
-        const response = await makeRequest('POST', '/chat/get/', { 'room': chatRoom, 'last_message_id': lastMessageId }, false)
+        const response = await makeRequest('POST', '/chat/get/', {
+            'room': chatRoom,
+            'last_message_id': lastMessageId
+        }, false)
         if (response.ok) {
             const messages = await response.json();
             if (messages.length > 0) {
@@ -389,7 +393,7 @@ function initChat(room, admin = '') {
 
     function updateChat(messages) {
         const chatLog = document.querySelector('#chat-log');
-        messages.forEach(function(message) {
+        messages.forEach(function (message) {
             chatLog.value += formatMessage(message.sender, message.content, message.type, message.timestamp, message.room) + '\n';
         });
         chatLog.scrollTop = chatLog.scrollHeight;
@@ -404,7 +408,7 @@ function initChat(room, admin = '') {
         const duration = 2000;
         const intervalTime = 100;
 
-        const interval = setInterval(function() {
+        const interval = setInterval(function () {
             if (width >= 100) {
                 clearInterval(interval);
                 enableSendMessageButton();

@@ -1,5 +1,4 @@
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const lightbox = document.getElementById('lightbox');
     const openButton = document.getElementById('open-lightbox-button');
     const lightboxButton = document.getElementsByClassName('lightbox-button');

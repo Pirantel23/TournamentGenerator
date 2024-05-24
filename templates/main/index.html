@@ -1,156 +1,165 @@
 <!DOCTYPE html>
 {% load static %}
-{% csrf_token %}
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>TGG</title>
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    </head>
-    <body class="page-body">
-        <div id="overlay"></div>
-        <div class="header">
-            <div class="header-buttons">
-                <div class="page-logo">TGG</div>
-                {% if logged_in %}
-                <div class="chat-logo" onclick="initChat('main')">
-                    <img src="{% static 'svg/chat-logo.svg' %}" alt="Chat Icon">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TGG</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="page-body">
+{% csrf_token %}
+<div id="overlay"></div>
+<div class="header">
+    <div class="header-buttons">
+        <div class="page-logo">TGG</div>
+        {% if logged_in %}
+        <div class="chat-logo" onclick="initChat('main')">
+            <img src="{% static 'svg/chat-logo.svg' %}" alt="Chat Icon">
+        </div>
+        {% else %}
+        <div class="chat-logo">
+            <img src="{% static 'svg/chat-logo.svg' %}" alt="Chat Icon">
+        </div>
+        {% endif %}
+        <div class="help-logo">
+            <img src="{% static 'svg/help-message-logo.svg' %}" alt="Tournaments Icon">
+        </div>
+    </div>
+    <div class="info-label useless"> {{ content }}</div>
+    {% if logged_in %}
+    <div class="profile-header">
+        <div class="name useless"> {{ username }}</div>
+        <img src='{{ picture }}' alt="user avatar" id="user-avatar" class="user-avatar">
+        <button onclick="window.location.href ='/logout'" class="logout-button" role="button">Выйти</button>
+    </div>
+    {% else %}
+    <button onclick="window.location.href ='https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={{ client_id }}&scope=openid%20profile%20email&redirect_uri={{ redirect_uri }}&state=test123&nonce=123'"
+            class="login-button">Войти
+    </button>
+    {% endif %}
+</div>
+<div class="content">
+    {% if logged_in %}
+    <div class="chat-container">
+        <textarea id="chat-log" readonly placeholder="Добро пожаловать, {{ request.user.username }}"></textarea>
+        <br>
+        <div class="chat-message">
+            <input id="chat-message-input" type="text" size="10" placeholder="Введите сообщение в чат"
+                   autocomplete="off">
+            <input id="chat-message-submit" type="button" value="Отправить" onclick="sendMessage('main')">
+        </div>
+        <div id="progress-bar"></div>
+    </div>
+    {% endif %}
+    <div id="tournaments-list" class="tournaments-list">
+        <div class="pevelshemetov"></div>
+        <div class="competitions">
+            <p>Соревнования</p>
+        </div>
+        {% if logged_in %}
+        <div class="create-button-container">
+            <img src="{% static 'svg/create-button.svg' %}" alt="Create Button" id="create-button"
+                 class="create-button">
+        </div>
+        {% endif %}
+        <ul>
+            {% for tournament in tournaments reversed %}
+            <li id="{{ tournament.id }}">
+                <div class="tournament-container">
+                    <a href="{% url 'tournament_info' tournament.id %}">
+                        <div class="short-info">{{ tournament.name }}</div>
+                        <div class="full-info">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <img src='{{ tournament.author.picture_url }}' class="author-picture">
+                                    </td>
+                                    <td>
+                                        <strong>Организатор: </strong> {{ tournament.author }}
+                                    </td>
+                                    <td>
+                                        <strong>Количество участников:</strong> {{ tournament.team_amount }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br>
+                                    </td>
+                                    <td>{% if tournament.is_finished %}
+                                        <strong>Статус:</strong> завершен {% else %}
+                                        <strong>Статус:</strong> в процессе {% endif %}
+                                    </td>
+                                    <td>
+                                        <strong>Дата проведения:</strong> {{ tournament.get_formatted_date }}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </a>
                 </div>
+                {% if is_admin or request.user == tournament.author %}
+                <img src="{% static 'svg/delete-button.svg' %}" alt="Delete Button" id="delete-button"
+                     class="delete-button" onclick="deleteTournament('{{ tournament.id }}')">
                 {% else %}
-                <div class="chat-logo">
-                    <img src="{% static 'svg/chat-logo.svg' %}" alt="Chat Icon">
-                </div>
+                <img src="{% static 'svg/delete-button.svg' %}" alt="Delete Button" id="delete-button"
+                     class="delete-button" style="visibility:hidden">
                 {% endif %}
-                <div class="help-logo">
-                    <img src="{% static 'svg/help-message-logo.svg' %}" alt="Tournaments Icon">
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="tournament-creator">
+        <div class="create-tournament-container">
+            <h2>Создание турнирной сетки</h2>
+            <form action="/tournament/create/" method="post" id="create-tournament-form">
+                {% csrf_token %}
+                <div class="create-tournament-field">
+                    <label for="tournament_name">Название турнира</label>
+                    <input placeholder="введите название турнира" name="tournament_name" id="tournament_name"
+                           class="tournament-name" maxlength="50" autocomplete="off" required>
                 </div>
-            </div>
-            <div class="info-label useless"> {{ content }}</div>
-            {% if logged_in %}
-            <div class="profile-header">
-                <div class="name useless"> {{ username }}</div>
-                <img src='{{ picture }}' alt="user avatar" id="user-avatar" class="user-avatar">
-                <button onclick="window.location.href ='/logout'" class="logout-button" role="button">Выйти</button>
-            </div>
-            {% else %}
-            <button onclick="window.location.href ='https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={{ client_id }}&scope=openid%20profile%20email&redirect_uri={{ redirect_uri }}&state=test123&nonce=123'" class="login-button">Войти</button>        {% endif %}
+                <div class="create-tournament-field">
+                    <label for="teamNames">Команды</label>
+                    <textarea id="teamNames" placeholder="введите названия команд через Enter" name="teams"
+                              class="tournament-teams" autocomplete="off" required></textarea>
+                </div>
+                <div class="create-tournament-field">
+                    <label for="tournament_datetime">Дата и время проведения</label>
+                    <input type="datetime-local" name="tournament_datetime" id="tournament_datetime"
+                           class="tournament_datetime" max="9999-12-31T23:59" required>
+                </div>
+                <div class="create-tournament-field">
+                    <label for="tournament_type">Тип турнира</label>
+                    <select name="tournament_type" id="tournament_type" class="tournament-type" onchange="changeImage()"
+                            required>
+                        <option value="single">Single Elimination</option>
+                        <option value="double">Double Elimination</option>
+                    </select>
+                </div>
+                <div id="image-container" class="image-container">
+                    <img src="{% static 'svg/single-elimination.svg' %}" id="tournament-img" alt="Изображение сетки">
+                </div>
+                <div class="create-tournament-button-container">
+                    <button type="submit" class="create-tournament-button">Создать турнир</button>
+                </div>
+            </form>
         </div>
-
-        <div class="content">
-            {% if logged_in %}
-            <div class="chat-container">
-                <textarea id="chat-log" readonly placeholder="Добро пожаловать, {{ request.user.username }}"></textarea>
-                <br>
-                <div class="chat-message">
-                    <input id="chat-message-input" type="text" size="10" placeholder="Введите сообщение в чат" autocomplete="off">
-                    <input id="chat-message-submit" type="button" value="Отправить" onclick="sendMessage('main')">
-                </div>
-                <div id="progress-bar"></div>
-            </div>
-            {% endif %}
-            <div id="tournaments-list" class="tournaments-list">
-                <div class="pevelshemetov"></div>
-                <div class="competitions">
-                    <p>Соревнования</p>
-                </div>
-                {% if logged_in %}
-                <div class="create-button-container">
-                    <img src="{% static 'svg/create-button.svg' %}" alt="Create Button" id="create-button" class="create-button">
-                </div>
-                {% endif %}
-                <ul>
-                    {% for tournament in tournaments reversed %}
-                    <li id="{{ tournament.id }}">
-                        <div class="tournament-container">
-                            <a href="{% url 'tournament_info' tournament.id %}">
-                                <div class="short-info">{{ tournament.name }} </div>
-                                <div class="full-info">
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <img src='{{ tournament.author.picture_url }}' class="author-picture">
-                                            </td>
-                                            <td>
-                                                <strong>Организатор: </strong> {{ tournament.author }}
-                                            </td>
-                                            <td>
-                                                <strong>Количество участников:</strong> {{ tournament.team_amount }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <br>
-                                            </td>
-                                            <td>{% if tournament.is_finished %}
-                                                <strong>Статус:</strong> завершен {% else %}
-                                                <strong>Статус:</strong> в процессе {% endif %}
-                                            </td>
-                                            <td>
-                                                <strong>Дата проведения:</strong> {{ tournament.get_formatted_date }}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </a>
-                        </div>
-                        {% if is_admin or request.user == tournament.author %}
-                        <img src="{% static 'svg/delete-button.svg' %}" alt="Delete Button" id="delete-button" class="delete-button" onclick="deleteTournament('{{ tournament.id }}')"> {% else %}
-                        <img src="{% static 'svg/delete-button.svg' %}" alt="Delete Button" id="delete-button" class="delete-button" style="visibility:hidden"> {% endif %}
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-
-            <div class="tournament-creator">
-                <div class="create-tournament-container">
-                    <h2>Создание турнирной сетки</h2>
-                    <form action="/tournament/create/" method="post" id="create-tournament-form">
-                        {% csrf_token %}
-
-                        <div class="create-tournament-field">
-                            <label for="tournament_name">Название турнира</label>
-                            <input placeholder="введите название турнира" name="tournament_name" id="tournament_name" class="tournament-name" maxlength="50" autocomplete="off" required>
-                        </div>
-
-                        <div class="create-tournament-field">
-                            <label for="teamNames">Команды</label>
-                            <textarea id="teamNames" placeholder="введите названия команд через Enter" name="teams" class="tournament-teams" autocomplete="off" required></textarea>
-                        </div>
-
-                        <div class="create-tournament-field">
-                            <label for="tournament_datetime">Дата и время проведения</label>
-                            <input type="datetime-local" name="tournament_datetime" id="tournament_datetime" class="tournament_datetime" max="9999-12-31T23:59" required>
-                        </div>
-
-                        <div class="create-tournament-field">
-                            <label for="tournament_type">Тип турнира</label>
-                            <select name="tournament_type" id="tournament_type" class="tournament-type" onchange="changeImage()" required>
-                                <option value="single">Single Elimination</option>
-                                <option value="double">Double Elimination</option>
-                            </select>
-                        </div>
-
-                        <div id="image-container" class="image-container">
-                            <img src="{% static 'svg/single-elimination.svg' %}" id="tournament-img" alt="Изображение сетки">
-                        </div>
-                        <div class="create-tournament-button-container">
-                            <button type="submit" class="create-tournament-button">Создать турнир</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="help-message">
-                <p>Данный сайт создан для проведения различных турниров
-                    <br><br> Также создан чат для общения между пользователями сайта <span class="span-auth-users">(только для авторизированных пользователей)</span>
-                    <br><br> Для авторизации требуется войти через <span style="color:#0086F9;">G</span><span style="color:#FF4131;">o</span><span style="color:#FEBD00;">o</span><span style="color:#0086F9;">g</span><span style="color:#00AA4A;">l</span><span style="color:#FF4131;">e</span> аккаунт
-                    <br><br> Чтобы создать турнир, нужно нажать на <img src="{% static 'svg/create-button.svg' %}" id="symbol-create">, написать название турнира, название команд (через Enter), время проведения (минимальная дата проведения - текущая) и тип турнира
-                    <br><br> По всем техническим вопросам писать в <a href="https://t.me/p1rantel">поддержку</a>
-                </p>
-            </div>
-
-        </div>
-        <script src="{% static 'js/script.js' %}"></script>
-    </body>
+    </div>
+    <div class="help-message">
+        <p>Данный сайт создан для проведения различных турниров
+            <br><br> Также создан чат для общения между пользователями сайта <span class="span-auth-users">(только для авторизированных пользователей)</span>
+            <br><br> Для авторизации требуется войти через <span style="color:#0086F9;">G</span><span
+                    style="color:#FF4131;">o</span><span style="color:#FEBD00;">o</span><span
+                    style="color:#0086F9;">g</span><span style="color:#00AA4A;">l</span><span
+                    style="color:#FF4131;">e</span> аккаунт
+            <br><br> Чтобы создать турнир, нужно нажать на <img src="{% static 'svg/create-button.svg' %}"
+                                                                id="symbol-create">, написать название турнира, название
+            команд (через Enter), время проведения (минимальная дата проведения - текущая) и тип турнира
+            <br><br> По всем техническим вопросам писать в <a href="https://t.me/p1rantel">поддержку</a>
+        </p>
+    </div>
+</div>
+<script src="{% static 'js/script.js' %}"></script>
+</body>
 </html>

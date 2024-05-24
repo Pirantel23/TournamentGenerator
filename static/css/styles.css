@@ -270,7 +270,7 @@
     height: 40px;
 }
 
-.competitions>p {
+.competitions > p {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -678,10 +678,12 @@ section h2 {
         display: block;
         position: absolute;
     }
+
     li:after {
         right: -15px;
         width: 15px;
     }
+
     li:nth-child(even):after {
         border-bottom: 1px solid black;
         border-bottom-right-radius: 10px;
@@ -689,6 +691,7 @@ section h2 {
         bottom: 50%;
         height: 100%;
     }
+
     li:nth-child(odd):after {
         border-right: 1px solid black;
         border-top: 1px solid black;
@@ -906,7 +909,7 @@ label#vs {
 }
 
 .content ::-webkit-scrollbar,
-.tournament-body ::-webkit-scrollbar{
+.tournament-body ::-webkit-scrollbar {
     width: 10px;
 }
 
@@ -1053,7 +1056,7 @@ label#vs {
     }
 
     .tournament-body ::-webkit-scrollbar {
-        width: auto;
+        width: 0;
     }
 
     .tournament-body ::-webkit-scrollbar-track {
