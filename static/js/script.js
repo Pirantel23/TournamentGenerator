@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const createTournamentForm = document.querySelector('#create-tournament-form');
     const chatLogo = document.querySelector('.chat-logo');
     const chatContainer = document.querySelector('.chat-container');
-
+    const logoutButton = document.querySelector('.logout-button');
 
     const scoreForm = document.getElementById('score-form');
     const popupContainer = document.getElementById('popup-container');
@@ -145,6 +145,9 @@ document.addEventListener("DOMContentLoaded", function() {
             document.addEventListener('click', function(event) {
                 if (!chatContainer.contains(event.target) && event.target !== chatLogo) {
                     chatContainer.style.display = "none";
+                    if (window.innerWidth <= 700) {
+                        logoutButton.classList.remove('hidden');
+                    }
                 }
             });
 
@@ -154,10 +157,17 @@ document.addEventListener("DOMContentLoaded", function() {
                     chatContainer.style.animation = "moveUpChat 0.3s forwards";
                     setTimeout(() => {
                         chatContainer.style.display = "none";
+                        if (window.innerWidth <= 700) {
+                            logoutButton.classList.remove('hidden');
+                        }
                     }, 300);
                 } else {
+                    if (window.innerWidth <= 700) {
+                        logoutButton.classList.add('hidden');
+                    }
                     chatContainer.style.display = "flex";
                     chatContainer.style.animation = "moveDownChat 0.3s forwards";
+
                 }
             });
         }
@@ -194,7 +204,7 @@ function updateScoreColor() {
         } else if (score2 > score1) {
             score1Elements[i].style.background = '#555966';
             team1Elements[i].style.background = '#555966';
-            score2Elements[i].style.background = '#35508a'; //#3d8a35 - зелененький
+            score2Elements[i].style.background = '#35508a';
             team2Elements[i].style.background = '#35508a';
         }
     }
@@ -351,7 +361,11 @@ function initChat(room, admin = '') {
         }
         switch (type) {
             case 'join':
-                return `${name} присоединился к чату ${room}.`;
+                if (room === 'main') {
+                    return `${name} присоединился к основному чату.`;
+                } else {
+                    return `${name} присоединился к чату турнира.`;
+                }
             case 'leave':
                 return `${name} покинул чат.`;
             case 'message':

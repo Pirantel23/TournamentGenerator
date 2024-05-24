@@ -104,15 +104,6 @@
     flex-wrap: nowrap;
 }
 
-
-/*.page-logo:hover {*/
-
-
-/*    transform: scale(120%);*/
-
-
-/*}*/
-
 .page-logo:hover,
 .delete-button:hover,
 .create-button:hover {
@@ -179,7 +170,6 @@
 
 .user-avatar {
     position: absolute;
-    /*  */
     margin: 10px;
     right: 0;
     border-radius: 50px;
@@ -210,33 +200,6 @@
     display: none;
 }
 
-
-/*.sidebar {*/
-
-
-/*    position: relative;*/
-
-
-/*    width: 75px;*/
-
-
-/*    background: #42454E;*/
-
-
-/*    float: left;*/
-
-
-/*    transition: width 0.3s;*/
-
-
-/*    overflow: hidden;*/
-
-
-/*    border-radius: 0 0 15px 15px;*/
-
-
-/*}*/
-
 .chat-logo,
 .help-logo {
     transition: transform 0.3s;
@@ -249,42 +212,6 @@
 .help-logo:hover {
     transform: scale(90%);
 }
-
-
-/*.sidebar-content {*/
-
-
-/*    width: 100%;*/
-
-
-/*    transition: width 0.3s;*/
-
-
-/*    white-space: nowrap;*/
-
-
-/*    overflow: hidden;*/
-
-
-/*    display: flex;*/
-
-
-/*    align-items: center;*/
-
-
-/*    flex-direction: column;*/
-
-
-/*}*/
-
-
-/*.sidebar:hover {*/
-
-
-/*    width: 150px;*/
-
-
-/*}*/
 
 .content {
     display: flex;
@@ -643,20 +570,21 @@
     background-color: #212121;
     color: #ECECEC;
     margin: 0;
-    padding: 120px;
+    padding: 120px 0;
     font-family: 'Inter', sans-serif;
     font-size: 32px;
 }
+
 
 .bracket {
     font-family: 'Inter', sans-serif;
     font-size: 32px;
     display: flex;
-    margin-bottom: 100px;
     overflow: visible;
     width: 100%;
-    padding-top: 120px;
+    padding: 130px 0;
 }
+
 
 .bracket section {
     min-width: 300px;
@@ -978,7 +906,7 @@ label#vs {
 }
 
 .content ::-webkit-scrollbar,
-.tournament-body ::-webkit-scrollbar {
+.tournament-body ::-webkit-scrollbar{
     width: 10px;
 }
 
@@ -997,33 +925,41 @@ label#vs {
 }
 
 @media screen and (max-width: 700px) {
-    .info-label {
-        display: none;
-    }
     .useless {
         display: none;
     }
+
     .tournament-container a,
     a:visited,
     a:active,
     .page-body {
         font-size: 24px;
     }
+
     .chat-container {
         width: 100%;
     }
+
+    .tournament-container .short-info {
+        font-size: 20px;
+    }
+
     .create-tournament-container {
         width: 90%;
     }
+
     .page-logo {
         display: none;
     }
+
     .profile-header {
         width: 30%;
     }
+
     .user-avatar {
         transform: scale(70%);
     }
+
     .logout-button {
         font-size: 24px;
         display: flex;
@@ -1031,54 +967,104 @@ label#vs {
         width: 100%;
         right: 0;
     }
+
+    .logout-button.hidden {
+        display: none;
+    }
+
     .help-message {
         width: 80%;
         font-size: 20px;
     }
+
     .help-message a,
     .help-message a:visited,
     .help-message a:active {
         font-size: 20px;
     }
+
     #symbol-create {
         width: 20px;
         height: 20px;
     }
+
     .tournament-creator {
         width: 90%;
     }
+
     .image-container img {
         width: 100%;
     }
+
     .create-tournament-button {
         width: 90%;
     }
+
+    .bracket {
+        overflow: scroll;
+    }
+
+    .tournament-body {
+        padding: 0;
+    }
+
     .tournament-container td {
         font-size: 50%;
     }
+
     .tournament-container,
     .competitions,
     .create-button-container {
         width: 70vw;
     }
+
     .author-picture {
         display: none;
     }
+
     .login-button {
         padding: 5px 10px;
     }
+
+    .submit-button {
+        font-size: 24px;
+    }
+
+    section h2 {
+        font-size: 32px;
+    }
+
     #popup-container {
-        top: 30%;
         padding: 5px;
     }
+
     #popup-container-field {
         flex-direction: column;
         align-items: center;
     }
+
     #popup-container h2 {
         width: 300px;
+        font-size: 32px;
     }
+
     label#vs {
         width: 90px;
+    }
+
+    .tournament-body ::-webkit-scrollbar {
+        width: auto;
+    }
+
+    .tournament-body ::-webkit-scrollbar-track {
+        background: initial;
+    }
+
+    .tournament-body ::-webkit-scrollbar-thumb {
+        background: initial;
+    }
+
+    .tournament-body ::-webkit-scrollbar-thumb:hover {
+        background: initial;
     }
 }

@@ -2,87 +2,84 @@
 {% load static %}
 {% csrf_token %}
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Турнир «{{ tournament.name }}»</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-
-<body class="tournament-body">
-    <div id="overlay"></div>
-    <div class="header">
-        <div class="header-buttons">
-            <div class="page-logo" onclick="window.location.href ='/'">TGG</div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Турнир «{{ tournament.name }}»</title>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+    <body class="tournament-body">
+        <div id="overlay"></div>
+        <div class="header">
+            <div class="header-buttons">
+                <div class="page-logo" onclick="window.location.href ='/'">TGG</div>
+                {% if logged_in %}
+                <div class="chat-logo" onclick="initChat('{{ tournament.id }}', '{{ tournament.author }}')">
+                    <img src="{% static 'svg/chat-logo.svg' %}" alt="Chat Icon">
+                </div>
+                {% else %}
+                <div class="chat-logo">
+                    <img src="{% static 'svg/chat-logo.svg' %}" alt="Chat Icon">
+                </div>
+                {% endif %}
+                <div class="help-logo">
+                    <img src="{% static 'svg/help-message-logo.svg' %}" alt="Tournaments Icon">
+                </div>
+            </div>
+            <div class="info-label useless">
+                {% if tournament.is_finished %}
+                Турнир «{{ tournament.name }}» завершен
+                {% else %}
+                Турнир «{{ tournament.name }}» в процессе
+                {% endif %}
+            </div>
             {% if logged_in %}
-            <div class="chat-logo" onclick="initChat('{{ tournament.id }}', '{{ tournament.author }}')">
-                <img src="{% static 'svg/chat-logo.svg' %}" alt="Chat Icon">
+            <div class="profile-header">
+                <div class="name useless"> {{ username }}</div>
+                <img src='{{ picture }}' alt="user avatar" id="user-avatar" class="user-avatar">
+                <button onclick="window.location.href ='/logout'" class="logout-button" role="button">Выйти</button>
             </div>
             {% else %}
-            <div class="chat-logo">
-                <img src="{% static 'svg/chat-logo.svg' %}" alt="Chat Icon">
-            </div>
-            {% endif %}
-            <div class="help-logo">
-                <img src="{% static 'svg/help-message-logo.svg' %}" alt="Tournaments Icon">
-            </div>
-        </div>
-        <div class="info-label">
-            {% if tournament.is_finished %}
-            <h2>Турнир «{{ tournament.name }}» завершен</h2>
-            {% else %}
-            <h2>Турнир «{{ tournament.name }}» в процессе</h2>
-            {% endif %}
+            <button onclick="window.location.href ='https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={{ client_id }}&scope=openid%20profile%20email&redirect_uri={{ redirect_uri }}&state=test123&nonce=123'" class="login-button">Войти</button>        {% endif %}
         </div>
         {% if logged_in %}
-        <div class="profile-header">
-            <div class="name"> {{ username }}</div>
-            <img src='{{ picture }}' alt="user avatar" id="user-avatar" class="user-avatar">
-            <button onclick="window.location.href ='/logout'" class="logout-button" role="button">Выйти</button>
+        <div class="chat-container">
+            <textarea id="chat-log" readonly placeholder="Добро пожаловать, {{ request.user.username }}"></textarea>
+            <br>
+            <div class="chat-message">
+                <input id="chat-message-input" type="text" size="10" placeholder="Введите сообщение в чат" autocomplete="off">
+                <input id="chat-message-submit" type="button" value="Отправить" onclick="sendMessage('main')">
+            </div>
+            <div id="progress-bar"></div>
         </div>
-        {% else %}
-        <button onclick="window.location.href ='https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={{ client_id }}&scope=openid%20profile%20email&redirect_uri={{ redirect_uri }}&state=test123&nonce=123'" class="login-button">Войти</button>        {% endif %}
-    </div>
-
-    {% if logged_in %}
-    <div class="chat-container">
-        <textarea id="chat-log" readonly placeholder="Добро пожаловать, {{ request.user.username }}"></textarea>
-        <br>
-        <div class="chat-message">
-            <input id="chat-message-input" type="text" size="10" placeholder="Введите сообщение в чат" autocomplete="off">
-            <input id="chat-message-submit" type="button" value="Отправить" onclick="sendMessage('main')">
-        </div>
-        <div id="progress-bar"></div>
-    </div>
-    {% endif %}
-    {% regroup tournament.matches.all by round_number as round_matches %}
-    <div class="bracket">
-        {% for round_match in round_matches %}
-        <section>
-            <h2>Раунд {{ round_match.grouper }}</h2>
-            <ul>
-                {% for match in round_match.list %}
-                <li>
-                    {% if not match.is_finished and match.team1 and match.team2 and request.user == tournament.author %}
-                    <div class="round-click" onclick="selectMatch('{{ match.id }}')" id="{{ match.id }}">
-                        {% else %}
-                        <div class="round-click" id="{{ match.id }}">
-                            {% endif %}
-                            <div class="teams">
-                                <div class="team-1">{{ match.team1 }}</div>
-                                <div class="score-1">{{ match.score1 }}</div>
+        {% endif %}
+        {% regroup tournament.matches.all by round_number as round_matches %}
+        <div class="bracket">
+            {% for round_match in round_matches %}
+            <section>
+                <h2>Раунд {{ round_match.grouper }}</h2>
+                <ul>
+                    {% for match in round_match.list %}
+                    <li>
+                        {% if not match.is_finished and match.team1 and match.team2 and request.user == tournament.author %}
+                        <div class="round-click" onclick="selectMatch('{{ match.id }}')" id="{{ match.id }}">
+                            {% else %}
+                            <div class="round-click" id="{{ match.id }}">
+                                {% endif %}
+                                <div class="teams">
+                                    <div class="team-1">{{ match.team1 }}</div>
+                                    <div class="score-1">{{ match.score1 }}</div>
+                                </div>
+                                <div class="teams">
+                                    <div class="team-2">{{ match.team2 }}</div>
+                                    <div class="score-2">{{ match.score2 }}</div>
+                                </div>
                             </div>
-                            <div class="teams">
-                                <div class="team-2">{{ match.team2 }}</div>
-                                <div class="score-2">{{ match.score2 }}</div>
-                            </div>
-                        </div>
-                </li>
-                {% endfor %}
-            </ul>
-        </section>
-        {% endfor %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endfor %}
         </div>
         <br>
         <div id="popup-container">
@@ -101,7 +98,6 @@
                 </form>
             </div>
         </div>
-
         <div class="help-message">
             <p>На данной странице можно просматривать, кто с кем может встретиться по ходу турнира
                 <br><br> Для определения победителя матча организатору нужно нажать на матч и определить победителя
@@ -111,10 +107,7 @@
                 <br><br> По всем техническим вопросам писать в <a href="https://t.me/p1rantel">поддержку</a>
             </p>
         </div>
-
         <img src="{% static 'svg/return-button.svg' %}" alt="Main page" class="return-button" onclick="window.location.href = '/'">
-
         <script src="{% static 'js/script.js' %}"></script>
-</body>
-
+    </body>
 </html>
